@@ -1,2 +1,6 @@
 NUnit
 NUnit.Runners
+NLog
+NCronTab
+chessie
+FsUnit
