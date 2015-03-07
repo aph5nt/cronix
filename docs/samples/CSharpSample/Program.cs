@@ -25,7 +25,9 @@ namespace CSharpSample
 	{
 		static void Main(string[] args)
 		{
-			BootStrapper.initService(new FSharpOption<string[]>(null), null);
+			BootStrapper.initService(new FSharpOption<string[]>(new[] { "debug" }), null);
+
+			Console.ReadKey();
         }
 	}
 }

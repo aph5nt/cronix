@@ -131,13 +131,13 @@ module BootStrapper =
         let entryAsm = Assembly.GetEntryAssembly()
         let executingAsm =  Assembly.GetExecutingAssembly()
         let assemblyName = if entryAsm <> null then entryAsm.GetName().Name else executingAsm.GetName().Name
-        printf "Ussage"
-        printf "%s debug" assemblyName
-        printf "    Starts the service in interactive mode. Press [ENTER] to exit."
-        printf "  %s install" assemblyName
-        printf "    Installs xxx as a Windows service."
-        printf "  %s uninstall" assemblyName
-        printf "    Uninstalls xxx as a Windows service."
+        printfn "Ussage:"
+        printfn " %s debug" assemblyName
+        printfn "    Starts the service in interactive mode."
+        printfn "  %s install" assemblyName
+        printfn "     Installs %s as a Windows service." assemblyName
+        printfn "  %s uninstall" assemblyName
+        printfn "     Uninstalls %s as a Windows service." assemblyName
     
     let isDebug() = Environment.UserInteractive
 
@@ -147,6 +147,7 @@ module BootStrapper =
             match args.Value.[0] with
             | "install" -> ProjectInstaller.install(Assembly.GetEntryAssembly())
             | "uninstall" -> ProjectInstaller.uninstall(Assembly.GetEntryAssembly())
+            | "debug" -> runService startupHandler <| isDebug()
             | _ -> printGuide() |> ignore   
         else
            printGuide() |> ignore   
