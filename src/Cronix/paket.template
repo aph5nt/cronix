@@ -1,0 +1,23 @@
+type project
+owners
+    aph5nt
+authors 
+    aph5nt
+projectUrl
+    http://github.com/aph5nt/Cronix
+iconUrl
+    https://raw.githubusercontent.com/aph5nt/Cronix/master/docs/files/img/logo.png
+licenseUrl
+    http://github.com/aph5nt/Cronix/blob/master/LICENSE.txt
+requireLicenseAcceptance
+    false
+copyright
+    Copyright 2015
+tags
+    cron ncron ncrontab scheduler service
+summary
+    F# / C# Cron Service
+description
+    Simple Cron Library / Service
+
+
