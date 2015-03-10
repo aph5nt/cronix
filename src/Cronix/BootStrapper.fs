@@ -140,14 +140,20 @@ module BootStrapper =
         printfn "     Uninstalls %s as a Windows service." assemblyName
     
     let isDebug() = Environment.UserInteractive
-
-    let initService(args : Option<string[]>) (startupHandler : Option<StartupHandler>) =
-        if args.IsNone then runService startupHandler <| isDebug()
-        else if args.IsSome && args.Value.Length = 1 then
-            match args.Value.[0] with
-            | "install" -> ProjectInstaller.install(Assembly.GetEntryAssembly())
-            | "uninstall" -> ProjectInstaller.uninstall(Assembly.GetEntryAssembly())
-            | "debug" -> runService startupHandler <| isDebug()
-            | _ -> printGuide() |> ignore   
-        else
-           printGuide() |> ignore   
+  
+    let InitService : InitService =
+        fun (args, startupHandler) ->
+            if args.IsNone then 
+                runService startupHandler <| isDebug()
+                ok("runService")
+            else if args.IsSome && args.Value.Length = 1 then
+                match args.Value.[0] with
+                | "install" -> ProjectInstaller.Install(Assembly.GetEntryAssembly())
+                | "uninstall" -> ProjectInstaller.Uninstall(Assembly.GetEntryAssembly())
+                | "debug" -> runService startupHandler <| isDebug()
+                             ok("runService")
+                | _ -> printGuide()
+                       ok("printGuide") 
+            else
+               printGuide()
+               ok("printGuide") 

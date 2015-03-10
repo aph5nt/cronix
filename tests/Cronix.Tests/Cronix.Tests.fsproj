@@ -66,8 +66,12 @@
   <Import Project="..\..\.paket\paket.targets" />
   <ItemGroup>
     <None Include="paket.references" />
+    <Compile Include="TestHelpers.fs" />
     <Compile Include="TriggerTests.fs" />
     <Compile Include="SchedulingTests.fs" />
+    <Compile Include="InstallerTests.fs" />
+    <Compile Include="BootStrapperTests.fs" />
+    <Compile Include="DslTests.fs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="mscorlib" />

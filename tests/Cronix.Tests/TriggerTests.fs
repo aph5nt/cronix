@@ -1,4 +1,4 @@
-﻿module TriggerTests
+﻿namespace ``Triggering tests ``
 //
 //open Xunit
 //open FsUnit.Xunit

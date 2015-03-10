@@ -102,6 +102,11 @@ and SuccessMessage =
     | StartJob
 
 
+(* Installer *)
+
+type Install = Assembly -> Result<string, string>
+type Uninstall = Assembly -> Result<string, string>
+
 (* BootStrapper *)
 
 type StartupHandlerState = {
@@ -118,6 +123,7 @@ and StartupScriptState = {
 
 and StartupHandler = delegate of (IScheduleManager) -> unit
 and RunService = IScheduleManager -> Option<StartupHandler> -> unit
+and InitService = Option<string[]> * Option<StartupHandler> -> Result<string, string>
 
 module Messages = 
 

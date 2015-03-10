@@ -7,6 +7,7 @@ module ProjectInstaller =
     open System.Configuration.Install
     open System.Reflection
     open System.ServiceProcess
+    open Chessie.ErrorHandling
     open Logging
 
     let logger = logger()
@@ -28,30 +29,36 @@ module ProjectInstaller =
         installer.Context.Parameters.["assemblypath"] <- assembly.Location;
 
 
-    let install (assembly : Assembly) =
-        let installer = new Installer()
-        initialize installer assembly
+    let Install : Install =
+        fun(assembly) ->
+            let installer = new Installer()
+            initialize installer assembly
 
-        let mutable state = new Hashtable()
-        try
-            installer.Install(state)
-            installer.Commit(state)
-        with
-        | exn ->
-            try 
-                installer.Rollback(state)
+            let mutable state = new Hashtable()
+            try
+                installer.Install(state)
+                installer.Commit(state)
+                installer.Dispose()
+                ok("installed")
             with
-            | _ -> ()
+            | exn ->
+                try 
+                    installer.Rollback(state)
+                    installer.Dispose()
+                    fail("rollback: " + exn.Message)
+                with
+                | ex -> fail("failed to rollback: " + ex.Message)
 
-            failwith exn.Message
-
-        installer.Dispose() |> ignore
-
-
-    let uninstall (assembly : Assembly)  = 
-        let installer = new Installer()
-        initialize installer assembly
-        installer.Uninstall(null);
+    let Uninstall : Uninstall = 
+        fun(assembly) ->
+            try
+                let installer = new Installer()
+                initialize installer assembly
+                installer.Uninstall(null);
+                installer.Dispose()
+                ok("uninstalled")
+            with 
+            | ex -> fail("failed to uninstall: " + ex.Message)
 
 
     type ServiceProcessAdapter(service : IScheduleManager) =
