@@ -1,12 +1,12 @@
 ﻿module InstallerTests
 
-    open FsUnit
-    open NUnit.Framework
+    open FsUnit.Xunit
+    open Xunit
 
-    [<Test>]
+    [<Fact>]
     let ``Install cronix as service``() =
         ()
 
-    [<Test>]
+    [<Fact>]
     let ``Uninstall cronix service``() = 
         ()

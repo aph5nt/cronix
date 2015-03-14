@@ -1,7 +1,7 @@
 ﻿module TestHelpers
 
-    open FsUnit
-    open NUnit.Framework
+    open FsUnit.Xunit
+    open Xunit
     open System.Threading   
     open Chessie.ErrorHandling
     open System

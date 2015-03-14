@@ -1,6 +1,6 @@
 ﻿namespace Cronix
 
-open Chessie.ErrorHandling
+    open Chessie.ErrorHandling
 
-module BootStrapper = 
-    val InitService : Option<string[]> * Option<StartupHandler> -> Result<string, string>
+    module BootStrapper = 
+        val InitService : Option<string[]> * Option<StartupHandler> -> Result<string, string>

@@ -21,13 +21,13 @@ namespace CSharpSample
 	}
 
 
-	class Program
+	public class Program
 	{
-		static void Main(string[] args)
+		public static void Main(string[] args)
 		{
-			BootStrapper.initService(new FSharpOption<string[]>(new[] { "debug" }), null);
-
-			Console.ReadKey();
-        }
+			Console.WriteLine("CSharpSample is running!");
+			BootStrapper.InitService(new FSharpOption<string[]>(args), null);
+			Console.WriteLine("Exiting...");
+		}
 	}
 }

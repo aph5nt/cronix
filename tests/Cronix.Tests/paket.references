@@ -1,6 +1,6 @@
-NUnit
-NUnit.Runners
+xUnit
+xunit.runner.visualstudio
+FsUnit.xUnit
 NLog
 NCronTab
 chessie
-FsUnit
