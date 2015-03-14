@@ -117,7 +117,7 @@ module BootStrapper =
 
             if debug = true then
                 setupService scheduleManager startupHandler |> ignore
-                Console.ReadLine() |> ignore
+                Console.Read() |> ignore
                 scheduleManager.Stop()
 
             else

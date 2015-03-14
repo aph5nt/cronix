@@ -226,6 +226,8 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Configuration.Install" />
     <Reference Include="System.Core" />
     <Reference Include="System.Numerics" />
     <ProjectReference Include="..\..\src\Cronix\Cronix.fsproj">
@@ -233,5 +235,6 @@
       <Project>{1ab7e0b7-c56e-4a50-b5fa-7ad04f56c17c}</Project>
       <Private>True</Private>
     </ProjectReference>
+    <Reference Include="System.ServiceProcess" />
   </ItemGroup>
 </Project>

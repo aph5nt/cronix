@@ -184,3 +184,4 @@ paket-files
 docs/content/license.md
 docs/content/release-notes.md
 debugEnv
+/envs/serviceEnv

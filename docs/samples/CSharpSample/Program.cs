@@ -8,6 +8,8 @@ using Cronix;
 using System.Threading;
 using CSharpSample.Jobs;
 using Microsoft.FSharp.Core;
+using Chessie.ErrorHandling;
+using Chessie.ErrorHandling.CSharp;
 
 namespace CSharpSample
 {
@@ -25,9 +27,16 @@ namespace CSharpSample
 	{
 		public static void Main(string[] args)
 		{
-			Console.WriteLine("CSharpSample is running!");
-			BootStrapper.InitService(new FSharpOption<string[]>(args), null);
-			Console.WriteLine("Exiting...");
+			var result = BootStrapper.InitService(new FSharpOption<string[]>(args), null);
+			result.Match(
+				(state, msgs) =>
+				{
+					Console.WriteLine(state);
+                },
+				(msgs) =>
+				{
+					msgs.ToList().ForEach(Console.WriteLine);
+				});
 		}
 	}
 }

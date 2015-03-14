@@ -25,7 +25,7 @@ module ProjectInstaller =
         serviceInstaller.StartType <- ServiceStartMode.Automatic
         installer.Installers.Add(serviceInstaller) |> ignore
 
-        installer.Context = new InstallContext() |> ignore
+        installer.Context <- new InstallContext()
         installer.Context.Parameters.["assemblypath"] <- assembly.Location;
 
 

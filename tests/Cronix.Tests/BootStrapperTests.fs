@@ -5,6 +5,10 @@ open Xunit
 open Cronix
 open Chessie.ErrorHandling
 open System.Reflection
+open System.ServiceProcess
+open System
+open System.Collections.Generic
+open System.Diagnostics 
 
 //   [MethodName_StateUnderTest_ExpectedBehavior]
 
@@ -62,8 +66,32 @@ module ServiceEnviroment =
         createEnviroment name
         File.Delete("FSharp.Scheduler.dll")
         name
+    
+    let isServiceInstalled serviceName =
+        let service = ServiceController.GetServices() |> Array.tryFind(fun(s: System.ServiceProcess.ServiceController) -> s.ServiceName = serviceName)
+        match service with
+        | Some s -> true
+        | _ -> false
 
-    let setupProcess (enviromentName) (parameter) = 
+    let uninstallService() =
+        if isServiceInstalled "CSharpSample" then
+            let process' = new Process()
+            let startInfo = new ProcessStartInfo()
+            startInfo.WindowStyle <- System.Diagnostics.ProcessWindowStyle.Hidden;
+            startInfo.FileName <- "cmd.exe";
+            startInfo.Arguments <- "/C sc delete CSharpSample";
+            process'.StartInfo <- startInfo;
+            process'.Start() |> ignore
+ 
+open ServiceEnviroment   
+
+type InitServiceTest() =
+    let result = new List<string>()
+    let mutable process' : Process = null
+    do
+        uninstallService()
+
+    let createProcess (enviromentName) (parameter) = 
         let targetPath = getTargetPath enviromentName
         let executable = System.IO.Path.Combine(targetPath, executable)
         let startInfo = new ProcessStartInfo()
@@ -71,38 +99,66 @@ module ServiceEnviroment =
         startInfo.FileName <- executable
         startInfo.Arguments <- parameter
         startInfo.RedirectStandardOutput <- true
+        startInfo.RedirectStandardInput <- true
         startInfo.UseShellExecute <- false
-        startInfo
- 
-module initServiceTest =
-    open ServiceEnviroment
-    open System.Diagnostics
+                
+        process' <- Process.Start(startInfo)
+        process'.BeginOutputReadLine() |> ignore
+        process'.OutputDataReceived.Add(fun(args) -> 
+            Console.WriteLine("event: {0} {1}", args.Data, DateTime.Now)
+            result.Add(args.Data))     
+                            
+    let exit() = 
+        process'.StandardInput.WriteLine("exit") |> ignore
+            
+    let wait() = process'.WaitForExit() |> ignore
+
 
     [<Fact>]
     let ``Run in debug mode``() =
         createEnviroment "debugEnv"
-        let setup = setupProcess "debugEnv" "debug"
-        use process' = Process.Start(setup)
-        process'.BeginOutputReadLine() |> ignore
-        process'.OutputDataReceived.Add(fun(args) -> printf "%s\n" args.Data)
-        process'.WaitForExit(10000) |> ignore
-        process'.Kill()|> ignore
+        createProcess "debugEnv" "debug"
+        exit()
+        wait()
+        result |> should contain "runService"
+
+    [<Fact>]
+    let ``Install service``() =
+        createEnviroment "serviceEnv"
+        createProcess "serviceEnv" "install"
+        wait()
         
+        result |> should contain "installed"
 
+    interface IDisposable with
+        member x.Dispose() =
+            if process' <> null then
+                if process'.HasExited = false then 
+                    process'.Kill()|> ignore
 
-        // global processs handler, Close in desctructor !!
+            uninstallService()
 
-//     
-//        
-//        printf "%s" stdoutx
-//        printf "%s" stderrx
-//        printf "exit code: %d" process'.ExitCode
+module initServiceTest2 =
+    open System
+    open System.Collections.Generic
+    open ServiceEnviroment
+    open System.Diagnostics
 
+   
 
+   
 
-//        let result = runBootStrapper "debugEnv" "debug"
-//        result |> findOk <| "runService"
-
+// class
+// setup
+// desctructor
+// mutable process; kill on dispose if posssible
+// common results
+// create process, with no use just let
+// move event to create class
+// move setup(Craete) to test class;
+// let exit()
+       
+ 
 //    [<Fact>]
 //    let ``Run as a service``() =
 //        ()
