@@ -1,4 +1,4 @@
-﻿module TriggerTests
+﻿namespace Cronix.Tests
 
 open Xunit
 open FsUnit.Xunit
@@ -12,45 +12,10 @@ open System.Threading
 open NCrontab 
 open System
 open Logging 
- 
+open TriggerEnviroment
 
-(* Commmon *)
-type TriggerStateCallback = delegate of unit -> TriggerState
 
-let rec wait dateTime =
-    if DateTime.UtcNow < dateTime then
-        Thread.Sleep(100)
-        wait dateTime
-
-let rec waitForState (actual : TriggerStateCallback) (expected : TriggerState) =
-    let invokedActual = actual.Invoke()
-    let pa =  invokedActual.ToString()
-    let pe = expected.ToString()
-    printf "actual: %s expected %s" pa pe |> ignore
-    if invokedActual <> expected then
-        Thread.Sleep(100)
-        waitForState actual expected |> ignore
- 
-(* Callbacks *)      
-let tokenSource = new CancellationTokenSource()
-  
-let callback (token : CancellationToken) = 
-    printf "callback executed at (UTC) %s\n" <| DateTime.UtcNow.ToString()
-    Thread.Sleep 100
-
-let overlapCallback (token : CancellationToken) = 
-    printf "overlapCallback executed at (UTC) %s\n" <| DateTime.UtcNow.ToString()
-    Thread.Sleep (60 * 1000 * 2) // 2minutes
-
-let throwingCallback (token : CancellationToken) = 
-    Thread.Sleep 500
-    failwith "exception message"
-
-let cancellingCallback (token : CancellationToken) = 
-    Thread.Sleep 500
-    raise (OperationCanceledException())
-
-[<TraitAttribute("Trigger", "Fast running")>] 
+[<Trait("Trigger", "Unit Test")>] 
 type TriggerTests() =
     
     let date = new DateTime(2015, 02, 05, 20, 52, 1)
@@ -75,8 +40,8 @@ type TriggerTests() =
        timerCallback("throwing OperationCanceledException from timerCallback", Callback(callback), tokenSource.Token)
 
 
-[<TraitAttribute("Trigger", "Long running")>] 
-type TriggerScenarios() =
+[<Trait("Trigger", "Integration Test")>] 
+type TriggerSystemTest() =
 
     let trigger = new Trigger("job#1", "* * * * *", Callback(callback)) :> ITrigger
     let overlapTrigger = new Trigger("job#1", "* * * * *", Callback(overlapCallback)) :> ITrigger
@@ -102,22 +67,6 @@ type TriggerScenarios() =
 
         (secondOccurance - firstOccurance).Minutes |> should equal 1
         overlapTrigger.Terminate()
-
-    [<Fact>]
-    let ``Should have equal occurance dates`` () =
-        trigger.Start() |> ignore
-        
-        let firstOccurance = trigger.OccurrenceAt
-        wait firstOccurance
-       
-        let secondOccurance = trigger.OccurrenceAt
-        wait secondOccurance
-
-        let tirdOccurance = trigger.OccurrenceAt
-        wait tirdOccurance
-
-        (secondOccurance - firstOccurance).Minutes |> should equal 1
-        (tirdOccurance - secondOccurance).Minutes |> should equal 1
 
     [<Fact>]
     let ``Should change the state durring execution`` () =

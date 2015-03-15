@@ -27,14 +27,6 @@ module Dsl =
 
 
 
-(* DSL language *)
-////let schedule (name: string) (task: JobType) (expr: string) =
-////    let taskEntry = { 
-////        TimeTableEntry.Name = name;
-////        CronExpr = expr;
-////        Job = task;
-////        NextOccurance =  // Services.CalculateOccurence expr
-////    }
-////    match Services.ScheduleTask taskEntry TimeTable with
-////    | Failure err -> printf "%s" err
-////    | Success _ -> printf "Task '%s' has been scheduled." name
+ //todo:
+ // support for job registration
+ // -- Cronix.CSharp -> extension methods for c#

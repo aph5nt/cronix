@@ -210,13 +210,11 @@
   <Import Project="..\..\packages\xunit.runner.visualstudio\build\$(__paket__xunit_runner_visualstudio_targets).targets" Condition="Exists('..\..\packages\xunit.runner.visualstudio\build\$(__paket__xunit_runner_visualstudio_targets).targets')" Label="Paket" />
   <ItemGroup>
     <None Include="paket.references" />
-    <Compile Include="TestHelpers.fs" />
+    <Compile Include="TriggerEnviroment.fs" />
     <Compile Include="TriggerTests.fs" />
     <Compile Include="SchedulingTests.fs" />
-    <Compile Include="InstallerTests.fs" />
-    <Compile Include="BootStrapperTests.fs" />
-    <Compile Include="DslTests.fs" />
-    <Compile Include="File1.fs" />
+    <Compile Include="ServiceEnviroment.fs" />
+    <Compile Include="ServiceSystemTest.fs" />
     <Content Include="packages.config" />
     <Content Include="App.config" />
   </ItemGroup>

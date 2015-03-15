@@ -2,7 +2,6 @@
 
 module ProjectInstaller =
 
-    open System
     open System.Collections
     open System.Configuration.Install
     open System.Reflection
@@ -63,7 +62,10 @@ module ProjectInstaller =
 
     type ServiceProcessAdapter(service : IScheduleManager) =
         inherit ServiceBase()
-        override x.OnStart(args : string[]) = ()
+        override x.OnStart(args : string[]) = service.Start()
         override x.OnStop() = service.Stop()
-        override x.OnPause() = ()
-        override x.OnContinue() = ()
+
+
+
+
+

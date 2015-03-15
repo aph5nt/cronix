@@ -67,7 +67,6 @@
     <Compile Include="Scheduling.fs" />
     <Compile Include="Dsl.fs" />
     <Compile Include="Installer.fs" />
-    <Compile Include="BootStrapper.fsi" />
     <Compile Include="BootStrapper.fs" />
     <None Include="Startup.fsx" />
   </ItemGroup>

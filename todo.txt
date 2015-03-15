@@ -1,0 +1,36 @@
+version 0.1
+-todo
+-- schedule manager integration test - DONE
+-- setup service integration test
+-- method documentation
+-- readme
+-- release notes
+-- samples (create F# Sample, C# sample, rename CSharpSample to TestService + update tests)
+-- create a sample with nugetpackate - bitcoin ticker! and run it in a background
+-- CI vs long running tests, and systeminstaller tests
+
+
+version 0.2
+- support for stopping and starting job
+- dsl for cron expressions
+- c# extensions (for less mess)
+
+
+version 0.3
+- mono support (raspberrypi2?; build server, bitcoin ticker)
+- installation as a service under linux
+
+version 0.4
+- webaservice - state + ui
+
+
+- bitcoin ticker project (SAMPLE)
+-- sql provider
+-- configuration provider
+-- json provider
+-- appconfig provider
+-- based on cronix
+-- (get data job)
+-- (clean up data job)
+-- (sql tune job)
++ documentation + manual

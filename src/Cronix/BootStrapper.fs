@@ -117,13 +117,14 @@ module BootStrapper =
 
             if debug = true then
                 setupService scheduleManager startupHandler |> ignore
+                scheduleManager.Start()
                 Console.Read() |> ignore
                 scheduleManager.Stop()
-
             else
                 setupService scheduleManager startupHandler |> ignore
                 use processAdapter = new ProjectInstaller.ServiceProcessAdapter(scheduleManager)
                 System.ServiceProcess.ServiceBase.Run(processAdapter)
+                
         with
         | exn ->  logger.Fatal(exn)
 
@@ -157,3 +158,13 @@ module BootStrapper =
             else
                printGuide()
                ok("printGuide") 
+
+
+(*
+
+TODO
+
+setupService Integration Test
+--> play around enviroments, scripts with handlers, on place handlers -> verify rop output
+
+*)

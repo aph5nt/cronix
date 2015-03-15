@@ -107,8 +107,6 @@ type ScheduleManager() =
         loop
     ), tokenSource.Token)
 
-    do agent.Start()
-
     let stop() =
         tokenSource.Cancel() |> ignore      // stops the agent
         for KeyValue(k, v) in state do
@@ -130,18 +128,24 @@ type ScheduleManager() =
 
     interface IScheduleManager with
         member self.Schedule name expr callback = 
-            agent.PostAndAsyncReply(fun replyChannel -> (Schedule( name, expr, callback), replyChannel)) |> ignore
+            agent.PostAndAsyncReply(fun replyChannel -> (Schedule( name, expr, callback), replyChannel))
+            |> Async.RunSynchronously
 
         member self.UnSchedule name =
-            agent.PostAndAsyncReply(fun replyChannel -> (UnSchedule(name), replyChannel)) |> ignore
+            agent.PostAndAsyncReply(fun replyChannel -> (UnSchedule(name), replyChannel))
+            |> Async.RunSynchronously
 
         member self.State =
             state |> Seq.map(fun i -> { Name = i.Value.Name; CronExpr = i.Value.CronExpr; TriggerState = i.Value.Trigger.State })
 
         member self.Stop() = stop()
+        member self.Start() = agent.Start()
 
+        // to version 0.2 !!
+        // todo: stop job
+        // todo: start job
     
-
+    // todo: missing stopJob will it be scheduled later? or hide this feature for 0.1?
   
 
 

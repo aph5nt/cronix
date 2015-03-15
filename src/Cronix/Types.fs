@@ -80,10 +80,11 @@ and ScheduleManagerCommand =
     | Start of JobName
 and IScheduleManager = 
     inherit IDisposable
-    abstract member Schedule: string -> string -> Callback -> unit
-    abstract member UnSchedule: string -> unit
+    abstract member Schedule: string -> string -> Callback -> Result<ScheduleState, string>
+    abstract member UnSchedule: string -> Result<ScheduleState, string>
     abstract member State: seq<JobState>
     abstract member Stop: unit -> unit
+    abstract member Start: unit -> unit
 
 type ResultMessage = 
     | FailureMessage of FailureMessage
@@ -103,12 +104,11 @@ and SuccessMessage =
 
 
 (* Installer *)
-
 type Install = Assembly -> Result<string, string>
 type Uninstall = Assembly -> Result<string, string>
 
-(* BootStrapper *)
 
+(* BootStrapper *)
 type StartupHandlerState = {
     scheduleManager : IScheduleManager
     startupHandler : Option<StartupHandler>
@@ -125,17 +125,18 @@ and StartupHandler = delegate of (IScheduleManager) -> unit
 and RunService = IScheduleManager -> Option<StartupHandler> -> unit
 and InitService = Option<string[]> * Option<StartupHandler> -> Result<string, string>
 
+(* Messages *)
 module Messages = 
 
     let FailureMessages : Map<FailureMessage, string> =
         Map.empty.
-            Add(InvalidCronExpr, "expr <{0}> is not valid.")
+            Add(InvalidCronExpr, "Expr <{0}> is not valid.")
             .Add(JobExists, "Job <{0}> already exists.")
             .Add(JobNotExists, "Job <{0}> does not exists.")
 
     let SuccesMessagess : Map<SuccessMessage, string> =
         Map.empty.
-            Add(ValidateExpr, "expr <{0}> is valid.")
+            Add(ValidateExpr, "Expr <{0}> is valid.")
             .Add(CanAddJob, "Job <{0}> can be added.")
             .Add(AddJob, "Job <{0}> has been added.")
             .Add(JobFound, "Job <{0}> found.")
