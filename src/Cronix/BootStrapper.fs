@@ -11,11 +11,12 @@ module BootStrapper =
     open FSharp.Compiler.CodeDom
  
     let startupFile = "Startup.fsx"
-    let defaultAssemblies  = [|"System.dll"; Path.GetFileName(Assembly.GetEntryAssembly().Location)|] 
+    let defaultAssemblies()  = 
+        [|"System.dll";|] // Path.GetFileName(Assembly.GetEntryAssembly().Location)|] 
     let outputAssembly = "FSharp.Scheduler.Startup.dll"
     let logger = logger()
 
-    let loadAssemblies =
+    let loadAssemblies() =
         let assemblies() =
             Directory.GetFiles(".", "*.dll", SearchOption.TopDirectoryOnly)
             |> Seq.map(fun(f) -> Path.GetFileName(f)) 
@@ -29,7 +30,7 @@ module BootStrapper =
 
         ok asm
 
-    let getStartupScript =
+    let getStartupScript() =
         try
             let sourceCode = File.ReadAllText("Startup.fsx")
             ok sourceCode
@@ -43,7 +44,7 @@ module BootStrapper =
             params'.GenerateExecutable <- false
             params'.OutputAssembly <- outputAssembly
             params'.IncludeDebugInformation <- true
-            params'.ReferencedAssemblies.AddRange(defaultAssemblies)
+            params'.ReferencedAssemblies.AddRange(defaultAssemblies())
             params'.ReferencedAssemblies.AddRange(state.referencedAssemblies)
             params'.GenerateInMemory <- true
             params'.WarningLevel <- 3
@@ -103,8 +104,8 @@ module BootStrapper =
         if File.Exists(startupFile) = true then
             startupScriptState
             <!> ok scheduleManager
-            <*> loadAssemblies
-            <*> getStartupScript
+            <*> loadAssemblies()
+            <*> getStartupScript()
             >>= compileScript
             >>= invokeStartupScript
             |> logResult 

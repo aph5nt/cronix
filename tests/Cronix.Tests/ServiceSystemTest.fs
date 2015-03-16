@@ -10,12 +10,13 @@ open System
 open System.Collections.Generic
 open System.Diagnostics 
 open ServiceEnviroment   
+open BootStrapper
 
 [<Trait("Service", "Unit Test")>]
 type SetupServiceTest() =
     
     [<Fact>]
-    let ``setup service returns result`` = failwith "Not Implemented."
+    let ``setup service returns result``() = failwith "Not Implemented."
 
     [<Fact>]
     let ``invoke startup handler returns success``() = failwith "Not Implemented."
@@ -24,19 +25,76 @@ type SetupServiceTest() =
     let ``invoke startup handler returns failure``() = failwith "Not Implemented."
 
     [<Fact>]
-    let ``load assemblies returns an array of dll names``() = failwith "Not Implemented."
+    let ``load assemblies returns an array of dll names``() = 
+        loadAssemblies()
+        |> successTee (fun(obj : string[], _) -> obj |> Array.iter (fun(m:string) -> Console.WriteLine(m)))
+        |> ignore
+        ()
 
     [<Fact>]
-    let ``get startup script returns success``() = failwith "Not Implemented."
+    let ``get startup script returns success``() = 
+        if IO.File.Exists("Startup.fsx.bak") then  IO.File.Move("Startup.fsx.bak", "Startup.fsx")
+        match getStartupScript() with
+         | Ok (script, msgs) -> script |> should not' NullOrEmptyString
+         | Fail msgs -> failwith "Expected Success Tee"
+
 
     [<Fact>]
-    let ``get startup script returns failure``() = failwith "Not Implemented."
+    let ``get startup script returns failure``() = 
+        if IO.File.Exists("Startup.fsx") then IO.File.Move("Startup.fsx", "Startup.fsx.bak")
+        match getStartupScript() with
+         | Ok (_, _) -> failwith "Expected Failure Tee"
+         | Fail msgs -> IO.File.Move("Startup.fsx.bak", "Startup.fsx")
+        
+        (*
+        
+        and StartupScriptState = {
+        scheduleManager : IScheduleManager
+        referencedAssemblies : string[]
+        source : string
+        compiled : Option<Assembly>
+}
+        
+        *)
 
     [<Fact>]
-    let ``comlipe script returns success``() = failwith "Not Implemented."
+    let ``comlipe script returns success``() =
+        let assemblies = 
+            [|
+                "Chessie.dll";
+                "Cronix.Tests.dll";
+                "Cronix.dll";
+                "FSharp.Compiler.CodeDom.dll";
+                "FSharp.Core.dll";
+                "FsUnit.CustomMatchers.dll";
+                "FsUnit.Xunit.dll";
+                "NCrontab.dll";
+                "NHamcrest.dll";
+                "NLog.dll";
+                "xunit.abstractions.dll";
+                "xunit.dll";
+                "xunit.runner.utility.desktop.dll";
+                "xunit.runner.visualstudio.testadapter.dll";
+            |]
+
+        let result = compileScript({ source = IO.File.ReadAllText("Startup.fsx"); 
+                        compiled = None;
+                        referencedAssemblies = assemblies;
+                        scheduleManager = new ScheduleManager() })
+
+        match result with
+        | Ok (obj, _) ->  obj.compiled.IsSome |> should equal True
+        | Fail msgs -> failwith "Expected Success Tee"
 
     [<Fact>]
-    let ``compile script returns failure``() = failwith "Not Implemented."
+    let ``compile script returns failure``() = 
+        let result = compileScript({ source = IO.File.ReadAllText("Startup.fsx"); 
+                                     compiled = None;
+                                     referencedAssemblies = [||];
+                                     scheduleManager = new ScheduleManager() })
+        match result with
+         | Ok (_, _) -> failwith "Expected Failure Tee"
+         | Fail msgs -> msgs.[0] |> should startWith "Failed to compile startup script."
 
     [<Fact>]
     let ``invoke startup script returns success``() = failwith "Not Implemented."

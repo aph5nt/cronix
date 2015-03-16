@@ -217,6 +217,9 @@
     <Compile Include="ServiceSystemTest.fs" />
     <Content Include="packages.config" />
     <Content Include="App.config" />
+    <None Include="Startup.fsx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Reference Include="mscorlib" />
