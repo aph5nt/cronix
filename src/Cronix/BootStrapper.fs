@@ -55,16 +55,20 @@ module BootStrapper =
             params'.OutputAssembly <- IO.Path.Combine(System.Environment.CurrentDirectory, outputAssembly)
             params'.IncludeDebugInformation <- true
             params'.ReferencedAssemblies.AddRange(state.referencedAssemblies)
-            params'.GenerateInMemory <- true
+            params'.GenerateInMemory <- false
             params'.WarningLevel <- 3
             params'.TreatWarningsAsErrors <- false
 
             let compiledResults = provider.CompileAssemblyFromSource(params', state.source)
 
             if compiledResults.Errors.Count > 0 then
-                //TODO fix later
-                let erros = [for error in compiledResults.Errors do error.ErrorText ]
-                let errorMessages = List.append ["Failed to compile startup script"] erros
+                let errors = Array.init<CompilerError> compiledResults.Errors.Count (fun(_)-> new CompilerError())
+                compiledResults.Errors.CopyTo(errors, 0)
+
+                let errorMessage = seq { for error in errors do yield error.ErrorText} |> Seq.toArray   
+                let errorMessages = Array.append [|"Failed to compile startup script"|] errorMessage
+                //TODO: write unit test on this 
+                //TODO: should fail have an array of errors?
                 fail("errorMessages")
             else
                 let asm = Some(compiledResults.CompiledAssembly)
@@ -167,14 +171,4 @@ module BootStrapper =
                        ok("printGuide") 
             else
                printGuide()
-               ok("printGuide") 
-
-
-(*
-
-TODO
-
-setupService Integration Test
---> play around enviroments, scripts with handlers, on place handlers -> verify rop output
-
-*)
+               ok("printGuide")

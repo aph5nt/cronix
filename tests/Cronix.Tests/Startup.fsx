@@ -13,6 +13,7 @@ module RunAtStartup =
     open System.Threading
     open System
     open Cronix
+    open Messages
 
     let sampleJob (token : CancellationToken) = 
       printf "callback executed at (UTC) %s\n" <| DateTime.UtcNow.ToString()
