@@ -9,19 +9,19 @@ Best practices:
 #I "."
 #I "bin\Debug"
 #I "bin\Release"
-#r "FSharp.Scheduler.dll"
+#r "Cronix.dll"
+#r "Chessie.dll"
 //#r "YourTask.dll"
 #endif
 
-namespace FSharp.Scheduler.Startup
+namespace Cronix.Startup
 
 module RunAtStartup =
     
     open System.Threading
     open System
     open Cronix
-    open Scheduling
-    open Messages
+
     //open YourJob.dll must be opened here!
     
     // sample job

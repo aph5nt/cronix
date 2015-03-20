@@ -11,22 +11,32 @@ module BootStrapper =
     open FSharp.Compiler.CodeDom
  
     let startupFile = "Startup.fsx"
-    let defaultAssemblies()  = 
-        [|"System.dll";|] // Path.GetFileName(Assembly.GetEntryAssembly().Location)|] 
-    let outputAssembly = "FSharp.Scheduler.Startup.dll"
+    
+    let outputAssembly = "Cronix.Startup.dll"
     let logger = logger()
 
     let loadAssemblies() =
-        let assemblies() =
+        let assemblies =
             Directory.GetFiles(".", "*.dll", SearchOption.TopDirectoryOnly)
             |> Seq.map(fun(f) -> Path.GetFileName(f)) 
+            |> Seq.filter ((<>)outputAssembly)
+            |> Seq.sort
             |> Seq.toArray 
-            |> Array.filter ((<>)outputAssembly)
-            |> Array.sort
-        let referencedAssemblies (assemblies : string[]) =
-            let names = seq { for a in assemblies do yield a } |> Seq.toArray
-            String.Join(", ", names)
-        let asm = assemblies()
+        let defaultAssemblies  = 
+            let entry = Assembly.GetEntryAssembly()
+            let executing = Assembly.GetExecutingAssembly()
+            let calling = Assembly.GetCallingAssembly()
+            [|"System.dll"; 
+                (if entry <> null then Path.GetFileName(entry.Location) else "");
+                (if executing <> null then Path.GetFileName(executing.Location) else "");
+                (if calling <> null then Path.GetFileName(calling.Location) else "");
+            |] 
+            |> Seq.distinct |> Seq.toArray
+        let asm = Array.append assemblies defaultAssemblies 
+                 |> Array.toSeq
+                 |> Seq.filter ((<>)"")
+                 |> Seq.distinct
+                 |> Seq.toArray
 
         ok asm
 
@@ -42,14 +52,13 @@ module BootStrapper =
             let provider = new FSharpCodeProvider()
             let params'= CompilerParameters()
             params'.GenerateExecutable <- false
-            params'.OutputAssembly <- outputAssembly
+            params'.OutputAssembly <- IO.Path.Combine(System.Environment.CurrentDirectory, outputAssembly)
             params'.IncludeDebugInformation <- true
-            params'.ReferencedAssemblies.AddRange(defaultAssemblies())
             params'.ReferencedAssemblies.AddRange(state.referencedAssemblies)
             params'.GenerateInMemory <- true
             params'.WarningLevel <- 3
             params'.TreatWarningsAsErrors <- false
-     
+
             let compiledResults = provider.CompileAssemblyFromSource(params', state.source)
 
             if compiledResults.Errors.Count > 0 then
@@ -67,7 +76,7 @@ module BootStrapper =
         try
             match state.compiled with
             | None -> fail(sprintf "Compile code has not been craeted.")
-            | Some assembly ->  let startMethod  = assembly.GetType("FSharp.Scheduler.Startup.RunAtStartup").GetMethod("start")
+            | Some assembly ->  let startMethod  = assembly.GetType("Cronix.Startup.RunAtStartup").GetMethod("start")
                                 let startInvoke (scheduler : IScheduleManager) = startMethod.Invoke(null, [|box (scheduler:IScheduleManager);|]) :?> unit
                                 startInvoke(state.scheduleManager)
                                 ok state
@@ -117,14 +126,14 @@ module BootStrapper =
             let scheduleManager = new ScheduleManager() :> IScheduleManager
 
             if debug = true then
-                setupService scheduleManager startupHandler |> ignore
                 scheduleManager.Start()
+                setupService scheduleManager startupHandler |> ignore
                 Console.Read() |> ignore
                 scheduleManager.Stop()
             else
-                setupService scheduleManager startupHandler |> ignore
                 use processAdapter = new ProjectInstaller.ServiceProcessAdapter(scheduleManager)
                 System.ServiceProcess.ServiceBase.Run(processAdapter)
+                setupService scheduleManager startupHandler |> ignore
                 
         with
         | exn ->  logger.Fatal(exn)

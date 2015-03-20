@@ -11,6 +11,7 @@ open System.Collections.Generic
 open System.Diagnostics 
 open ServiceEnviroment   
 open BootStrapper
+open System.IO
 
 [<Trait("Service", "Unit Test")>]
 type SetupServiceTest() =
@@ -59,6 +60,7 @@ type SetupServiceTest() =
 
     [<Fact>]
     let ``comlipe script returns success``() =
+
         let assemblies = 
             [|
                 "Chessie.dll";
@@ -75,7 +77,14 @@ type SetupServiceTest() =
                 "xunit.dll";
                 "xunit.runner.utility.desktop.dll";
                 "xunit.runner.visualstudio.testadapter.dll";
+                "System.dll";
             |]
+
+//        // załadować liste assemblies z tej metody (naprawiajac buga w niej)
+//        let a = loadAssemblies()
+//        match a with
+//        | Ok(obj,_) -> for i in obj do Console.WriteLine(i)
+//        | Fail _ -> ()
 
         let result = compileScript({ source = IO.File.ReadAllText("Startup.fsx"); 
                         compiled = None;
