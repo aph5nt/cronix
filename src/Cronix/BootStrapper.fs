@@ -64,12 +64,9 @@ module BootStrapper =
             if compiledResults.Errors.Count > 0 then
                 let errors = Array.init<CompilerError> compiledResults.Errors.Count (fun(_)-> new CompilerError())
                 compiledResults.Errors.CopyTo(errors, 0)
-
                 let errorMessage = seq { for error in errors do yield error.ErrorText} |> Seq.toArray   
-                let errorMessages = Array.append [|"Failed to compile startup script"|] errorMessage
-                //TODO: write unit test on this 
-                //TODO: should fail have an array of errors?
-                fail("errorMessages")
+                let errorMessages = Array.append [|"Failed to compile startup script."|] errorMessage
+                fail(String.Join("\n", errorMessages))
             else
                 let asm = Some(compiledResults.CompiledAssembly)
                 ok { state with compiled = asm}

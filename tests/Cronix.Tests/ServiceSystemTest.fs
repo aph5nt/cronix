@@ -46,20 +46,10 @@ type SetupServiceTest() =
         match getStartupScript() with
          | Ok (_, _) -> failwith "Expected Failure Tee"
          | Fail msgs -> IO.File.Move("Startup.fsx.bak", "Startup.fsx")
-        
-        (*
-        
-        and StartupScriptState = {
-        scheduleManager : IScheduleManager
-        referencedAssemblies : string[]
-        source : string
-        compiled : Option<Assembly>
-}
-        
-        *)
 
+        
     [<Fact>]
-    let ``comlipe script returns success``() =
+    let ``comlipe script returns failure when compilation have errors``() =
 
         let assemblies = 
             [|
@@ -80,23 +70,20 @@ type SetupServiceTest() =
                 "System.dll";
             |]
 
-//        // załadować liste assemblies z tej metody (naprawiajac buga w niej)
-//        let a = loadAssemblies()
-//        match a with
-//        | Ok(obj,_) -> for i in obj do Console.WriteLine(i)
-//        | Fail _ -> ()
-
         let result = compileScript({ source = IO.File.ReadAllText("Startup.fsx"); 
                         compiled = None;
                         referencedAssemblies = assemblies;
                         scheduleManager = new ScheduleManager() })
 
         match result with
-        | Ok (obj, _) ->  obj.compiled.IsSome |> should equal True
-        | Fail msgs -> failwith "Expected Success Tee"
+        | Ok (_, _) -> failwith "Expected Failure Tee"
+        | Fail msgs -> 
+            msgs.[0] |> should startWith "Failed to compile startup script."
+            msgs.[0].Contains("FS0229") |> should equal true
+            msgs.[0].Contains("FS3160") |> should equal true
 
     [<Fact>]
-    let ``compile script returns failure``() = 
+    let ``compile script returns failure when exception is thrown``() = 
         let result = compileScript({ source = IO.File.ReadAllText("Startup.fsx"); 
                                      compiled = None;
                                      referencedAssemblies = [||];
@@ -104,6 +91,7 @@ type SetupServiceTest() =
         match result with
          | Ok (_, _) -> failwith "Expected Failure Tee"
          | Fail msgs -> msgs.[0] |> should startWith "Failed to compile startup script."
+                        msgs.[0]
 
     [<Fact>]
     let ``invoke startup script returns success``() = failwith "Not Implemented."
@@ -128,7 +116,9 @@ type ServiceSystemTest() =
         startInfo.RedirectStandardOutput <- true
         startInfo.RedirectStandardInput <- true
         startInfo.UseShellExecute <- false
-                
+        startInfo.UserName <- "cronix"
+        startInfo.Password <- loadUserPassword()
+              
         process' <- Process.Start(startInfo)
         process'.BeginOutputReadLine() |> ignore
         process'.OutputDataReceived.Add(fun(args) -> 
@@ -139,6 +129,16 @@ type ServiceSystemTest() =
         process'.StandardInput.WriteLine("exit") |> ignore
             
     let wait() = process'.WaitForExit() |> ignore
+
+    let rec searchInLogFile message till =
+        Async.Sleep 100 |> ignore
+        if till > DateTime.UtcNow then
+            let logName = sprintf "%s.log" <| DateTime.UtcNow.ToShortDateString()
+            if File.Exists logName then
+               let content = File.ReadAllText(logName)
+               if content.Contains(message) = false then searchInLogFile message till
+            else 
+                searchInLogFile message till
 
     [<Fact>]
     let ``Run in debug mode``() =
@@ -154,6 +154,15 @@ type ServiceSystemTest() =
         createProcess "serviceEnv" "install"
         wait()
         result |> should contain "installed"
+
+    [<Fact>]
+    let ``Run installed service``() =
+        createEnviroment "serviceEnv"
+        createProcess "serviceEnv" "install"
+        wait()
+        result |> should contain "installed"
+        startService()
+        searchInLogFile "callback executed at (UTC) " <| DateTime.UtcNow.AddMinutes 1.5
 
     [<Fact>]
     let ``Rollback instalation on installation failure``() =

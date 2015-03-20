@@ -18,6 +18,7 @@ module ServiceEnviroment =
     open System
     open System.IO
     open System.Diagnostics
+    open System.Security
 
     let sourcePath = "../../../../docs/samples/CSharpSample/bin/debug"
     let enviromentPath = "../../../../envs"
@@ -71,12 +72,25 @@ module ServiceEnviroment =
         | Some s -> true
         | _ -> false
 
+    let executeCmd args = 
+        let process' = new Process()
+        let startInfo = new ProcessStartInfo()
+        startInfo.WindowStyle <- System.Diagnostics.ProcessWindowStyle.Hidden;
+        startInfo.FileName <- "cmd.exe"
+        startInfo.Arguments <- args
+        process'.StartInfo <- startInfo
+        process'.Start() |> ignore
+
+    let startService() =
+        if isServiceInstalled "CSharpSample" then
+           executeCmd "/C sc start CSharpSample"
+
     let uninstallService() =
         if isServiceInstalled "CSharpSample" then
-            let process' = new Process()
-            let startInfo = new ProcessStartInfo()
-            startInfo.WindowStyle <- System.Diagnostics.ProcessWindowStyle.Hidden;
-            startInfo.FileName <- "cmd.exe";
-            startInfo.Arguments <- "/C sc delete CSharpSample";
-            process'.StartInfo <- startInfo;
-            process'.Start() |> ignore
+           executeCmd "/C sc delete CSharpSample"
+
+    let loadUserPassword() =
+        let password = File.ReadAllText("../../../../password.txt")
+        let secured = new SecureString()
+        for c in password.ToCharArray() do secured.AppendChar(c)
+        secured   
