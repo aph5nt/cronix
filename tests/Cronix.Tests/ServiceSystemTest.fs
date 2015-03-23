@@ -116,8 +116,8 @@ type ServiceSystemTest() =
         startInfo.RedirectStandardOutput <- true
         startInfo.RedirectStandardInput <- true
         startInfo.UseShellExecute <- false
-        startInfo.UserName <- "cronix"
-        startInfo.Password <- loadUserPassword()
+        //startInfo.UserName <- ".\cronix"
+        //startInfo.Password <- loadUserPassword()
               
         process' <- Process.Start(startInfo)
         process'.BeginOutputReadLine() |> ignore
@@ -139,6 +139,7 @@ type ServiceSystemTest() =
                if content.Contains(message) = false then searchInLogFile message till
             else 
                 searchInLogFile message till
+        else failwith <| sprintf "message '%s' not found." message
 
     [<Fact>]
     let ``Run in debug mode``() =
@@ -161,6 +162,7 @@ type ServiceSystemTest() =
         createProcess "serviceEnv" "install"
         wait()
         result |> should contain "installed"
+        configureServiceCredentials()
         startService()
         searchInLogFile "callback executed at (UTC) " <| DateTime.UtcNow.AddMinutes 1.5
 
@@ -205,3 +207,6 @@ type ServiceSystemTest() =
             uninstallService()
 
  
+ //todo:
+ // - tests, currently run service as cronix user let ``Run installed service``() =
+ // - compilation tests --> ignore them

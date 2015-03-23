@@ -60,9 +60,12 @@ module ProjectInstaller =
             | ex -> fail("failed to uninstall: " + ex.Message)
 
 
-    type ServiceProcessAdapter(service : IScheduleManager) =
+    type ServiceProcessAdapter(service : IScheduleManager, setup) =
         inherit ServiceBase()
-        override x.OnStart(args : string[]) = service.Start()
+        override x.OnStart(args : string[]) = 
+            service.Start()
+            setup()
+         
         override x.OnStop() = service.Stop()
 
 

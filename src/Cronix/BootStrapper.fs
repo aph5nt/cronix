@@ -9,6 +9,8 @@ module BootStrapper =
     open System.Reflection
     open System.CodeDom.Compiler
     open FSharp.Compiler.CodeDom
+    open System.ServiceProcess
+    open System.Diagnostics
  
     let startupFile = "Startup.fsx"
     
@@ -125,16 +127,17 @@ module BootStrapper =
         try
             AppDomain.CurrentDomain.UnhandledException.AddHandler(fun(sender:obj) (args:UnhandledExceptionEventArgs) -> logger.Fatal(args.ExceptionObject))
             let scheduleManager = new ScheduleManager() :> IScheduleManager
-
             if debug = true then
+                logger.Debug("running service in debug mode")
                 scheduleManager.Start()
                 setupService scheduleManager startupHandler |> ignore
                 Console.Read() |> ignore
                 scheduleManager.Stop()
             else
-                use processAdapter = new ProjectInstaller.ServiceProcessAdapter(scheduleManager)
-                System.ServiceProcess.ServiceBase.Run(processAdapter)
-                setupService scheduleManager startupHandler |> ignore
+                // Debugger.Launch() |> ignore
+                let setup() = setupService scheduleManager startupHandler |> ignore 
+                use processAdapter = new ProjectInstaller.ServiceProcessAdapter(scheduleManager, setup)
+                ServiceBase.Run(processAdapter)
                 
         with
         | exn ->  logger.Fatal(exn)
@@ -153,11 +156,20 @@ module BootStrapper =
     
     let isDebug() = Environment.UserInteractive
   
+
+  // todo: test when args is none, args is null args is some
+
     let InitService : InitService =
         fun (args, startupHandler) ->
+
             if args.IsNone then 
                 runService startupHandler <| isDebug()
                 ok("runService")
+
+            else if args.IsSome && args.Value.Length = 0 then
+                runService startupHandler <| isDebug()
+                ok("runService")
+
             else if args.IsSome && args.Value.Length = 1 then
                 match args.Value.[0] with
                 | "install" -> ProjectInstaller.Install(Assembly.GetEntryAssembly())

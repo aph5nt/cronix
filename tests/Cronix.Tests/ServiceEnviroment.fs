@@ -48,6 +48,12 @@ module ServiceEnviroment =
 
         copy source target
 
+    let deleteLogDir targetPath = 
+        let logDir = IO.Path.Combine(targetPath, "logs")
+        if Directory.Exists logDir then 
+            Directory.EnumerateFiles(logDir) 
+            |> Seq.iter (fun(f) -> File.Delete f) |> ignore
+
     let getTargetPath enviromentName = 
         let uri = new Uri(Assembly.GetAssembly(typedefof<DummyType>).CodeBase)
         let location = Path.GetDirectoryName(uri.LocalPath)
@@ -59,7 +65,8 @@ module ServiceEnviroment =
         let targetPath = getTargetPath enviromentName
         deleteDirectory targetPath
         copyExecutable sourcePath targetPath
-     
+        deleteLogDir targetPath
+
     let createEnviromentForRollbackWithFailure =
         let name = "rollback"
         createEnviroment name
@@ -84,6 +91,11 @@ module ServiceEnviroment =
     let startService() =
         if isServiceInstalled "CSharpSample" then
            executeCmd "/C sc start CSharpSample"
+
+    let configureServiceCredentials() =
+        if isServiceInstalled "CSharpSample" then
+            let cmd = sprintf "/C sc config \"CSharpSample\" obj= \".\cronix\" password= \"%s\"" <| File.ReadAllText("../../../../password.txt")
+            executeCmd cmd        
 
     let uninstallService() =
         if isServiceInstalled "CSharpSample" then
