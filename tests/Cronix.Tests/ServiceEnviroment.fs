@@ -92,10 +92,10 @@ module ServiceEnviroment =
         if isServiceInstalled "CSharpSample" then
            executeCmd "/C sc start CSharpSample"
 
-    let configureServiceCredentials() =
-        if isServiceInstalled "CSharpSample" then
-            let cmd = sprintf "/C sc config \"CSharpSample\" obj= \".\cronix\" password= \"%s\"" <| File.ReadAllText("../../../../password.txt")
-            executeCmd cmd        
+//    let configureServiceCredentials() =
+//        if isServiceInstalled "CSharpSample" then
+//            let cmd = sprintf "/C sc config \"CSharpSample\" obj= \".\cronix\" password= \"%s\"" <| File.ReadAllText("../../../../password.txt")
+//            executeCmd cmd        
 
     let uninstallService() =
         if isServiceInstalled "CSharpSample" then

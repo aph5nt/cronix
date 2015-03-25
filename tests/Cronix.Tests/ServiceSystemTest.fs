@@ -116,8 +116,6 @@ type ServiceSystemTest() =
         startInfo.RedirectStandardOutput <- true
         startInfo.RedirectStandardInput <- true
         startInfo.UseShellExecute <- false
-        //startInfo.UserName <- ".\cronix"
-        //startInfo.Password <- loadUserPassword()
               
         process' <- Process.Start(startInfo)
         process'.BeginOutputReadLine() |> ignore
@@ -130,15 +128,17 @@ type ServiceSystemTest() =
             
     let wait() = process'.WaitForExit() |> ignore
 
-    let rec searchInLogFile message till =
-        Async.Sleep 100 |> ignore
+    let rec searchInLogFile enviroment message till =
+        Async.Sleep 200 |> ignore
         if till > DateTime.UtcNow then
-            let logName = sprintf "%s.log" <| DateTime.UtcNow.ToShortDateString()
-            if File.Exists logName then
-               let content = File.ReadAllText(logName)
-               if content.Contains(message) = false then searchInLogFile message till
+            let dir = getTargetPath enviroment
+            let logName = sprintf "%s.log" <| DateTime.Now.ToString("yyyy-MM-dd")
+            let fileName = Path.Combine(dir, "logs", logName)
+            if File.Exists fileName then
+               let content = File.ReadAllText(fileName)
+               if content.Contains(message) = false then searchInLogFile enviroment message till
             else 
-                searchInLogFile message till
+                searchInLogFile enviroment message till
         else failwith <| sprintf "message '%s' not found." message
 
     [<Fact>]
@@ -162,9 +162,8 @@ type ServiceSystemTest() =
         createProcess "serviceEnv" "install"
         wait()
         result |> should contain "installed"
-        configureServiceCredentials()
         startService()
-        searchInLogFile "callback executed at (UTC) " <| DateTime.UtcNow.AddMinutes 1.5
+        searchInLogFile "serviceEnv" "Trigger<'job1'> has been executed." <| DateTime.UtcNow.AddMinutes 1.5
 
     [<Fact>]
     let ``Rollback instalation on installation failure``() =
@@ -205,8 +204,3 @@ type ServiceSystemTest() =
                     process'.Kill()|> ignore
 
             uninstallService()
-
- 
- //todo:
- // - tests, currently run service as cronix user let ``Run installed service``() =
- // - compilation tests --> ignore them
