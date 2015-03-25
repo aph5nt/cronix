@@ -13,7 +13,9 @@ module BootStrapper =
     open System.Diagnostics
  
     let startupFile = "Startup.fsx"
+
     
+
     let outputAssembly = "Cronix.Startup.dll"
     let logger = logger()
 
@@ -106,6 +108,8 @@ module BootStrapper =
         let startupHandlerState scheduleManager startupHandler = 
             { StartupHandlerState.scheduleManager = scheduleManager; startupHandler = startupHandler;}
 
+        // System.Diagnostics.Debugger.Launch() |> ignore
+
         startupHandlerState
         <!> ok scheduleManager
         <*> ok startupHandler
@@ -128,14 +132,13 @@ module BootStrapper =
             AppDomain.CurrentDomain.UnhandledException.AddHandler(fun(sender:obj) (args:UnhandledExceptionEventArgs) -> logger.Fatal(args.ExceptionObject))
             let scheduleManager = new ScheduleManager() :> IScheduleManager
             if debug = true then
-                logger.Debug("running service in debug mode")
                 scheduleManager.Start()
                 setupService scheduleManager startupHandler |> ignore
                 Console.Read() |> ignore
                 scheduleManager.Stop()
             else
-                // Debugger.Launch() |> ignore
-                let setup() = setupService scheduleManager startupHandler |> ignore 
+                let setup() = 
+                    setupService scheduleManager startupHandler |> ignore 
                 use processAdapter = new ProjectInstaller.ServiceProcessAdapter(scheduleManager, setup)
                 ServiceBase.Run(processAdapter)
                 
@@ -155,9 +158,7 @@ module BootStrapper =
         printfn "     Uninstalls %s as a Windows service." assemblyName
     
     let isDebug() = Environment.UserInteractive
-  
-
-  // todo: test when args is none, args is null args is some
+ 
 
     let InitService : InitService =
         fun (args, startupHandler) ->

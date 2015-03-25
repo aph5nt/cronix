@@ -8,6 +8,8 @@ module ProjectInstaller =
     open System.ServiceProcess
     open Chessie.ErrorHandling
     open Logging
+    open System.IO
+    open System
 
     let logger = logger()
 
@@ -62,13 +64,17 @@ module ProjectInstaller =
 
     type ServiceProcessAdapter(service : IScheduleManager, setup) =
         inherit ServiceBase()
+        do
+            (* Set default directory for windows service *)
+            Directory.SetCurrentDirectory(AppDomain.CurrentDomain.BaseDirectory)
+
         override x.OnStart(args : string[]) = 
+            logger.Debug("starting service")
             service.Start()
             setup()
          
-        override x.OnStop() = service.Stop()
-
-
-
+        override x.OnStop() = 
+            logger.Debug("stopping service")
+            service.Stop()
 
 

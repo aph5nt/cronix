@@ -88,8 +88,10 @@ open System
 open System.Collections.Generic
 open Cronix
 open Scheduling
+open Logging
 
 type ScheduleManager() = 
+    let logger = logger()
     let mutable disposed = false;
     let state = new Dictionary<string, Job>()
     let tokenSource = new CancellationTokenSource()
@@ -138,8 +140,12 @@ type ScheduleManager() =
         member self.State =
             state |> Seq.map(fun i -> { Name = i.Value.Name; CronExpr = i.Value.CronExpr; TriggerState = i.Value.Trigger.State })
 
-        member self.Stop() = stop()
-        member self.Start() = agent.Start()
+        member self.Stop() = 
+            logger.Debug("stopping agent")
+            stop()
+        member self.Start() = 
+            logger.Debug("starting agent")
+            agent.Start()
 
         // to version 0.2 !!
         // todo: stop job
