@@ -13,9 +13,6 @@ module BootStrapper =
     open System.Diagnostics
  
     let startupFile = "Startup.fsx"
-
-    
-
     let outputAssembly = "Cronix.Startup.dll"
     let logger = logger()
 
@@ -108,8 +105,6 @@ module BootStrapper =
         let startupHandlerState scheduleManager startupHandler = 
             { StartupHandlerState.scheduleManager = scheduleManager; startupHandler = startupHandler;}
 
-        // System.Diagnostics.Debugger.Launch() |> ignore
-
         startupHandlerState
         <!> ok scheduleManager
         <*> ok startupHandler
@@ -159,10 +154,10 @@ module BootStrapper =
     
     let isDebug() = Environment.UserInteractive
  
-
+ // Init service -> option -> null
     let InitService : InitService =
         fun (args, startupHandler) ->
-
+            //System.Diagnostics.Debugger.Launch() |> ignore
             if args.IsNone then 
                 runService startupHandler <| isDebug()
                 ok("runService")

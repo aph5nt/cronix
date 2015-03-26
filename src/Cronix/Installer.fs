@@ -77,4 +77,7 @@ module ProjectInstaller =
             logger.Debug("stopping service")
             service.Stop()
 
+        override x.OnShutdown() =
+            logger.Debug("shutting down service")
+            service.Stop()
 

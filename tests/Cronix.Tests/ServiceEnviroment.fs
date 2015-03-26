@@ -7,6 +7,7 @@ open Chessie.ErrorHandling
 open System.Reflection
 open System.ServiceProcess
 open System
+open System.Threading
 open System.Collections.Generic
 open System.Diagnostics 
 
@@ -61,17 +62,7 @@ module ServiceEnviroment =
         let target = new DirectoryInfo(targetPath)
         target.FullName
 
-    let createEnviroment enviromentName =
-        let targetPath = getTargetPath enviromentName
-        deleteDirectory targetPath
-        copyExecutable sourcePath targetPath
-        deleteLogDir targetPath
-
-    let createEnviromentForRollbackWithFailure =
-        let name = "rollback"
-        createEnviroment name
-        File.Delete("FSharp.Scheduler.dll")
-        name
+    
     
     let isServiceInstalled serviceName =
         let service = ServiceController.GetServices() |> Array.tryFind(fun(s: System.ServiceProcess.ServiceController) -> s.ServiceName = serviceName)
@@ -85,20 +76,24 @@ module ServiceEnviroment =
         startInfo.WindowStyle <- System.Diagnostics.ProcessWindowStyle.Hidden;
         startInfo.FileName <- "cmd.exe"
         startInfo.Arguments <- args
+        startInfo.RedirectStandardOutput <- true
+        startInfo.RedirectStandardInput <- true
+        startInfo.UseShellExecute <- false
+
         process'.StartInfo <- startInfo
         process'.Start() |> ignore
+        process'.BeginOutputReadLine() |> ignore
+        process'.OutputDataReceived.Add(fun(args) -> 
+            Console.WriteLine("executeCmd: {0} {1}", args.Data, DateTime.Now))
+        Thread.Sleep(1000) |> ignore
 
     let startService() =
         if isServiceInstalled "CSharpSample" then
            executeCmd "/C sc start CSharpSample"
 
-//    let configureServiceCredentials() =
-//        if isServiceInstalled "CSharpSample" then
-//            let cmd = sprintf "/C sc config \"CSharpSample\" obj= \".\cronix\" password= \"%s\"" <| File.ReadAllText("../../../../password.txt")
-//            executeCmd cmd        
-
     let uninstallService() =
         if isServiceInstalled "CSharpSample" then
+           executeCmd "/C sc stop CSharpSample"
            executeCmd "/C sc delete CSharpSample"
 
     let loadUserPassword() =
@@ -106,3 +101,17 @@ module ServiceEnviroment =
         let secured = new SecureString()
         for c in password.ToCharArray() do secured.AppendChar(c)
         secured   
+
+    let createEnviroment enviromentName =
+        uninstallService()
+        let targetPath = getTargetPath enviromentName
+        deleteDirectory targetPath
+        copyExecutable sourcePath targetPath
+        deleteLogDir targetPath
+
+    let createEnviromentForRollbackWithFailure =
+        uninstallService()
+        let name = "rollback"
+        createEnviroment name
+        File.Delete("FSharp.Scheduler.dll")
+        name
