@@ -1,7 +1,7 @@
 version 0.1
 -todo
 -- schedule manager integration test - DONE
--- setup service integration test
+-- setup service integration test - DONE
 -- method documentation
 -- readme
 -- release notes

@@ -60,8 +60,8 @@ redistribution for both commercial and non-commercial purposes. For more informa
 [License file][license] in the GitHub repository. 
 
   [content]: https://github.com/fsprojects/Cronix/tree/master/docs/content
-  [gh]: https://github.com/fsprojects/Cronix
-  [issues]: https://github.com/fsprojects/Cronix/issues
-  [readme]: https://github.com/fsprojects/Cronix/blob/master/README.md
-  [license]: https://github.com/fsprojects/Cronix/blob/master/LICENSE.txt
+  [gh]: https://github.com/aph5nt/cronix
+  [issues]: https://github.com/aph5nt/cronix/issues
+  [readme]: https://github.com/aph5nt/cronix/blob/master/README.md
+  [license]: https://github.com/aph5nt/cronix/blob/master/LICENSE.txt
 *)
