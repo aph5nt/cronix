@@ -41,7 +41,7 @@ type SetupServiceTest() =
 
         
     [<Fact>]
-    let ``comlipe script returns failure when compilation have errors``() =
+    let ``comlipe script returns success``() =
 
         let assemblies = 
             [|
@@ -68,11 +68,9 @@ type SetupServiceTest() =
                         scheduleManager = new ScheduleManager() })
 
         match result with
-        | Ok (_, _) -> failwith "Expected Failure Tee"
-        | Fail msgs -> 
-            msgs.[0] |> should startWith "Failed to compile startup script."
-            msgs.[0].Contains("FS0229") |> should equal true
-            msgs.[0].Contains("FS3160") |> should equal true
+        | Ok (state, msgs) -> ()
+        | Fail msgs -> failwith "Expected Success Tee"
+        | _ -> ()
 
     [<Fact>]
     let ``compile script returns failure when exception is thrown``() = 
