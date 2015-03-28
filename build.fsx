@@ -46,7 +46,7 @@ let tags = "cron ncron ncrontab scheduler service"
 // File system information 
 let solutionFile  = "Cronix.sln"
 
-// Pattern specifying assemblies to be tested using NUnit
+// Pattern specifying assemblies to be tested using Xunit
 let testAssemblies = "tests/**/bin/Release/*Tests*.dll"
 
 // Git configuration (used for publishing documentation in gh-pages branch)
@@ -136,11 +136,14 @@ Target "Build" (fun _ ->
 
 Target "RunTests" (fun _ ->
     !! testAssemblies
-    |> NUnit (fun p ->
-        { p with
-            DisableShadowCopy = true
-            TimeOut = TimeSpan.FromMinutes 20.
-            OutputFile = "TestResults.xml" })
+    |> xUnit (fun p ->
+        { p with 
+                 XUnitParams.TimeOut = TimeSpan.FromMinutes 20.0;
+                 XUnitParams.XmlOutput = true;
+                 ShadowCopy = false;
+                 HtmlOutput = true;
+                 ExcludeTraits = Some ("Service", "System Test");
+        })
 )
 
 #if MONO

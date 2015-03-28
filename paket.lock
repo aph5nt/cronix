@@ -33,8 +33,9 @@ NUGET
     xunit.extensibility.core (2.0.0)
       xunit.abstractions (2.0.0)
     xunit.runner.visualstudio (2.0.0)
+    xunit.runners (1.9.2)
 GITHUB
   remote: fsharp/FAKE
   specs:
-    modules/Octokit/Octokit.fsx (60e49f7c915a8134a5f07ca408249e4bd7cc4a63)
+    modules/Octokit/Octokit.fsx (e8456a22c8b342c53190030401d0daf00f0682ae)
       Octokit

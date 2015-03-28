@@ -2,6 +2,7 @@ source https://nuget.org/api/v2
 
 nuget FSharp.Formatting
 nuget xUnit ~> 1.9.2
+nuget xUnit.runners ~> 1.9.2
 nuget FsUnit.xUnit
 nuget xunit.runner.visualstudio
 nuget FAKE
