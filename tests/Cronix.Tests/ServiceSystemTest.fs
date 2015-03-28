@@ -18,15 +18,6 @@ open System.IO
 type SetupServiceTest() =
     
     [<Fact>]
-    let ``setup service returns result``() = failwith "Not Implemented."
-
-    [<Fact>]
-    let ``invoke startup handler returns success``() = failwith "Not Implemented."
-
-    [<Fact>]
-    let ``invoke startup handler returns failure``() = failwith "Not Implemented."
-
-    [<Fact>]
     let ``load assemblies returns an array of dll names``() = 
         loadAssemblies()
         |> successTee (fun(obj : string[], _) -> obj |> Array.iter (fun(m:string) -> Console.WriteLine(m)))
@@ -94,11 +85,6 @@ type SetupServiceTest() =
          | Fail msgs -> msgs.[0] |> should startWith "Failed to compile startup script."
                         msgs.[0]
 
-    [<Fact>]
-    let ``invoke startup script returns success``() = failwith "Not Implemented."
-
-    [<Fact>]
-    let ``invoke startup script returns failure``() = failwith "Not Implemented."
 
 [<Trait("Service", "System Test")>]
 type ServiceSystemTest() =
@@ -188,13 +174,6 @@ type ServiceSystemTest() =
     let ``Print guide for invalid param``() =
         createEnviroment "serviceEnv"
         createProcess "serviceEnv" "?"
-        wait()
-        result |> should contain "printGuide" 
-
-   // [<Fact>] //TODO fix this!
-    let ``Print guide for null param``() =
-        createEnviroment "serviceEnv"
-        createProcess "serviceEnv" null
         wait()
         result |> should contain "printGuide" 
 

@@ -154,23 +154,27 @@ module BootStrapper =
     
     let isDebug() = Environment.UserInteractive
  
- // Init service -> option -> null
+    let parseOption (input : Option<'a>) =
+        match input with
+        | None -> None
+        | Some(null) -> None
+        | Some(a') -> Some(a')
+
     let InitService : InitService =
         fun (args, startupHandler) ->
-            //System.Diagnostics.Debugger.Launch() |> ignore
-            if args.IsNone then 
-                runService startupHandler <| isDebug()
+           
+            let args' = parseOption args
+            let startupHandler' = parseOption startupHandler
+            
+            if args'.IsNone || (args'.IsSome && args'.Value.Length = 0) then 
+                runService startupHandler' <| isDebug()
                 ok("runService")
 
-            else if args.IsSome && args.Value.Length = 0 then
-                runService startupHandler <| isDebug()
-                ok("runService")
-
-            else if args.IsSome && args.Value.Length = 1 then
-                match args.Value.[0] with
+            else if args'.IsSome && args'.Value.Length = 1 then
+                match args'.Value.[0] with
                 | "install" -> ProjectInstaller.Install(Assembly.GetEntryAssembly())
                 | "uninstall" -> ProjectInstaller.Uninstall(Assembly.GetEntryAssembly())
-                | "debug" -> runService startupHandler <| isDebug()
+                | "debug" -> runService startupHandler' <| isDebug()
                              ok("runService")
                 | _ -> printGuide()
                        ok("printGuide") 

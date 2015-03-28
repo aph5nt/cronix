@@ -1,15 +1,10 @@
 ﻿
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Cronix;
-using System.Threading;
-using CSharpSample.Jobs;
-using Microsoft.FSharp.Core;
-using Chessie.ErrorHandling;
 using Chessie.ErrorHandling.CSharp;
+using Cronix;
+using Microsoft.FSharp.Core;
+using System;
+using System.Linq;
+using System.Threading;
 
 namespace CSharpSample
 {
@@ -26,6 +21,12 @@ namespace CSharpSample
 	{
 		public static void Main(string[] args)
 		{
+			//var result = BootStrapper.InitService(new FSharpOption<string[]>(null), null);
+			//var result = BootStrapper.InitService(new FSharpOption<string[]>(new[] { "debug" }), 
+			// new FSharpOption<StartupHandler>(scheduler => {
+			//  scheduler.Schedule("scheduled job", "* * * * *", EmbededJobs.Callback);
+			// }));
+
 			var result = BootStrapper.InitService(new FSharpOption<string[]>(args), null);
 			result.Match(
 				(state, msgs) =>
