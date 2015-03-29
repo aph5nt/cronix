@@ -79,7 +79,6 @@
     <Compile Include="SchedulingTests.fs" />
     <Compile Include="ServiceEnviroment.fs" />
     <Compile Include="ServiceSystemTest.fs" />
-    <Content Include="packages.config" />
     <Content Include="App.config" />
     <None Include="Startup.fsx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>

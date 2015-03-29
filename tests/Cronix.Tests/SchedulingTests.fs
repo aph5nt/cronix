@@ -77,22 +77,23 @@ type ScheduleManagerTests() =
             msgs |> should contain "Expr <[* * * * *]> is valid."
             msgs |> should contain "Job <[job1]> can be added."
             msgs |> should contain "Job <[job1]> has been added."
-        | Fail msgs -> failwith "Expected Success Tee"
+        | _ -> failwith "Expected Success Tee"
+
 
     [<Fact>]
     let ``schedule not the same job twice``() =
         manager.Schedule "job1" "* * * * *" <| Callback(sampleJob) |> ignore
         let result = manager.Schedule "job1" "* * * * *" <| Callback(sampleJob)
         match result with
-        | Ok (_, msg) -> failwith "Expected Failure Tee" 
         | Fail msgs ->  msgs |> should contain "Job <[job1]> already exists."
-            
+        | _  -> failwith "Expected Failure Tee"    
+
     [<Fact>]
     let ``schedule not job with invalid expression``() =
         let result = manager.Schedule "job1" "a * * * *" <| Callback(sampleJob)
         match result with
-        | Ok (_, msg) -> failwith "Expected Failure Tee" 
         | Fail msgs ->  msgs |> should contain "Expr <[a * * * *]> is not valid."
+        | _ -> failwith "Expected Failure Tee" 
 
     [<Fact>]
     let ``unschedule a job``() =
@@ -102,14 +103,14 @@ type ScheduleManagerTests() =
         | Ok (_, msgs) -> 
             msgs |> should contain "Job <[job1]> found."
             msgs |> should contain "Job <[job1]> has been removed."
-        | Fail msgs -> failwith "Expected Success Tee"
+        | _ -> failwith "Expected Success Tee"
 
     [<Fact>]
     let ``unschedule not existing job``() =
         let result = manager.UnSchedule "job1"
         match result with
-        | Ok (_, msgs) -> failwith "Expected Failure Tee" 
         | Fail msgs ->  msgs |> should contain "Job <[job1]> does not exists."
+        | _ -> failwith "Expected Failure Tee" 
 
     [<Fact>]
     let ``get manager state``() =
