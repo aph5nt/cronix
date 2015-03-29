@@ -10,8 +10,10 @@
 
 
     let rec wait dateTime =
-        if DateTime.UtcNow < dateTime then
-            Thread.Sleep(100)
+        let now = DateTime.UtcNow
+        if now < dateTime then
+            Console.WriteLine("now: {0}, datetime: {1}", now, dateTime)
+            Thread.Sleep(5000)
             wait dateTime
 
     type TriggerStateCallback = delegate of unit -> TriggerState

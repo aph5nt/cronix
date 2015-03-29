@@ -65,6 +65,10 @@ type TriggerSystemTest() =
         let secondOccurance = overlapTrigger.OccurrenceAt
         wait secondOccurance
 
+        Console.WriteLine("firstOccurance: {0}", firstOccurance)
+        Console.WriteLine("secondOccurance: {0}", secondOccurance)
+        Console.WriteLine("diff: {0}", (secondOccurance - firstOccurance))
+
         (secondOccurance - firstOccurance).Minutes |> should equal 1
         overlapTrigger.Terminate()
 
