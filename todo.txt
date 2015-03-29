@@ -5,6 +5,7 @@ version 0.1
 -- method documentation
 -- readme
 -- release notes
+-- github documentation page
 -- samples (create F# Sample, C# sample, rename CSharpSample to TestService + update tests)
 -- create a sample with nugetpackate - bitcoin ticker! and run it in a background
 -- CI vs long running tests, and systeminstaller tests
