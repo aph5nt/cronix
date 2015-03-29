@@ -20,4 +20,5 @@ let main argv =
     match result with
     | Ok (state, msgs) -> printfn "%s" state
     | Fail msgs -> msgs |> List.iter(fun(s) ->  printfn "%s" s)
+    | _ -> ()
     0 // return an integer exit code
