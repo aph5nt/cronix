@@ -59,7 +59,10 @@
     <Reference Include="Chessie">
       <HintPath>..\..\..\packages\Chessie\lib\net40\Chessie.dll</HintPath>
     </Reference>
-    <Reference Include="FSharp.Core, Version=4.4.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+    <Reference Include="FSharp.Core, Version=4.3.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\packages\FSharp.Core\lib\net40\FSharp.Core.dll</HintPath>
+    </Reference>
     <Reference Include="NCrontab">
       <HintPath>..\..\..\packages\ncrontab\lib\net20\NCrontab.dll</HintPath>
     </Reference>
