@@ -6,7 +6,7 @@
 
 A F# implementation of 'CRON like' service.
 
-Documentation: http://fsprojects.github.io/ProjectScaffold
+Documentation: http://aph5nt.github.io/cronix
 
 ## Maintainer(s)
 
