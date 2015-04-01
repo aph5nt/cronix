@@ -13,7 +13,7 @@ Documentation
   <div class="span1"></div>
   <div class="span6">
     <div class="well well-small" id="nuget">
-      The Cronix library can be <a href="https://nuget.org/packages/Cronix">installed from NuGet</a>:
+      The Cronix library can be <a href="https://nuget.org/packages/cronix">installed from NuGet</a>:
       <pre>PM> Install-Package Cronix</pre>
     </div>
   </div>

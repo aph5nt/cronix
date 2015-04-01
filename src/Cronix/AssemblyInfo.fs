@@ -2,8 +2,8 @@
 open System.Reflection
 
 [<assembly: AssemblyTitleAttribute("Cronix")>]
-[<assembly: AssemblyProductAttribute("Cronix")>]
-[<assembly: AssemblyDescriptionAttribute("F# / C# Cron Service")>]
+[<assembly: AssemblyProductAttribute("cronix")>]
+[<assembly: AssemblyDescriptionAttribute("Cron Service")>]
 [<assembly: AssemblyVersionAttribute("0.1")>]
 [<assembly: AssemblyFileVersionAttribute("0.1")>]
 do ()

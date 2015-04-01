@@ -4,17 +4,17 @@
 // --------------------------------------------------------------------------------------
 
 // Web site location for the generated documentation
-let website = "/Cronix"
+let website = "/cronix"
 
-let githubLink = "http://github.com/aph5nt/Cronix"
+let githubLink = "http://github.com/aph5nt/cronix"
 
 // Specify more information about your project
 let info =
-  [ "project-name", "Cronix"
+  [ "project-name", "cronix"
     "project-author", "aph5nt"
     "project-summary", "F# / C# Cron Service"
     "project-github", githubLink
-    "project-nuget", "http://nuget.org/packages/Cronix" ]
+    "project-nuget", "http://nuget.org/packages/cronix" ]
 
 // --------------------------------------------------------------------------------------
 // For typical project, no changes are needed below

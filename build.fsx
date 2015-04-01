@@ -27,15 +27,15 @@ open SourceLink
 
 // The name of the project
 // (used by attributes in AssemblyInfo, name of a NuGet package and directory in 'src')
-let project = "Cronix"
+let project = "cronix"
 
 // Short summary of the project
 // (used as description in AssemblyInfo and as a short summary for NuGet package)
-let summary = "F# / C# Cron Service"
+let summary = "Cron Service"
 
 // Longer description of the project
 // (used as a description for NuGet package; line breaks are automatically cleaned up)
-let description = "Simple Cron Library / Service"
+let description = "Simple Cron Library"
 
 // List of author names (for NuGet package)
 let authors = [ "aph5nt" ]
