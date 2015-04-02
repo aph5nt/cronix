@@ -191,7 +191,8 @@ Target "NuGet" (fun _ ->
 Target "PublishNuget" (fun _ ->
     Paket.Push(fun p -> 
         { p with
-            WorkingDir = "bin" })
+            WorkingDir = "bin";
+            ApiKey = System.IO.File.ReadAllText(@"c:\workplace\nuget.key"); })
 )
 
 
@@ -344,7 +345,7 @@ Target "All" DoNothing
   ==> "AssemblyInfo"
   ==> "Build"
   ==> "CopyBinaries"
-  ==> "RunTests"
+  //==> "RunTests"
   =?> ("GenerateReferenceDocs",isLocalBuild)
   =?> ("GenerateDocs",isLocalBuild)
   ==> "All"

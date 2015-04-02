@@ -44,6 +44,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CSharpSample.Jobs", "docs\s
 EndProject
 Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "FSharpSample", "docs\samples\FSharpSample\FSharpSample.fsproj", "{1CBB9793-714B-42A9-AD03-12B15FB71967}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NugetTest", "tests\NugetTest\NugetTest.csproj", "{D42EB378-8509-46EC-8799-2CF02A665E8B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -70,6 +72,10 @@ Global
 		{1CBB9793-714B-42A9-AD03-12B15FB71967}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1CBB9793-714B-42A9-AD03-12B15FB71967}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1CBB9793-714B-42A9-AD03-12B15FB71967}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D42EB378-8509-46EC-8799-2CF02A665E8B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D42EB378-8509-46EC-8799-2CF02A665E8B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D42EB378-8509-46EC-8799-2CF02A665E8B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D42EB378-8509-46EC-8799-2CF02A665E8B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -82,5 +88,6 @@ Global
 		{06322D90-9A28-423C-9805-AC1393A8F18D} = {B6255659-79E8-4AC2-AD13-321960F13DF4}
 		{5C018694-E498-4971-AF52-4E4343DC38FC} = {B6255659-79E8-4AC2-AD13-321960F13DF4}
 		{1CBB9793-714B-42A9-AD03-12B15FB71967} = {B6255659-79E8-4AC2-AD13-321960F13DF4}
+		{D42EB378-8509-46EC-8799-2CF02A665E8B} = {ED8079DD-2B06-4030-9F0F-DC548F98E1C4}
 	EndGlobalSection
 EndGlobal

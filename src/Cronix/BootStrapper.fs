@@ -1,5 +1,6 @@
 ﻿namespace Cronix
 
+/// Module responsible for cronix service initialization.
 module BootStrapper =
    
     open Chessie.ErrorHandling
@@ -12,10 +13,16 @@ module BootStrapper =
     open System.ServiceProcess
     open System.Diagnostics
  
+    /// Statup script name constant.
     let startupFile = "Startup.fsx"
+
+    /// Output assembly name constant.
     let outputAssembly = "Cronix.Startup.dll"
+
+    /// Boostrapper module specific logger.
     let logger = logger()
 
+    /// Scans for assemblies in the cronix service directory. Returns assembly name list.
     let loadAssemblies() =
         let assemblies =
             Directory.GetFiles(".", "*.dll", SearchOption.TopDirectoryOnly)
@@ -40,7 +47,8 @@ module BootStrapper =
                  |> Seq.toArray
 
         ok asm
-
+    
+    /// Loads the startup script.
     let getStartupScript() =
         try
             let sourceCode = File.ReadAllText("Startup.fsx")
@@ -48,6 +56,7 @@ module BootStrapper =
         with
         | exn -> fail(sprintf "Failed to load source code from the starup script. %s" exn.Message)
 
+    /// Compiles the startup script.
     let compileScript(state : StartupScriptState) =
         try
             let provider = new FSharpCodeProvider()
@@ -74,6 +83,7 @@ module BootStrapper =
         with
         | exn -> fail(sprintf "Failed to compile startup script. %s" exn.Message)
 
+    /// Invokes the compiled startup script.
     let invokeStartupScript(state : StartupScriptState) =
         try
             match state.compiled with
@@ -85,6 +95,7 @@ module BootStrapper =
         with
             | exn -> fail(sprintf "Failed to run startup script. %s" exn.Message)
     
+    /// Invokes the startup handler.
     let invokeStartupHandler (state: StartupHandlerState) =
         match state.startupHandler with
         | None -> ok state
@@ -95,6 +106,7 @@ module BootStrapper =
             with
             | exn -> fail(sprintf "Failed to run a startup handler. %s" exn.Message)
 
+    /// Setups up the cronix service
     let setupService(scheduleManager : IScheduleManager) (startupHandler : Option<StartupHandler>) =
         let startupScriptState scheduleManager referencedAssemblies  source = 
             { StartupScriptState.scheduleManager = scheduleManager; 
@@ -122,6 +134,7 @@ module BootStrapper =
             |> logResult 
             |> ignore
 
+    /// Runs the cronix service. If its run in console mode then the service will start immediately. If not then the ServiceProcessAdapter will start.
     let runService(startupHandler : Option<StartupHandler>) debug =
         try
             AppDomain.CurrentDomain.UnhandledException.AddHandler(fun(sender:obj) (args:UnhandledExceptionEventArgs) -> logger.Fatal(args.ExceptionObject))
@@ -140,6 +153,7 @@ module BootStrapper =
         with
         | exn ->  logger.Fatal(exn)
 
+    /// Prints the user guide.
     let printGuide() =
         let entryAsm = Assembly.GetEntryAssembly()
         let executingAsm =  Assembly.GetExecutingAssembly()
@@ -152,14 +166,17 @@ module BootStrapper =
         printfn "  %s uninstall" assemblyName
         printfn "     Uninstalls %s as a Windows service." assemblyName
     
+    /// Returns true if service is run from console.
     let isDebug() = Environment.UserInteractive
  
+    /// Changes the Some(null) into None value.
     let parseOption (input : Option<'a>) =
         match input with
         | None -> None
         | Some(null) -> None
         | Some(a') -> Some(a')
 
+    /// Initializes the cronix service
     let InitService : InitService =
         fun (args, startupHandler) ->
            

@@ -1,5 +1,6 @@
 ﻿namespace Cronix
 
+/// Module responsible for installing, uninstalling and starting up the cronix service
 module ProjectInstaller =
 
     open System.Collections
@@ -11,8 +12,10 @@ module ProjectInstaller =
     open System.IO
     open System
 
+    /// Project installer module specific logger
     let logger = logger()
 
+    /// Performs required initialization steps in order to install or uninstall the cronix service
     let initialize (installer : Installer) (assembly : Assembly) =
         let serviceName = assembly.GetName().Name
         let serviceProcessInstaller = new ServiceProcessInstaller()
@@ -29,7 +32,7 @@ module ProjectInstaller =
         installer.Context <- new InstallContext()
         installer.Context.Parameters.["assemblypath"] <- assembly.Location;
 
-
+    /// Installs the cronix service. An installation rollback will be done on failure.
     let Install : Install =
         fun(assembly) ->
             let installer = new Installer()
@@ -49,7 +52,8 @@ module ProjectInstaller =
                     fail("rollback: " + exn.Message)
                 with
                 | ex -> fail("failed to rollback: " + ex.Message)
-
+    
+    /// Uninstalls the cronix service.
     let Uninstall : Uninstall = 
         fun(assembly) ->
             try
@@ -61,22 +65,25 @@ module ProjectInstaller =
             with 
             | ex -> fail("failed to uninstall: " + ex.Message)
 
-
+    /// An adapter responsible for starting, stopping and shutting down the cronix service.
     type ServiceProcessAdapter(service : IScheduleManager, setup) =
         inherit ServiceBase()
         do
             (* Set default directory for windows service *)
             Directory.SetCurrentDirectory(AppDomain.CurrentDomain.BaseDirectory)
 
+        ///Starts the ScheduleManager and performs the manager setup
         override x.OnStart(args : string[]) = 
             logger.Debug("starting service")
             service.Start()
             setup()
          
+        /// Stops the ScheduleManager
         override x.OnStop() = 
             logger.Debug("stopping service")
             service.Stop()
 
+        /// Stops the ScheduleManager
         override x.OnShutdown() =
             logger.Debug("shutting down service")
             service.Stop()

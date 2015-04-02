@@ -1,5 +1,6 @@
 ﻿namespace Cronix
 
+/// Module responsible for providing the Domain Specific language for creating crontab expressions
 module Dsl = 
 
     open System
@@ -10,12 +11,14 @@ module Dsl =
     open System.Collections.Concurrent
     open System
 
+    /// Describes the frequence rate
     type CronExpr =
         | Hourly
         | Daily
         | Weekly
         | Monthly
 
+    /// Changes frequence rate into crontab expression.
     let crontab expr = 
         match expr with
         | Hourly -> "01 * * * *"
@@ -24,9 +27,3 @@ module Dsl =
         | Monthly -> "42 4 1 * *"
 
     crontab Daily |> printf "%s" 
-
-
-
- //todo:
- // support for job registration
- // -- Cronix.CSharp -> extension methods for c#
