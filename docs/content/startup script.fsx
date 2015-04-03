@@ -41,7 +41,6 @@ module RunAtStartup =
     open System.Threading
     open System
     open Cronix
-    open Messages
     open CSharpSample.Jobs
 
     /// startup method
@@ -71,8 +70,6 @@ module RunAtStartup =
     open System.Threading
     open System
     open Cronix
-    open Messages
-    open Dsl
 
     //reference yours custom assembly here
     open CSharpSample

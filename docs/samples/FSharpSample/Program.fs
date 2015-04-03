@@ -2,7 +2,6 @@
 open Cronix
 open Chessie.ErrorHandling
 open System.Threading
-open Dsl
 
 let sampleJob (token : CancellationToken) = 
       printf "callback executed at (UTC) %s\n" <| DateTime.UtcNow.ToString()

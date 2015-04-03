@@ -8,7 +8,6 @@ module Scheduling =
     open NCrontab 
     open Logging
     open Cronix
-    open Messages
 
     /// Creates the job trigger
     let createTrigger : CreateTrigger =
@@ -20,77 +19,77 @@ module Scheduling =
         let _, expr, _ = params'
         try
             CrontabSchedule.Parse(expr).GetNextOccurrence |> ignore
-            SuccesMessage(state, params') ValidateExpr [expr]
+            SuccesMessage(state, params') ValidateExprMsg [expr]
         with
         | _ -> FailureMessage InvalidCronExpr [expr]
     
-    /// Checks if job can be added.
-    let canAddJob (state : ScheduleState, params' : ScheduleParams) =
+    /// Checks if a job trigger can be added.
+    let canAddTrigger (state : ScheduleState, params' : ScheduleParams) =
         let name, _, _ = params'
         match state.ContainsKey name with
         | true -> FailureMessage JobExists [name]
-        | false -> SuccesMessage(state, params') CanAddJob [name]
+        | false -> SuccesMessage(state, params') CanAddJobMsg [name]
  
-    /// Adds the job.
-    let addJob(state : ScheduleState, params' : ScheduleParams) =
+    /// Adds the job to the trigger.
+    let addTrigger(state : ScheduleState, params' : ScheduleParams) =
         let name, expr, callback = params'
         state.Add(name, { Name = name; CronExpr = expr; Trigger = createTrigger(name, expr, callback); })
         state.[name].Trigger.Start()
-        SuccesMessage(state) AddJob [name]
+        SuccesMessage(state) AddJobMsg [name]
 
     /// Checks if given job exists.
     let jobExists (state : ScheduleState, name : string) = 
          match state.ContainsKey name with
          | false -> FailureMessage JobNotExists [name]
-         | true -> SuccesMessage(state, name) JobFound [name]
+         | true -> SuccesMessage(state, name) JobFoundMsg [name]
 
-    /// Removes the job.
-    let removeJob (state : ScheduleState, name : string) =
+    /// Removes given trigger.
+    let removeTrigger (state : ScheduleState, name : string) =
         state.[name].Trigger.Terminate() |> ignore
         state.Remove name |> ignore
-        SuccesMessage(state) RemoveJob [name]
+        SuccesMessage(state) RemoveJobMsg [name]
     
-    /// Stops given job execution.
-    let stopJob (state : ScheduleState, name : string) = 
+    /// Stops given trigger execution.
+    let stopTrigger (state : ScheduleState, name : string) = 
         state.[name].Trigger.Stop()
-        SuccesMessage(state) StopJob [name]
+        SuccesMessage(state) StopJobMsg [name]
 
-    /// Starts given job.
-    let startJob (state : ScheduleState, name : string) = 
+    /// Starts given trigger.
+    let startTrigger (state : ScheduleState, name : string) = 
         state.[name].Trigger.Start()
-        SuccesMessage(state) StartJob [name]
+        SuccesMessage(state) StartJobMsg [name]
 
     /// Schedules  given job. This method performs cron expression validation, job existance check, job adding and logs the output result.
-    let schedule : Schedule = 
+    let scheduleJob : Schedule = 
         fun (state, params') ->
             ok (state, params')
             >>= validateExpr
-            >>= canAddJob
-            >>= addJob 
+            >>= canAddTrigger
+            >>= addTrigger
             |> logResult
 
     /// Unschedules given job. This method performs job existance check, job removal and logs the output result.
-    let unschedule : UnSchedule = 
+    let unscheduleJob : UnSchedule = 
         fun(state, name) ->
             ok (state, name)
             >>= jobExists
-            >>= removeJob
+            >>= removeTrigger
             |> logResult 
     
     /// Stops given job. This method performs job existance check, stops the job and logs the output result.
-    let stop : Stop =
+    let stopJob : Stop =
         fun(state, name) ->
             ok (state, name)
             >>= jobExists
-            >>= stopJob
+            >>= stopTrigger
             |> logResult
 
     /// Starts given job. This method performs job existane check, starts the job and logs the output result.
-    let start : Start =
+    let startJob : Start =
         fun(state, name) ->
             ok (state, name)
             >>= jobExists
-            >>= startJob
+            >>= startTrigger
             |> logResult
 
     /// Replies the message 
@@ -116,10 +115,10 @@ type ScheduleManager() =
                 while true do 
                     let! (message, replyChannel) = inbox.Receive()
                     match message with
-                    | Schedule (name, expr, callback) -> schedule(state, (name, expr, callback)) |> reply replyChannel |> ignore
-                    | Stop name                       -> stop(state, name) |> reply replyChannel |> ignore
-                    | Start name                      -> start(state, name) |> reply replyChannel |> ignore
-                    | UnSchedule name                 -> unschedule(state, name) |> reply replyChannel |> ignore
+                    | ScheduleJob (name, expr, callback) -> scheduleJob(state, (name, expr, callback)) |> reply replyChannel |> ignore
+                    | StopJob name                       -> stopJob(state, name) |> reply replyChannel |> ignore
+                    | StartJob name                      -> startJob(state, name) |> reply replyChannel |> ignore
+                    | UnScheduleJob name                 -> unscheduleJob(state, name) |> reply replyChannel |> ignore
             }
         loop
     ), tokenSource.Token)
@@ -145,11 +144,19 @@ type ScheduleManager() =
 
     interface IScheduleManager with
         member self.Schedule name expr callback = 
-            agent.PostAndAsyncReply(fun replyChannel -> (Schedule( name, expr, callback), replyChannel))
+            agent.PostAndAsyncReply(fun replyChannel -> (ScheduleJob( name, expr, callback), replyChannel))
             |> Async.RunSynchronously
 
         member self.UnSchedule name =
-            agent.PostAndAsyncReply(fun replyChannel -> (UnSchedule(name), replyChannel))
+            agent.PostAndAsyncReply(fun replyChannel -> (UnScheduleJob(name), replyChannel))
+            |> Async.RunSynchronously
+        
+        member self.StartJob name = 
+             agent.PostAndAsyncReply(fun replyChannel -> (StartJob(name), replyChannel))
+            |> Async.RunSynchronously
+
+        member self.StopJob name = 
+             agent.PostAndAsyncReply(fun replyChannel -> (StopJob(name), replyChannel))
             |> Async.RunSynchronously
 
         member self.State =

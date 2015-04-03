@@ -6,7 +6,6 @@ open System.Collections.Generic
 open Xunit
 open FsUnit.Xunit
 open Cronix
-open Messages
 open Scheduling
 open Chessie.ErrorHandling
     
@@ -29,7 +28,7 @@ type SchedulingTests() =
     let ``validate exprArgValid expression``() = 
         let params' = (jobName1, exprArgValid, Callback(callback))
         let actual = validateExpr(state, params')
-        let expected = SuccesMessage(state, params') ValidateExpr [exprArgValid]
+        let expected = SuccesMessage(state, params') ValidateExprMsg [exprArgValid]
         compareResults actual expected |> ignore
 
     [<Fact>]
@@ -43,21 +42,21 @@ type SchedulingTests() =
     [<Fact>]
     let ``can add job``() =
         let params' = (jobName1, exprArgValid, Callback(callback))
-        let actual = canAddJob(state, params') 
-        let expected = SuccesMessage(state, params') CanAddJob [jobName1]
+        let actual = canAddTrigger(state, params') 
+        let expected = SuccesMessage(state, params') CanAddJobMsg [jobName1]
         compareResults actual expected |> ignore
     
         state.Add(jobName1, { Name = jobName1; CronExpr = exprArgValid; Trigger = createTrigger(jobName1, exprArgValid, Callback(callback)) })
 
-        let actual2 = canAddJob(state, params') 
+        let actual2 = canAddTrigger(state, params') 
         let expected2 = FailureMessage JobExists [jobName1]
         compareResults actual2 expected2 |> ignore
 
     [<Fact>]
     let ``add job``() =
         let params' = (jobName1, exprArgValid, Callback(callback))
-        let actual = addJob(state, params') 
-        let expected = SuccesMessage(state) AddJob [jobName1]
+        let actual = addTrigger(state, params') 
+        let expected = SuccesMessage(state) AddJobMsg [jobName1]
         compareResults actual expected |> ignore
 
 [<Trait("Scheduling", "Integration Test")>]
@@ -111,6 +110,22 @@ type ScheduleManagerTests() =
         match result with
         | Fail msgs ->  msgs |> should contain "Job <[job1]> does not exists."
         | _ -> failwith "Expected Failure Tee" 
+
+    [<Fact>]
+    let ``stop and start a job``() =
+        let result = manager.Schedule "job1" "a * * * *" <| Callback(sampleJob)
+        let stopped = manager.StopJob("job1")
+        Thread.Sleep(200)
+        match stopped with
+        | Ok (_, msgs) -> 
+             msgs |> should contain "Job <[job1]> has been stopped."
+        | _ -> failwith "Expected Success Tee"
+
+        let started = manager.StartJob("job1")
+        match started with
+        | Ok (_, msgs) -> 
+             msgs |> should contain "Job <[job1]> has been started."
+        | _ -> failwith "Expected Success Tee"
 
     [<Fact>]
     let ``get manager state``() =

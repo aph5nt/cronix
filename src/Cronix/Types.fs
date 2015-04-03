@@ -122,10 +122,10 @@ and ScheduleServices = {
 
 /// Describes the schedule mannager commands.
 and ScheduleManagerCommand = 
-    | Schedule of JobName * JobCronExpr * Callback
-    | UnSchedule of JobName
-    | Stop of JobName
-    | Start of JobName
+    | ScheduleJob of JobName * JobCronExpr * Callback
+    | UnScheduleJob of JobName
+    | StopJob of JobName
+    | StartJob of JobName
 
 /// Manges the job schedules.
 and IScheduleManager = 
@@ -135,6 +135,12 @@ and IScheduleManager =
 
     /// Unschedules given job.
     abstract member UnSchedule: string -> Result<ScheduleState, string>
+
+    /// Starts given job.
+    abstract member StartJob : string -> Result<ScheduleState, string>
+
+    /// Stops given job.
+    abstract member StopJob : string -> Result<ScheduleState, string>
 
     /// Returns jobs state.
     abstract member State: seq<JobState>
@@ -158,13 +164,13 @@ and FailureMessage =
 
 /// Describes the sucess message.
 and SuccessMessage = 
-    | ValidateExpr
-    | CanAddJob
-    | AddJob
-    | JobFound
-    | RemoveJob
-    | StopJob
-    | StartJob
+    | ValidateExprMsg
+    | CanAddJobMsg
+    | AddJobMsg
+    | JobFoundMsg
+    | RemoveJobMsg
+    | StopJobMsg
+    | StartJobMsg
 
 
 (* Installer *)
@@ -201,6 +207,7 @@ and InitService = Option<string[]> * Option<StartupHandler> -> Result<string, st
 
 (* Messages *)
 /// Module responsible for generic messages.
+[<AutoOpen>]
 module Messages = 
 
     /// Returns the failure messages.
@@ -213,13 +220,13 @@ module Messages =
     /// Returns the success messages.
     let SuccesMessagess : Map<SuccessMessage, string> =
         Map.empty.
-            Add(ValidateExpr, "Expr <{0}> is valid.")
-            .Add(CanAddJob, "Job <{0}> can be added.")
-            .Add(AddJob, "Job <{0}> has been added.")
-            .Add(JobFound, "Job <{0}> found.")
-            .Add(RemoveJob, "Job <{0}> has been removed.")
-            .Add(StopJob, "Job <{0}> has been stopped.")
-            .Add(StartJob, "Job <{0}> has been started.")
+            Add(ValidateExprMsg, "Expr <{0}> is valid.")
+            .Add(CanAddJobMsg, "Job <{0}> can be added.")
+            .Add(AddJobMsg, "Job <{0}> has been added.")
+            .Add(JobFoundMsg, "Job <{0}> found.")
+            .Add(RemoveJobMsg, "Job <{0}> has been removed.")
+            .Add(StopJobMsg, "Job <{0}> has been stopped.")
+            .Add(StartJobMsg, "Job <{0}> has been started.")
         
     /// Creates the failure message.
     let FailureMessage (key : FailureMessage) ([<ParamArray>] params' : list<_>) =
@@ -231,7 +238,7 @@ module Messages =
         let result = String.Format(SuccesMessagess.[key], params')
         Ok(state, [result])
      
-
+[<AutoOpen>]
 module Dsl = 
 
     /// Describes the frequence rate
