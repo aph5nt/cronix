@@ -21,13 +21,12 @@ namespace CSharpSample
 	{
 		public static void Main(string[] args)
 		{
-			//var result = BootStrapper.InitService(new FSharpOption<string[]>(null), null);
-			//var result = BootStrapper.InitService(new FSharpOption<string[]>(new[] { "debug" }), 
-			// new FSharpOption<StartupHandler>(scheduler => {
-			//  scheduler.Schedule("scheduled job", "* * * * *", EmbededJobs.Callback);
-			// }));
-
-			var result = BootStrapper.InitService(new FSharpOption<string[]>(args), null);
+			var result = BootStrapper.InitService(new FSharpOption<string[]>(new[] { "debug" }),
+				new FSharpOption<StartupHandler>(scheduler =>
+				{
+					// schedule your job here
+					scheduler.Schedule("scheduled job", "* * * * *", EmbededJobs.Callback);
+				}));
 			result.Match(
 				(state, msgs) =>
 				{

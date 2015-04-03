@@ -2,13 +2,13 @@ version 0.1
 -todo
 -- schedule manager integration test - DONE
 -- setup service integration test - DONE
--- method documentation
--- readme
--- release notes
--- github documentation page
--- samples (create F# Sample, C# sample, rename CSharpSample to TestService + update tests)
--- create a sample with nugetpackate - bitcoin ticker! and run it in a background
--- CI vs long running tests, and systeminstaller tests
+-- method documentation - DONE
+-- readme - DONE
+-- release notes - DONE
+-- github documentation page - DONE
+-- samples (create F# Sample, C# sample, rename CSharpSample to TestService + update tests) - DONE
+-- create a sample with nugetpackate - bitcoin ticker! and run it in a background - OPTIONAL
+-- CI vs long running tests, and systeminstaller tests - DONE
 
 
 version 0.2

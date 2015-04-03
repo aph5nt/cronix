@@ -4,7 +4,7 @@
 
 # Cronix
 
-A F# implementation of 'CRON like' service.
+The 'CRON like' library.
 
 Documentation: http://aph5nt.github.io/cronix
 

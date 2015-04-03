@@ -12,7 +12,7 @@ let githubLink = "http://github.com/aph5nt/cronix"
 let info =
   [ "project-name", "cronix"
     "project-author", "aph5nt"
-    "project-summary", "F# / C# Cron Service"
+    "project-summary", "Cron Library"
     "project-github", githubLink
     "project-nuget", "http://nuget.org/packages/cronix" ]
 

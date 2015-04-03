@@ -1,5 +1,6 @@
 ﻿namespace Cronix
 
+/// Module responsible for triggering the jobs.
 module Triggers =
 
     open System.Threading
@@ -7,8 +8,10 @@ module Triggers =
     open System
     open Logging 
  
+    /// Trigger module specific logger.
     let logger = logger()
 
+    /// Calculates the timer arguments.
     let calculateTimerArgs : CalculateTimerArgs =
         fun(expr, date, occurrenceAt) ->
             let nextOccurence = CrontabSchedule.Parse(expr).GetNextOccurrence occurrenceAt
@@ -17,10 +20,12 @@ module Triggers =
             logger.Debug("Calculating TimerArgs: due = <%d>; interval = <%d>.", due, interval)
             (due, interval)
    
+    /// Calculates the occurance at time.
     let calculatetOccurrenceAt : CalculatetOccurrenceAt =
         fun(expr, date) ->
             CrontabSchedule.Parse(expr).GetNextOccurrence date
-
+    
+    /// Invokes the callback function.
     let timerCallback : Cronix.TimerCallback = 
         fun(name, callback, token) ->
             try
@@ -32,6 +37,7 @@ module Triggers =
             | :? OperationCanceledException -> logger.Debug("Trigger<'{0}'> has been cancelled", name)
             | _ as ex -> logger.Error("Trigger<'{0}'> failed", name, ex)
         
+    /// Mannages the job execution.
     type Trigger(name: string, expr : string, jobCallback : Callback) =
         let mutable triggerState = Stopped
         let mutable occurrenceAt = DateTime.UtcNow

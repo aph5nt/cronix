@@ -42,13 +42,13 @@ and ITrigger =
 /// The trigger callback delegate
 and Callback = delegate of (CancellationToken) -> unit
 
-/// Calculates the timer argument.
+/// Calculates the timer argument function signature. 
 and CalculateTimerArgs = JobCronExpr * DateTime * DateTime -> ChangeArgs
 
-/// The change time argument
+/// The change time argument type
 and ChangeArgs = int * int 
  
-/// The calculates the occurance at time.
+/// The calculates the occurance at time function signature.
 and CalculatetOccurrenceAt = JobCronExpr * DateTime -> DateTime
 
 /// The occurance at type
@@ -64,7 +64,7 @@ and TriggerServices = {
     timerCallback : TimerCallback
 }
 
-/// Creates new trigger.
+/// Creates new trigger function signature.
 and CreateTrigger = JobName * JobCronExpr * Callback  -> ITrigger
 
 /// The trigger factory.
@@ -73,6 +73,7 @@ and TriggerFactory = {
 }
 
 (* Jobs *)
+/// The job type.
 and Job = {
     Name : JobName;
     CronExpr : JobCronExpr;
@@ -93,19 +94,19 @@ and JobState = {
 }
 
 (* Scheduling *)
-/// The schedule type.
+/// The schedule function signature.
 type Schedule = ScheduleState * ScheduleParams -> Result<ScheduleState, string>
 
-/// The unschedule type.
+/// The unschedule function signature.
 and UnSchedule = ScheduleState * JobName ->  Result<ScheduleState, string>
 
-/// The start type.
+/// The start function signature.
 and Start = ScheduleState * JobName ->  Result<ScheduleState, string>
 
-/// The stop type.
+/// The stop function signature.
 and Stop = ScheduleState * JobName ->  Result<ScheduleState, string>
 
-/// THe schedule state type.
+/// The schedule state type.
 and ScheduleState = Dictionary<string, Job>
 
 /// The schedule params type.
@@ -167,10 +168,10 @@ and SuccessMessage =
 
 
 (* Installer *)
-/// The install type.
+/// The install function signature.
 type Install = Assembly -> Result<string, string>
 
-/// The uninstall type type.
+/// The uninstall function signature.
 type Uninstall = Assembly -> Result<string, string>
 
 
@@ -189,13 +190,13 @@ and StartupScriptState = {
         compiled : Option<Assembly>
 }
 
-/// The startup handler type.
+/// The startup handler delegate.
 and StartupHandler = delegate of (IScheduleManager) -> unit
 
-/// The run service type.
+/// The run service function signature.
 and RunService = IScheduleManager -> Option<StartupHandler> -> unit
 
-/// The initialize service type.
+/// The initialize service function signature.
 and InitService = Option<string[]> * Option<StartupHandler> -> Result<string, string>
 
 (* Messages *)

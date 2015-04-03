@@ -4,18 +4,20 @@
 module Dsl = 
 
     open System
-    open System.Collections.Concurrent
-    open System.Threading
-    open System.Threading
     open NCrontab 
-    open System.Collections.Concurrent
-    open System
 
     /// Describes the frequence rate
     type CronExpr =
+        /// 01 * * * *
         | Hourly
+
+        /// 02 4 * * *
         | Daily
+
+        /// 22 4 * * 0
         | Weekly
+
+        /// 42 4 1 * *
         | Monthly
 
     /// Changes frequence rate into crontab expression.

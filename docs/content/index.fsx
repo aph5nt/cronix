@@ -7,7 +7,11 @@
 Cronix
 ======================
 
-Documentation
+What is Cronix?
+Cronix is a CRON like library, which allows to create windows service that will execute user defined tasks at given point in time.
+The current implementation supports Windows and .NET Framework 4.5 or greater.
+
+How to install ?
 
 <div class="row">
   <div class="span1"></div>
@@ -20,33 +24,20 @@ Documentation
   <div class="span1"></div>
 </div>
 
-Example
--------
-
-This example demonstrates using a function defined in this sample library.
-
-*)
-#r "Cronix.dll"
-open Cronix
-
-printfn "hello = %i" <| Library.hello 0
-
-(**
-Some more info
 
 Samples & documentation
 -----------------------
 
-The library comes with comprehensible documentation. 
-It can include tutorials automatically generated from `*.fsx` files in [the content folder][content]. 
-The API reference is automatically generated from Markdown comments in the library implementation.
+ * [Cronix service](cronix setup.html) initialization manual.
 
- * [Tutorial](tutorial.html) contains a further explanation of this sample library.
+ * [Startup script](startup script.html) configuration manual.
 
  * [API Reference](reference/index.html) contains automatically generated documentation for all types, modules
    and functions in the library. This includes additional brief samples on using most of the
    functions.
  
+ * [Samples](https://github.com/aph5nt/cronix/tree/master/docs/samples)
+
 Contributing and copyright
 --------------------------
 
