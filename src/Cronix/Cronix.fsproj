@@ -65,7 +65,6 @@
     <Compile Include="Logging.fs" />
     <Compile Include="Triggers.fs" />
     <Compile Include="Scheduling.fs" />
-    <Compile Include="Dsl.fs" />
     <Compile Include="Installer.fs" />
     <Compile Include="BootStrapper.fs" />
     <None Include="Startup.fsx" />

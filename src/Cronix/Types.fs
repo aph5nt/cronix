@@ -231,3 +231,26 @@ module Messages =
         let result = String.Format(SuccesMessagess.[key], params')
         Ok(state, [result])
      
+
+module Dsl = 
+
+    /// Describes the frequence rate
+    type CronExpr =
+        /// 01 * * * *
+        | Hourly
+
+        /// 02 4 * * *
+        | Daily
+
+        /// 22 4 * * 0
+        | Weekly
+
+        /// 42 4 1 * *
+        | Monthly
+
+    let frequency expr = 
+        match expr with
+        | Hourly -> "01 * * * *"
+        | Daily -> "02 4 * * *"
+        | Weekly -> "22 4 * * 0"
+        | Monthly -> "42 4 1 * *"
