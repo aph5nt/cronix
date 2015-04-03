@@ -2,6 +2,7 @@
 open Cronix
 open Chessie.ErrorHandling
 open System.Threading
+open Dsl
 
 let sampleJob (token : CancellationToken) = 
       printf "callback executed at (UTC) %s\n" <| DateTime.UtcNow.ToString()
@@ -14,6 +15,7 @@ let main argv =
         new StartupHandler(
             fun(scheduler) ->
                         scheduler.Schedule "scheduled job" "* * * * *" <| Callback( sampleJob ) |> ignore
+                        scheduler.Schedule "second name" <| frequency Hourly <| Callback( sampleJob ) |> ignore
             )
 
     let result = BootStrapper.InitService(Some(argv), Some(startupHandler))

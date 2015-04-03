@@ -1,5 +1,4 @@
-﻿
-using Chessie.ErrorHandling.CSharp;
+﻿using Chessie.ErrorHandling.CSharp;
 using Cronix;
 using Microsoft.FSharp.Core;
 using System;
@@ -26,6 +25,7 @@ namespace CSharpSample
 				{
 					// schedule your job here
 					scheduler.Schedule("scheduled job", "* * * * *", EmbededJobs.Callback);
+					scheduler.Schedule("scheduled job", Dsl.frequency(Dsl.CronExpr.Daily), EmbededJobs.Callback);
 				}));
 			result.Match(
 				(state, msgs) =>
