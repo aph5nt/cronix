@@ -14,12 +14,10 @@ version 0.1
 version 0.2
 - support for stopping and starting job (unit test for starting, stopping job) - DONE
 - dsl for cron expressions - DONE
-- c# extensions (for less mess)
+- c# extensions (for less mess) - DONE
 
 
-version 0.3
-- mono support (raspberrypi2?; build server, bitcoin ticker)
-- installation as a service under linux
+
 
 version 0.4
 - webaservice - state + ui
@@ -35,3 +33,8 @@ version 0.4
 -- (clean up data job)
 -- (sql tune job)
 + documentation + manual
+
+
+version 0.3
+- mono support (raspberrypi2?; build server, bitcoin ticker)
+- installation as a service under linux

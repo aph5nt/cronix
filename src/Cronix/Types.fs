@@ -203,7 +203,7 @@ and StartupHandler = delegate of (IScheduleManager) -> unit
 and RunService = IScheduleManager -> Option<StartupHandler> -> unit
 
 /// The initialize service function signature.
-and InitService = Option<string[]> * Option<StartupHandler> -> Result<string, string>
+and InitService = string[] * StartupHandler -> Result<string, string>
 
 (* Messages *)
 /// Module responsible for generic messages.

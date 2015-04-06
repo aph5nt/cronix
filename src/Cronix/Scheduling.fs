@@ -107,7 +107,7 @@ open Logging
 type ScheduleManager() = 
     let logger = logger()
     let mutable disposed = false;
-    let state = new Dictionary<string, Job>()
+    let state = new Dictionary<string, Job>() // make this dictionary observable, and attach signalR on dict changes or expose onchanged event or sth like that.
     let tokenSource = new CancellationTokenSource()
     let agent = new MailboxProcessor<_>((fun inbox ->
         let loop = 
@@ -170,5 +170,13 @@ type ScheduleManager() =
             agent.Start()
   
 
+open System.Runtime.CompilerServices
 
+
+//[<Extension>]
+//type ResultExtensions () =
+//
+//    [<Extension>]
+//    static member inline Match(this, ifSuccess:Action<'TSuccess , ('TMessage list)>, ifFailure:Action<'TMessage list>) =
+//       ()
 

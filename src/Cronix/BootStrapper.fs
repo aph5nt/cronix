@@ -139,6 +139,8 @@ module BootStrapper =
         try
             AppDomain.CurrentDomain.UnhandledException.AddHandler(fun(sender:obj) (args:UnhandledExceptionEventArgs) -> logger.Fatal(args.ExceptionObject))
             let scheduleManager = new ScheduleManager() :> IScheduleManager
+            Web.initialize(scheduleManager)
+
             if debug = true then
                 scheduleManager.Start()
                 setupService scheduleManager startupHandler |> ignore
@@ -180,8 +182,8 @@ module BootStrapper =
     let InitService : InitService =
         fun (args, startupHandler) ->
            
-            let args' = parseOption args
-            let startupHandler' = parseOption startupHandler
+            let args' = parseOption <| Some(args)
+            let startupHandler' = parseOption <| Some(startupHandler)
             
             if args'.IsNone || (args'.IsSome && args'.Value.Length = 0) then 
                 runService startupHandler' <| isDebug()
