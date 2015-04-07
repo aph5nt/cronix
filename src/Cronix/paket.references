@@ -1,5 +1,11 @@
 NLog
 NCronTab
 chessie
+FSharp.Control.Reactive
+Microsoft.Owin.Hosting
+Microsoft.Owin.Host.HttpListener
 Nancy
-Nancy.Hosting.Self
+Nancy.Owin
+Microsoft.AspNet.SignalR
+Microsoft.AspNet.SignalR.Owin
+Microsoft.Owin.Security

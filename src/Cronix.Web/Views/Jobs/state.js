@@ -16,7 +16,18 @@ $(document).ready(function () {
             console.log(state.length);
             return state.length > 0;
         }),
-        initialize = function() {};
+        initialize = function() {
+            $.connection.hub.url = "http://localhost:8080/signalr";
+            var hub = $.connection.exchangeHub;
+            hub.client.UpdateContent = function (data) {
+                alert(data);
+            };
+            $.connection.hub.start().done(function () {
+                hub.server.GetInitialState().done(function(state) {
+                    console.log(state);
+                });
+            });
+        };
 
         return {
             state: state,

@@ -1,7 +1,6 @@
 source https://nuget.org/api/v2
 
 nuget FSharp.Formatting
-nuget Suave
 nuget xUnit ~> 1.9.2
 nuget xUnit.runners ~> 1.9.2
 nuget FsUnit.xUnit
@@ -12,12 +11,13 @@ nuget NCrontab
 nuget NLog
 nuget chessie
 nuget FSharp.Compiler.CodeDom
+nuget FSharp.Control.Reactive
+nuget Microsoft.Owin.Hosting
+nuget Microsoft.Owin.Host.HttpListener
 nuget Nancy
-nuget Nancy.Hosting.Self
-nuget bootstrap
-nuget jQuery
-nuget jquery.TypeScript.DefinitelyTyped
-nuget knockoutjs
- 
+nuget Nancy.Owin
+nuget Microsoft.AspNet.SignalR
+nuget Microsoft.AspNet.SignalR.Owin
+nuget Microsoft.Owin.Security
 
 github fsharp/FAKE modules/Octokit/Octokit.fsx
