@@ -20,13 +20,12 @@ namespace CSharpSample
 	{
 		public static void Main(string[] args)
 		{
-			var result = BootStrapper.InitService(new FSharpOption<string[]>(new[] { "debug" }),
-				new FSharpOption<StartupHandler>(scheduler =>
+			var result = BootStrapper.InitService(args, scheduler =>
 				{
 					// schedule your job here
 					scheduler.Schedule("scheduled job", "* * * * *", EmbededJobs.Callback);
 					scheduler.Schedule("scheduled job", Dsl.frequency(Dsl.CronExpr.Daily), EmbededJobs.Callback);
-				}));
+				});
 			result.Match(
 				(state, msgs) =>
 				{

@@ -111,8 +111,8 @@ module BootStrapper =
     let InitService : InitService =
         fun (args, startupHandler) ->
            
-            let args' = parseOption args
-            let startupHandler' = parseOption startupHandler
+            let args' = parseOption(Some(args))
+            let startupHandler' = parseOption(Some(startupHandler))
             
             if args'.IsNone || (args'.IsSome && args'.Value.Length = 0) then 
                 runService startupHandler' <| isDebug()

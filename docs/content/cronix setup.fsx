@@ -37,12 +37,12 @@ namespace CSharpSample
 	{
 		public static void Main(string[] args)
 		{
-			var result = BootStrapper.InitService(new FSharpOption<string[]>(new[] { "debug" }),
-				new FSharpOption<StartupHandler>(scheduler =>
+			var result = BootStrapper.InitService(args, scheduler =>
 				{
 					// schedule your job here
 					scheduler.Schedule("scheduled job", "* * * * *", EmbededJobs.Callback);
-				}));
+				});
+
 			result.Match(
 				(state, msgs) =>
 				{
@@ -76,7 +76,7 @@ let main argv =
                         scheduler.Schedule "scheduled job"  <| "* * * * *" <| Callback( sampleJob ) |> ignore
             )
 
-    let result = BootStrapper.InitService(Some(argv), Some(startupHandler))
+    let result = BootStrapper.InitService(argv, startupHandler)
     match result with
     | Ok (state, msgs) -> printfn "%s" state
     | Fail msgs -> msgs |> List.iter(fun(s) ->  printfn "%s" s)

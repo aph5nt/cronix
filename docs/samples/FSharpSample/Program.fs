@@ -17,7 +17,7 @@ let main argv =
                         scheduler.Schedule "second name" <| frequency Hourly <| Callback( sampleJob ) |> ignore
             )
 
-    let result = BootStrapper.InitService(Some(argv), Some(startupHandler))
+    let result = BootStrapper.InitService(argv, startupHandler)
     match result with
     | Ok (state, msgs) -> printfn "%s" state
     | Fail msgs -> msgs |> List.iter(fun(s) ->  printfn "%s" s)
