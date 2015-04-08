@@ -51,18 +51,18 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '24', 24)" onmouseover="showTip(event, '24', 24)">
-            addJob (state, params&#39;)
+            addTrigger (state, params&#39;)
           </code>
           <div class="tip" id="24">
             <strong>Signature:</strong> (state:ScheduleState * params&#39;:ScheduleParams) -&gt; Result&lt;ScheduleState,string&gt;<br />
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="http://github.com/aph5nt/cronix/tree/master/src/Cronix/Scheduling.fs#L35-35" class="github-link">
+            <a href="http://github.com/aph5nt/cronix/tree/master/src/Cronix/Scheduling.fs#L34-34" class="github-link">
               <img src="../content/img/github.png" class="normal" />
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
-          <p>Adds the job.</p>
+          <p>Adds the job to the trigger.</p>
 
         </td>
       </tr>
@@ -70,18 +70,18 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '25', 25)" onmouseover="showTip(event, '25', 25)">
-            canAddJob (state, params&#39;)
+            canAddTrigger (state, params&#39;)
           </code>
           <div class="tip" id="25">
             <strong>Signature:</strong> (state:ScheduleState * params&#39;:ScheduleParams) -&gt; Result&lt;(ScheduleState * ScheduleParams),string&gt;<br />
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="http://github.com/aph5nt/cronix/tree/master/src/Cronix/Scheduling.fs#L28-28" class="github-link">
+            <a href="http://github.com/aph5nt/cronix/tree/master/src/Cronix/Scheduling.fs#L27-27" class="github-link">
               <img src="../content/img/github.png" class="normal" />
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
-          <p>Checks if job can be added.</p>
+          <p>Checks if a job trigger can be added.</p>
 
         </td>
       </tr>
@@ -96,7 +96,7 @@
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="http://github.com/aph5nt/cronix/tree/master/src/Cronix/Scheduling.fs#L14-14" class="github-link">
+            <a href="http://github.com/aph5nt/cronix/tree/master/src/Cronix/Scheduling.fs#L13-13" class="github-link">
               <img src="../content/img/github.png" class="normal" />
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
@@ -115,7 +115,7 @@
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="http://github.com/aph5nt/cronix/tree/master/src/Cronix/Scheduling.fs#L42-42" class="github-link">
+            <a href="http://github.com/aph5nt/cronix/tree/master/src/Cronix/Scheduling.fs#L41-41" class="github-link">
               <img src="../content/img/github.png" class="normal" />
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
@@ -127,18 +127,18 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '28', 28)" onmouseover="showTip(event, '28', 28)">
-            removeJob (state, name)
+            removeTrigger (state, name)
           </code>
           <div class="tip" id="28">
             <strong>Signature:</strong> (state:ScheduleState * name:string) -&gt; Result&lt;ScheduleState,string&gt;<br />
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="http://github.com/aph5nt/cronix/tree/master/src/Cronix/Scheduling.fs#L48-48" class="github-link">
+            <a href="http://github.com/aph5nt/cronix/tree/master/src/Cronix/Scheduling.fs#L47-47" class="github-link">
               <img src="../content/img/github.png" class="normal" />
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
-          <p>Removes the job.</p>
+          <p>Removes given trigger.</p>
 
         </td>
       </tr>
@@ -153,7 +153,7 @@
                           <strong>Type parameters:</strong> 'a          </div>
         </td>
         <td class="xmldoc">
-            <a href="http://github.com/aph5nt/cronix/tree/master/src/Cronix/Scheduling.fs#L97-97" class="github-link">
+            <a href="http://github.com/aph5nt/cronix/tree/master/src/Cronix/Scheduling.fs#L96-96" class="github-link">
               <img src="../content/img/github.png" class="normal" />
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
@@ -165,14 +165,14 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '30', 30)" onmouseover="showTip(event, '30', 30)">
-            schedule (state, params&#39;)
+            scheduleJob (state, params&#39;)
           </code>
           <div class="tip" id="30">
             <strong>Signature:</strong> (state:ScheduleState * params&#39;:ScheduleParams) -&gt; Result&lt;ScheduleState,string&gt;<br />
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="http://github.com/aph5nt/cronix/tree/master/src/Cronix/Scheduling.fs#L64-64" class="github-link">
+            <a href="http://github.com/aph5nt/cronix/tree/master/src/Cronix/Scheduling.fs#L63-63" class="github-link">
               <img src="../content/img/github.png" class="normal" />
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
@@ -184,14 +184,14 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '31', 31)" onmouseover="showTip(event, '31', 31)">
-            start (state, name)
+            startJob (state, name)
           </code>
           <div class="tip" id="31">
             <strong>Signature:</strong> (state:ScheduleState * name:JobName) -&gt; Result&lt;ScheduleState,string&gt;<br />
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="http://github.com/aph5nt/cronix/tree/master/src/Cronix/Scheduling.fs#L89-89" class="github-link">
+            <a href="http://github.com/aph5nt/cronix/tree/master/src/Cronix/Scheduling.fs#L88-88" class="github-link">
               <img src="../content/img/github.png" class="normal" />
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
@@ -203,18 +203,18 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '32', 32)" onmouseover="showTip(event, '32', 32)">
-            startJob (state, name)
+            startTrigger (state, name)
           </code>
           <div class="tip" id="32">
             <strong>Signature:</strong> (state:ScheduleState * name:string) -&gt; Result&lt;ScheduleState,string&gt;<br />
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="http://github.com/aph5nt/cronix/tree/master/src/Cronix/Scheduling.fs#L59-59" class="github-link">
+            <a href="http://github.com/aph5nt/cronix/tree/master/src/Cronix/Scheduling.fs#L58-58" class="github-link">
               <img src="../content/img/github.png" class="normal" />
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
-          <p>Starts given job.</p>
+          <p>Starts given trigger.</p>
 
         </td>
       </tr>
@@ -222,14 +222,14 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '33', 33)" onmouseover="showTip(event, '33', 33)">
-            stop (state, name)
+            stopJob (state, name)
           </code>
           <div class="tip" id="33">
             <strong>Signature:</strong> (state:ScheduleState * name:JobName) -&gt; Result&lt;ScheduleState,string&gt;<br />
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="http://github.com/aph5nt/cronix/tree/master/src/Cronix/Scheduling.fs#L81-81" class="github-link">
+            <a href="http://github.com/aph5nt/cronix/tree/master/src/Cronix/Scheduling.fs#L80-80" class="github-link">
               <img src="../content/img/github.png" class="normal" />
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
@@ -241,18 +241,18 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '34', 34)" onmouseover="showTip(event, '34', 34)">
-            stopJob (state, name)
+            stopTrigger (state, name)
           </code>
           <div class="tip" id="34">
             <strong>Signature:</strong> (state:ScheduleState * name:string) -&gt; Result&lt;ScheduleState,string&gt;<br />
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="http://github.com/aph5nt/cronix/tree/master/src/Cronix/Scheduling.fs#L54-54" class="github-link">
+            <a href="http://github.com/aph5nt/cronix/tree/master/src/Cronix/Scheduling.fs#L53-53" class="github-link">
               <img src="../content/img/github.png" class="normal" />
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
-          <p>Stops given job execution.</p>
+          <p>Stops given trigger execution.</p>
 
         </td>
       </tr>
@@ -260,14 +260,14 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '35', 35)" onmouseover="showTip(event, '35', 35)">
-            unschedule (state, name)
+            unscheduleJob (state, name)
           </code>
           <div class="tip" id="35">
             <strong>Signature:</strong> (state:ScheduleState * name:JobName) -&gt; Result&lt;ScheduleState,string&gt;<br />
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="http://github.com/aph5nt/cronix/tree/master/src/Cronix/Scheduling.fs#L73-73" class="github-link">
+            <a href="http://github.com/aph5nt/cronix/tree/master/src/Cronix/Scheduling.fs#L72-72" class="github-link">
               <img src="../content/img/github.png" class="normal" />
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
@@ -286,7 +286,7 @@
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="http://github.com/aph5nt/cronix/tree/master/src/Cronix/Scheduling.fs#L19-19" class="github-link">
+            <a href="http://github.com/aph5nt/cronix/tree/master/src/Cronix/Scheduling.fs#L18-18" class="github-link">
               <img src="../content/img/github.png" class="normal" />
               <img src="../content/img/github-blue.png" class="hover" />
             </a>

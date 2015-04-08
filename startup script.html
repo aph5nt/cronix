@@ -75,7 +75,6 @@ Startup script is compiled on the Cronix service startup time.</p>
 <span class="l">23: </span>
 <span class="l">24: </span>
 <span class="l">25: </span>
-<span class="l">26: </span>
 </pre>
 </td>
 <td class="snippet"><pre class="fssnip">
@@ -98,7 +97,6 @@ Startup script is compiled on the Cronix service startup time.</p>
     <span class="k">open</span> <span onmouseout="hideTip(event, 'fs1', 1)" onmouseover="showTip(event, 'fs1', 1)" class="i">System</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs2', 2)" onmouseover="showTip(event, 'fs2', 2)" class="i">Threading</span>
     <span class="k">open</span> <span onmouseout="hideTip(event, 'fs1', 3)" onmouseover="showTip(event, 'fs1', 3)" class="i">System</span>
     <span class="k">open</span> <span class="i">Cronix</span>
-    <span class="k">open</span> <span class="i">Messages</span>
     <span class="k">open</span> <span class="i">CSharpSample</span><span class="o">.</span><span class="i">Jobs</span>
 
     <span class="c">/// startup method</span>
@@ -168,7 +166,6 @@ Startup script is compiled on the Cronix service startup time.</p>
     <span class="k">open</span> <span onmouseout="hideTip(event, 'fs1', 8)" onmouseover="showTip(event, 'fs1', 8)" class="i">System</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs2', 9)" onmouseover="showTip(event, 'fs2', 9)" class="i">Threading</span>
     <span class="k">open</span> <span onmouseout="hideTip(event, 'fs1', 10)" onmouseover="showTip(event, 'fs1', 10)" class="i">System</span>
     <span class="k">open</span> <span onmouseout="hideTip(event, 'fs6', 11)" onmouseover="showTip(event, 'fs6', 11)" class="i">Cronix</span>
-    <span class="k">open</span> <span class="i">Messages</span>
 
     <span class="c">//reference yours custom assembly here</span>
     <span class="k">open</span> <span class="i">CSharpSample</span>
@@ -180,9 +177,10 @@ Startup script is compiled on the Cronix service startup time.</p>
       <span onmouseout="hideTip(event, 'fs14', 19)" onmouseover="showTip(event, 'fs14', 19)" class="t">Thread</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs15', 20)" onmouseover="showTip(event, 'fs15', 20)" class="f">Sleep</span> <span class="n">100</span>
 
     <span class="k">let</span> <span onmouseout="hideTip(event, 'fs16', 21)" onmouseover="showTip(event, 'fs16', 21)" class="f">start</span> (<span onmouseout="hideTip(event, 'fs4', 22)" onmouseover="showTip(event, 'fs4', 22)" class="i">scheduler</span> <span class="o">:</span> <span class="i">IScheduleManager</span>) <span class="o">=</span>
-        <span onmouseout="hideTip(event, 'fs4', 23)" onmouseover="showTip(event, 'fs4', 23)" class="i">scheduler</span><span class="o">.</span><span class="i">Schedule</span> <span class="s">&quot;inline job&quot;</span> <span class="s">&quot;* * * * *&quot;</span> <span class="o">&lt;|</span> <span class="i">Callback</span>(<span onmouseout="hideTip(event, 'fs7', 24)" onmouseover="showTip(event, 'fs7', 24)" class="i">sampleJob</span>) <span class="o">|&gt;</span> <span onmouseout="hideTip(event, 'fs5', 25)" onmouseover="showTip(event, 'fs5', 25)" class="f">ignore</span>
-        <span onmouseout="hideTip(event, 'fs4', 26)" onmouseover="showTip(event, 'fs4', 26)" class="i">scheduler</span><span class="o">.</span><span class="i">Schedule</span> <span class="s">&quot;job from external assembly&quot;</span> <span class="s">&quot;* * * * *&quot;</span> <span class="o">&lt;|</span> <span class="i">Callback</span>(<span class="i">ExternalJobs</span><span class="o">.</span><span class="i">Callback</span>) <span class="o">|&gt;</span> <span onmouseout="hideTip(event, 'fs5', 27)" onmouseover="showTip(event, 'fs5', 27)" class="f">ignore</span>
-        <span onmouseout="hideTip(event, 'fs4', 28)" onmouseover="showTip(event, 'fs4', 28)" class="i">scheduler</span><span class="o">.</span><span class="i">Schedule</span> <span class="s">&quot;job defined inside the cronix service&quot;</span> <span class="s">&quot;* * * * *&quot;</span> <span class="o">&lt;|</span> <span class="i">Callback</span>(<span class="i">EmbededJobs</span><span class="o">.</span><span class="i">Callback</span>) <span class="o">|&gt;</span> <span onmouseout="hideTip(event, 'fs5', 29)" onmouseover="showTip(event, 'fs5', 29)" class="f">ignore</span>
+        <span onmouseout="hideTip(event, 'fs4', 23)" onmouseover="showTip(event, 'fs4', 23)" class="i">scheduler</span><span class="o">.</span><span class="i">Schedule</span> <span class="s">&quot;inline job&quot;</span> <span class="o">&lt;|</span> <span class="s">&quot;* * * * *&quot;</span> <span class="o">&lt;|</span> <span class="i">Callback</span>(<span onmouseout="hideTip(event, 'fs7', 24)" onmouseover="showTip(event, 'fs7', 24)" class="i">sampleJob</span>) <span class="o">|&gt;</span> <span onmouseout="hideTip(event, 'fs5', 25)" onmouseover="showTip(event, 'fs5', 25)" class="f">ignore</span>
+        <span onmouseout="hideTip(event, 'fs4', 26)" onmouseover="showTip(event, 'fs4', 26)" class="i">scheduler</span><span class="o">.</span><span class="i">Schedule</span> <span class="s">&quot;job from external assembly&quot;</span> <span class="o">&lt;|</span>  <span class="s">&quot;* * * * *&quot;</span> <span class="o">&lt;|</span> <span class="i">Callback</span>(<span class="i">ExternalJobs</span><span class="o">.</span><span class="i">Callback</span>) <span class="o">|&gt;</span> <span onmouseout="hideTip(event, 'fs5', 27)" onmouseover="showTip(event, 'fs5', 27)" class="f">ignore</span>
+        <span onmouseout="hideTip(event, 'fs4', 28)" onmouseover="showTip(event, 'fs4', 28)" class="i">scheduler</span><span class="o">.</span><span class="i">Schedule</span> <span class="s">&quot;job defined inside the cronix service&quot;</span> <span class="o">&lt;|</span>  <span class="s">&quot;* * * * *&quot;</span> <span class="o">&lt;|</span> <span class="i">Callback</span>(<span class="i">EmbededJobs</span><span class="o">.</span><span class="i">Callback</span>) <span class="o">|&gt;</span> <span onmouseout="hideTip(event, 'fs5', 29)" onmouseover="showTip(event, 'fs5', 29)" class="f">ignore</span>
+        <span onmouseout="hideTip(event, 'fs4', 30)" onmouseover="showTip(event, 'fs4', 30)" class="i">scheduler</span><span class="o">.</span><span class="i">Schedule</span> <span class="s">&quot;with frequency helper&quot;</span> <span class="o">&lt;|</span> <span class="i">frequency</span> <span class="i">Hourly</span> <span class="o">&lt;|</span> <span class="i">Callback</span>( <span onmouseout="hideTip(event, 'fs7', 31)" onmouseover="showTip(event, 'fs7', 31)" class="i">sampleJob</span> ) <span class="o">|&gt;</span> <span onmouseout="hideTip(event, 'fs5', 32)" onmouseover="showTip(event, 'fs5', 32)" class="f">ignore</span>
         ()
 </pre>
 </td>

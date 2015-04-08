@@ -176,7 +176,7 @@
     <span class="k">let</span> <span class="i">startupHandler</span> <span class="o">=</span> 
         <span class="k">new</span> <span class="i">StartupHandler</span>(
             <span class="k">fun</span>(<span class="i">scheduler</span>) <span class="k">-&gt;</span>
-                        <span class="i">scheduler</span><span class="o">.</span><span class="i">Schedule</span> <span class="s">&quot;scheduled job&quot;</span> <span class="s">&quot;* * * * *&quot;</span> <span class="o">&lt;|</span> <span class="i">Callback</span>( <span class="i">sampleJob</span> ) <span class="o">|&gt;</span> <span onmouseout="hideTip(event, 'fs11', 22)" onmouseover="showTip(event, 'fs11', 22)" class="i">ignore</span>
+                        <span class="i">scheduler</span><span class="o">.</span><span class="i">Schedule</span> <span class="s">&quot;scheduled job&quot;</span>  <span class="o">&lt;|</span> <span class="s">&quot;* * * * *&quot;</span> <span class="o">&lt;|</span> <span class="i">Callback</span>( <span class="i">sampleJob</span> ) <span class="o">|&gt;</span> <span onmouseout="hideTip(event, 'fs11', 22)" onmouseover="showTip(event, 'fs11', 22)" class="i">ignore</span>
             )
 
     <span class="k">let</span> <span class="i">result</span> <span class="o">=</span> <span class="i">BootStrapper</span><span class="o">.</span><span class="i">InitService</span>(<span onmouseout="hideTip(event, 'fs12', 23)" onmouseover="showTip(event, 'fs12', 23)" class="i">Some</span>(<span class="i">argv</span>), <span onmouseout="hideTip(event, 'fs12', 24)" onmouseover="showTip(event, 'fs12', 24)" class="i">Some</span>(<span class="i">startupHandler</span>))

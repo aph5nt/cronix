@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="utf-8"/>
-    <title>JobState - cronix</title>
+    <title>Compiler - cronix</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <meta name="description" content=""/>
     <meta name="author" content="aph5nt"/>
@@ -34,68 +34,112 @@
 
 
 
-<h1>JobState</h1>
+<h1>Compiler</h1>
 <div class="xmldoc">
-<p>The job state type.</p>
+<p>Module responsible for compiling the startup.fsx script.</p>
 </div>
-  <h3>Record Fields</h3>
+
+<!-- Render nested types and modules, if there are any -->
+
+  <h3>Functions and values</h3>
   <table class="table table-bordered member-list">
     <thead>
-      <tr><td>Record Field</td><td>Description</td></tr>
+      <tr><td>Function or value</td><td>Description</td></tr>
     </thead>
     <tbody>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '73', 73)" onmouseover="showTip(event, '73', 73)">
-            CronExpr
+          <code onmouseout="hideTip(event, '10', 10)" onmouseover="showTip(event, '10', 10)">
+            compileScript state
           </code>
-          <div class="tip" id="73">
-            <strong>Signature:</strong> JobCronExpr<br />
+          <div class="tip" id="10">
+            <strong>Signature:</strong> state:StartupScriptState -&gt; Result&lt;StartupScriptState,string&gt;<br />
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="http://github.com/aph5nt/cronix/tree/master/src/Cronix/Types.fs#L92-92" class="github-link">
+            <a href="http://github.com/aph5nt/cronix/tree/master/src/Cronix/Compiler.fs#L60-60" class="github-link">
               <img src="../content/img/github.png" class="normal" />
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
-          
+          <p>Compiles the startup script.</p>
+
         </td>
       </tr>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '74', 74)" onmouseover="showTip(event, '74', 74)">
-            Name
+          <code onmouseout="hideTip(event, '11', 11)" onmouseover="showTip(event, '11', 11)">
+            getStartupScript ()
           </code>
-          <div class="tip" id="74">
-            <strong>Signature:</strong> JobName<br />
+          <div class="tip" id="11">
+            <strong>Signature:</strong> unit -&gt; Result&lt;string,string&gt;<br />
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="http://github.com/aph5nt/cronix/tree/master/src/Cronix/Types.fs#L91-91" class="github-link">
+            <a href="http://github.com/aph5nt/cronix/tree/master/src/Cronix/Compiler.fs#L52-52" class="github-link">
               <img src="../content/img/github.png" class="normal" />
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
-          
+          <p>Loads the startup script.</p>
+
         </td>
       </tr>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '75', 75)" onmouseover="showTip(event, '75', 75)">
-            TriggerState
+          <code onmouseout="hideTip(event, '12', 12)" onmouseover="showTip(event, '12', 12)">
+            loadAssemblies ()
           </code>
-          <div class="tip" id="75">
-            <strong>Signature:</strong> TriggerState<br />
-                      </div>
+          <div class="tip" id="12">
+            <strong>Signature:</strong> unit -&gt; Result&lt;string [],&#39;?6305&gt;<br />
+                          <strong>Type parameters:</strong> '?6305          </div>
         </td>
         <td class="xmldoc">
-            <a href="http://github.com/aph5nt/cronix/tree/master/src/Cronix/Types.fs#L93-93" class="github-link">
+            <a href="http://github.com/aph5nt/cronix/tree/master/src/Cronix/Compiler.fs#L26-26" class="github-link">
               <img src="../content/img/github.png" class="normal" />
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
-          
+          <p>Scans for assemblies in the cronix service directory. Returns assembly name list.</p>
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '13', 13)" onmouseover="showTip(event, '13', 13)">
+            outputAssembly 
+          </code>
+          <div class="tip" id="13">
+            <strong>Signature:</strong> string<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+            <a href="http://github.com/aph5nt/cronix/tree/master/src/Cronix/Compiler.fs#L20-20" class="github-link">
+              <img src="../content/img/github.png" class="normal" />
+              <img src="../content/img/github-blue.png" class="hover" />
+            </a>
+          <p>Output assembly name constant.</p>
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '14', 14)" onmouseover="showTip(event, '14', 14)">
+            startupFile 
+          </code>
+          <div class="tip" id="14">
+            <strong>Signature:</strong> string<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+            <a href="http://github.com/aph5nt/cronix/tree/master/src/Cronix/Compiler.fs#L17-17" class="github-link">
+              <img src="../content/img/github.png" class="normal" />
+              <img src="../content/img/github-blue.png" class="hover" />
+            </a>
+          <p>Statup script name constant.</p>
+
         </td>
       </tr>
     </tbody>
