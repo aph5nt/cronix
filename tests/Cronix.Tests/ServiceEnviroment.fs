@@ -1,15 +1,8 @@
 ﻿namespace Cronix.Tests
 
-open FsUnit.Xunit
-open Xunit
-open Cronix
-open Chessie.ErrorHandling
 open System.Reflection
 open System.ServiceProcess
-open System
 open System.Threading
-open System.Collections.Generic
-open System.Diagnostics 
 
 type DummyType() = 
     class

@@ -13,7 +13,7 @@ let main argv =
     let startupHandler = 
         new StartupHandler(
             fun(scheduler) ->
-                        scheduler.Schedule "scheduled job" "* * * * *" <| Callback( sampleJob ) |> ignore
+                        scheduler.Schedule "scheduled job" <| "* * * * *" <| Callback( sampleJob ) |> ignore
                         scheduler.Schedule "second name" <| frequency Hourly <| Callback( sampleJob ) |> ignore
             )
 

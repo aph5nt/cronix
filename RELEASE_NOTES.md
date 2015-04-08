@@ -1,7 +1,9 @@
+### 0.2 - Released
+* Documentation fixes
+* Unit test fixes
+* Code refactoring
+* Added support for starting and stopping given job
+* Added Cron expression helper
+
 ### 0.1 - Released
 * Initial version of CRONIX service
-
-### 0.2 - Unreleased (Planned)
-* add support for stopping and starting job
-* dsl for cron expressions
-* c# extensions for better language support

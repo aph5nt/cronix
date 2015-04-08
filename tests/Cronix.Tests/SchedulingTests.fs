@@ -70,7 +70,10 @@ type ScheduleManagerTests() =
 
     [<Fact>]
     let ``schedule a job``() =
-        let result = manager.Schedule "job1" "* * * * *" <| Callback(sampleJob)
+        let result = manager.Schedule "job1" 
+                     <| "* * * * *" 
+                     <| Callback(sampleJob)
+
         match result with
         | Ok (_, msgs) -> 
             msgs |> should contain "Expr <[* * * * *]> is valid."
@@ -81,7 +84,11 @@ type ScheduleManagerTests() =
 
     [<Fact>]
     let ``schedule not the same job twice``() =
-        manager.Schedule "job1" "* * * * *" <| Callback(sampleJob) |> ignore
+        manager.Schedule "job1" 
+        <| "* * * * *" 
+        <| Callback(sampleJob)  
+         |> ignore
+
         let result = manager.Schedule "job1" "* * * * *" <| Callback(sampleJob)
         match result with
         | Fail msgs ->  msgs |> should contain "Job <[job1]> already exists."
@@ -89,14 +96,21 @@ type ScheduleManagerTests() =
 
     [<Fact>]
     let ``schedule not job with invalid expression``() =
-        let result = manager.Schedule "job1" "a * * * *" <| Callback(sampleJob)
+        let result = manager.Schedule "job1"
+                     <| "a * * * *"
+                     <| Callback(sampleJob)
+
         match result with
         | Fail msgs ->  msgs |> should contain "Expr <[a * * * *]> is not valid."
         | _ -> failwith "Expected Failure Tee" 
 
     [<Fact>]
     let ``unschedule a job``() =
-        manager.Schedule "job1" "* * * * *" <| Callback(sampleJob) |> ignore
+        manager.Schedule "job1" 
+        <| "* * * * *"
+        <| Callback(sampleJob) 
+        |> ignore
+
         let result = manager.UnSchedule "job1"
         match result with
         | Ok (_, msgs) -> 
@@ -113,7 +127,10 @@ type ScheduleManagerTests() =
 
     [<Fact>]
     let ``stop and start a job``() =
-        let result = manager.Schedule "job1" "a * * * *" <| Callback(sampleJob)
+        let result = manager.Schedule "job1" 
+                     <| "* * * * *" 
+                     <| Callback(sampleJob)
+
         let stopped = manager.StopJob("job1")
         Thread.Sleep(200)
         match stopped with
@@ -129,7 +146,11 @@ type ScheduleManagerTests() =
 
     [<Fact>]
     let ``get manager state``() =
-         manager.Schedule "job1" "* * * * *" <| Callback(sampleJob) |> ignore
+         manager.Schedule "job1" 
+         <| "* * * * *"
+         <| Callback(sampleJob)
+          |> ignore
+
          manager.State |> Seq.toArray |> Array.find(fun(i) -> i.Name = "job1") |> should not' Null
 
     interface IDisposable with

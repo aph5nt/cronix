@@ -73,7 +73,7 @@ let main argv =
     let startupHandler = 
         new StartupHandler(
             fun(scheduler) ->
-                        scheduler.Schedule "scheduled job" "* * * * *" <| Callback( sampleJob ) |> ignore
+                        scheduler.Schedule "scheduled job"  <| "* * * * *" <| Callback( sampleJob ) |> ignore
             )
 
     let result = BootStrapper.InitService(Some(argv), Some(startupHandler))

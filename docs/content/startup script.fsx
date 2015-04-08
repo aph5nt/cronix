@@ -81,9 +81,9 @@ module RunAtStartup =
       Thread.Sleep 100
 
     let start (scheduler : IScheduleManager) =
-        scheduler.Schedule "inline job" "* * * * *" <| Callback(sampleJob) |> ignore
-        scheduler.Schedule "job from external assembly" "* * * * *" <| Callback(ExternalJobs.Callback) |> ignore
-        scheduler.Schedule "job defined inside the cronix service" "* * * * *" <| Callback(EmbededJobs.Callback) |> ignore
+        scheduler.Schedule "inline job" <| "* * * * *" <| Callback(sampleJob) |> ignore
+        scheduler.Schedule "job from external assembly" <|  "* * * * *" <| Callback(ExternalJobs.Callback) |> ignore
+        scheduler.Schedule "job defined inside the cronix service" <|  "* * * * *" <| Callback(EmbededJobs.Callback) |> ignore
         scheduler.Schedule "with frequency helper" <| frequency Hourly <| Callback( sampleJob ) |> ignore
         ()
 

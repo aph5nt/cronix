@@ -66,6 +66,7 @@
     <Compile Include="Triggers.fs" />
     <Compile Include="Scheduling.fs" />
     <Compile Include="Installer.fs" />
+    <Compile Include="Compiler.fs" />
     <Compile Include="BootStrapper.fs" />
     <None Include="Startup.fsx" />
   </ItemGroup>

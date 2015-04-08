@@ -4,14 +4,11 @@ open FsUnit.Xunit
 open Xunit
 open Cronix
 open Chessie.ErrorHandling
-open System.Reflection
-open System.ServiceProcess
 open System
 open System.Threading
 open System.Collections.Generic
 open System.Diagnostics 
 open ServiceEnviroment   
-open BootStrapper
 open System.IO
 
 [<Trait("Service", "Unit Test")>]
@@ -30,6 +27,7 @@ type SetupServiceTest() =
         match getStartupScript() with
          | Ok (script, msgs) -> script |> should not' NullOrEmptyString
          | Fail msgs -> failwith "Expected Success Tee"
+         | _ -> ()
 
 
     [<Fact>]
@@ -38,6 +36,7 @@ type SetupServiceTest() =
         match getStartupScript() with
          | Ok (_, _) -> failwith "Expected Failure Tee"
          | Fail msgs -> IO.File.Move("Startup.fsx.bak", "Startup.fsx")
+         | _ -> ()
 
         
     [<Fact>]

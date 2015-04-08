@@ -14,7 +14,11 @@ version 0.1
 version 0.2
 - support for stopping and starting job (unit test for starting, stopping job) - DONE
 - dsl for cron expressions - DONE
-- c# extensions (for less mess)
+- c# extensions (for less mess) -DONE
+- refactoring:
+
+-- Cronix.Common (types + logging)
+---Bootstrapper --> Compiler
 
 
 version 0.3

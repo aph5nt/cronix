@@ -5,83 +5,14 @@ module BootStrapper =
    
     open Chessie.ErrorHandling
     open Logging
+    open Compiler
     open System.IO
     open System
-    open System.Reflection
-    open System.CodeDom.Compiler
-    open FSharp.Compiler.CodeDom
     open System.ServiceProcess
-    open System.Diagnostics
- 
-    /// Statup script name constant.
-    let startupFile = "Startup.fsx"
-
-    /// Output assembly name constant.
-    let outputAssembly = "Cronix.Startup.dll"
+    open System.Reflection
 
     /// Boostrapper module specific logger.
     let logger = logger()
-
-    /// Scans for assemblies in the cronix service directory. Returns assembly name list.
-    let loadAssemblies() =
-        let assemblies =
-            Directory.GetFiles(".", "*.dll", SearchOption.TopDirectoryOnly)
-            |> Seq.map(fun(f) -> Path.GetFileName(f)) 
-            |> Seq.filter ((<>)outputAssembly)
-            |> Seq.sort
-            |> Seq.toArray 
-        let defaultAssemblies  = 
-            let entry = Assembly.GetEntryAssembly()
-            let executing = Assembly.GetExecutingAssembly()
-            let calling = Assembly.GetCallingAssembly()
-            [|"System.dll"; 
-                (if entry <> null then Path.GetFileName(entry.Location) else "");
-                (if executing <> null then Path.GetFileName(executing.Location) else "");
-                (if calling <> null then Path.GetFileName(calling.Location) else "");
-            |] 
-            |> Seq.distinct |> Seq.toArray
-        let asm = Array.append assemblies defaultAssemblies 
-                 |> Array.toSeq
-                 |> Seq.filter ((<>)"")
-                 |> Seq.distinct
-                 |> Seq.toArray
-
-        ok asm
-    
-    /// Loads the startup script.
-    let getStartupScript() =
-        try
-            let sourceCode = File.ReadAllText("Startup.fsx")
-            ok sourceCode
-        with
-        | exn -> fail(sprintf "Failed to load source code from the starup script. %s" exn.Message)
-
-    /// Compiles the startup script.
-    let compileScript(state : StartupScriptState) =
-        try
-            let provider = new FSharpCodeProvider()
-            let params'= CompilerParameters()
-            params'.GenerateExecutable <- false
-            params'.OutputAssembly <- IO.Path.Combine(System.Environment.CurrentDirectory, outputAssembly)
-            params'.IncludeDebugInformation <- true
-            params'.ReferencedAssemblies.AddRange(state.referencedAssemblies)
-            params'.GenerateInMemory <- false
-            params'.WarningLevel <- 3
-            params'.TreatWarningsAsErrors <- false
-
-            let compiledResults = provider.CompileAssemblyFromSource(params', state.source)
-
-            if compiledResults.Errors.Count > 0 then
-                let errors = Array.init<CompilerError> compiledResults.Errors.Count (fun(_)-> new CompilerError())
-                compiledResults.Errors.CopyTo(errors, 0)
-                let errorMessage = seq { for error in errors do yield error.ErrorText} |> Seq.toArray   
-                let errorMessages = Array.append [|"Failed to compile startup script."|] errorMessage
-                fail(String.Join("\n", errorMessages))
-            else
-                let asm = Some(compiledResults.CompiledAssembly)
-                ok { state with compiled = asm}
-        with
-        | exn -> fail(sprintf "Failed to compile startup script. %s" exn.Message)
 
     /// Invokes the compiled startup script.
     let invokeStartupScript(state : StartupScriptState) =
@@ -137,7 +68,7 @@ module BootStrapper =
     /// Runs the cronix service. If its run in console mode then the service will start immediately. If not then the ServiceProcessAdapter will start.
     let runService(startupHandler : Option<StartupHandler>) debug =
         try
-            AppDomain.CurrentDomain.UnhandledException.AddHandler(fun(sender:obj) (args:UnhandledExceptionEventArgs) -> logger.Fatal(args.ExceptionObject))
+            AppDomain.CurrentDomain.UnhandledException.AddHandler(fun(_) (args:UnhandledExceptionEventArgs) -> logger.Fatal(args.ExceptionObject))
             let scheduleManager = new ScheduleManager() :> IScheduleManager
             if debug = true then
                 scheduleManager.Start()
