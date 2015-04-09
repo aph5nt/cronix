@@ -12,19 +12,22 @@ nuget NLog
 nuget chessie
 nuget FSharp.Compiler.CodeDom
  
-nuget jQuery 
-nuget Microsoft.AspNet.Razor 
-nuget Microsoft.AspNet.SignalR 
-nuget Microsoft.AspNet.SignalR.Core 
-nuget Microsoft.AspNet.SignalR.JS 
-nuget Microsoft.AspNet.SignalR.SystemWeb 
-nuget Microsoft.Owin 
-nuget Microsoft.Owin.Host.SystemWeb 
-nuget Microsoft.Owin.Security 
-nuget Nancy 
-nuget Nancy.Owin 
-nuget Nancy.Viewengines.Razor 
-nuget Newtonsoft.Json 
+nuget jQuery
+nuget knockoutjs
+nuget Microsoft.AspNet.Razor
+nuget Microsoft.AspNet.SignalR
+nuget Microsoft.AspNet.SignalR.Core
+nuget Microsoft.AspNet.SignalR.JS
+nuget Microsoft.AspNet.SignalR.SystemWeb
+nuget Microsoft.Owin
+nuget Microsoft.Owin.Hosting
+nuget Microsoft.Owin.Host.SystemWeb
+nuget Microsoft.Owin.Host.HttpListener
+nuget Microsoft.Owin.Security
+nuget Nancy
+nuget Nancy.Owin
+nuget Nancy.Viewengines.Razor
+nuget Newtonsoft.Json
 nuget Owin
- 
+
 github fsharp/FAKE modules/Octokit/Octokit.fsx
