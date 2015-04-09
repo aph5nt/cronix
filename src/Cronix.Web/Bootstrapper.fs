@@ -8,5 +8,5 @@ type Bootstrapper() =
     inherit DefaultNancyBootstrapper()
 
     override x.ApplicationStartup(container :TinyIoCContainer,  pipelines : IPipelines) =
-        ()
+        base.ApplicationStartup(container, pipelines)
    

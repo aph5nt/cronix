@@ -29,5 +29,8 @@ nuget Nancy.Owin
 nuget Nancy.Viewengines.Razor
 nuget Newtonsoft.Json
 nuget Owin
+nuget Microsoft.AspNet.SignalR
+ 
+ 
 
 github fsharp/FAKE modules/Octokit/Octokit.fsx

@@ -1,35 +1,33 @@
 ﻿namespace Cronix.Web
 
-
 open System
 open Nancy
 open Microsoft.Owin.Hosting
- 
- 
 
 module EntryPoint = 
-
-
-
+    open Microsoft.AspNet.SignalR
 
     [<EntryPoint>]
     let main args =
-        let uri = Uri("http://localhost:8085")
-
+        
         // Owin configuration
         let options = new StartOptions()
-        options.Port <- new Nullable<int>(8085)
+        options.Port <- new Nullable<int>(8111)
          
         // Nancy configuration
         let nancyOptions = new Nancy.Owin.NancyOptions()
-        nancyOptions.Bootstrapper <- new Bootstrapper()
+        nancyOptions.Bootstrapper <- new DefaultNancyBootstrapper()
+
+        // signalr configuration
+        let config = new HubConfiguration(EnableDetailedErrors = true)
 
         WebApp.Start(options,
             fun(app : Owin.IAppBuilder) -> (
                                              app.Use(Nancy.Owin.NancyMiddleware.UseNancy(nancyOptions)) |> ignore
+                                             Owin.OwinExtensions.MapSignalR(app, "/signalrHub", config) |> ignore
             )) |> ignore
  
-        Console.WriteLine("Your application is running on " + uri.AbsoluteUri)
+ 
         Console.WriteLine("Press any [Enter] to close the host.")
         Console.ReadLine() |> ignore
         0
