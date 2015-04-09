@@ -1,0 +1,17 @@
+NLog
+NCronTab
+chessie
+jQuery 
+Microsoft.AspNet.Razor 
+Microsoft.AspNet.SignalR 
+Microsoft.AspNet.SignalR.Core 
+Microsoft.AspNet.SignalR.JS 
+Microsoft.AspNet.SignalR.SystemWeb 
+Microsoft.Owin 
+Microsoft.Owin.Host.SystemWeb 
+Microsoft.Owin.Security 
+Nancy 
+Nancy.Owin 
+Nancy.Viewengines.Razor 
+Newtonsoft.Json 
+Owin
