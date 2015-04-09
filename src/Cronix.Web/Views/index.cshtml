@@ -12,13 +12,13 @@
             //$.connection.hub.url = "http://localhost:8111/signalrHub";
             var hub = $.connection.SampleHub;
 
-            hub.client.GetData = function(input) {
+            hub.client.getData = function (input) {
                 console.log("client received " + input);
             };
 
             $.connection.hub.start().done(function () {
                 console.log("something happened!");
-                hub.server.GetData("Dupa");
+                hub.server.getData("Dupa");
             });
         })
     </script>

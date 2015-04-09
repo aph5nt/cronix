@@ -12,6 +12,8 @@ type Bootstrapper() =
         base.ApplicationStartup(container, pipelines)
    
     override x.ConfigureConventions(nancyConventions : NancyConventions) =
-        nancyConventions.StaticContentsConventions.Add(StaticContentConventionBuilder.AddDirectory("Scripts", @"/Scripts"))
         base.ConfigureConventions(nancyConventions)
+        nancyConventions.StaticContentsConventions.Add(StaticContentConventionBuilder.AddDirectory("Scripts", @"/Scripts"))
+  
+        
   

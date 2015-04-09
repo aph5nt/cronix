@@ -5,13 +5,13 @@ open Microsoft.AspNet.SignalR
 open Microsoft.AspNet.SignalR.Hubs
 
 type ISampleHub =
-   abstract member GetData: string -> string
+   abstract member GetData: string -> unit
 
 [<HubName("SampleHub")>]
 type SampleHub() =
     inherit Hub<ISampleHub>()
     member x.GetData(input : string) =
-        base.Clients.All.GetData(input)
+        base.Clients.All.GetData(input) |> ignore
 
 type IndexModule() as x =
     inherit NancyModule()
