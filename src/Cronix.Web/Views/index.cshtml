@@ -4,13 +4,31 @@
     <meta charset="utf-8">
     <title>Cronix.Web</title>
 
-	<style type="text/css">
+    <script src="../Scripts/jquery-2.1.3.min.js"></script>
+    <script src="../Scripts/jquery.signalR-2.2.0.min.js"></script>
+    <script src="signalr/hubs"></script>
+    <script type="text/javascript">
+        $(function() {
+            //$.connection.hub.url = "http://localhost:8111/signalrHub";
+            var hub = $.connection.SampleHub;
+
+            hub.client.GetData = function(input) {
+                console.log("client received " + input);
+            };
+
+            $.connection.hub.start().done(function () {
+                console.log("something happened!");
+                hub.server.GetData("Dupa");
+            });
+        })
+    </script>
+    <style type="text/css">
 
 		body {
-			text-align: center;
+		    text-align: center;
 		}
 
-	</style>
+    </style>
 
 </head>
 <body>

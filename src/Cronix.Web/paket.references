@@ -18,5 +18,4 @@ Nancy.Owin
 Nancy.Viewengines.Razor 
 Newtonsoft.Json 
 Owin
-Microsoft.AspNet.SignalR
- 
+Microsoft.Owin.Diagnostics

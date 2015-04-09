@@ -2,9 +2,16 @@
 
 open Nancy
 open Microsoft.AspNet.SignalR
+open Microsoft.AspNet.SignalR.Hubs
 
+type ISampleHub =
+   abstract member GetData: string -> string
+
+[<HubName("SampleHub")>]
 type SampleHub() =
-    inherit Hub()
+    inherit Hub<ISampleHub>()
+    member x.GetData(input : string) =
+        base.Clients.All.GetData(input)
 
 type IndexModule() as x =
     inherit NancyModule()

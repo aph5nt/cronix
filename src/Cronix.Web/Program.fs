@@ -2,7 +2,10 @@
 
 open System
 open Nancy
+ 
 open Microsoft.Owin.Hosting
+open Microsoft.Owin.Diagnostics
+ 
 
 module EntryPoint = 
     open Microsoft.AspNet.SignalR
@@ -16,15 +19,16 @@ module EntryPoint =
          
         // Nancy configuration
         let nancyOptions = new Nancy.Owin.NancyOptions()
-        nancyOptions.Bootstrapper <- new DefaultNancyBootstrapper()
-
+        nancyOptions.Bootstrapper <- new Bootstrapper()
+        
         // signalr configuration
         let config = new HubConfiguration(EnableDetailedErrors = true)
-
+        
         WebApp.Start(options,
             fun(app : Owin.IAppBuilder) -> (
-                                             app.Use(Nancy.Owin.NancyMiddleware.UseNancy(nancyOptions)) |> ignore
-                                             Owin.OwinExtensions.MapSignalR(app, "/signalrHub", config) |> ignore
+                                           Owin.OwinExtensions.MapSignalR(app, "/signalr", config) |> ignore
+                                           app.Use(Nancy.Owin.NancyMiddleware.UseNancy(nancyOptions)) |> ignore
+                                           
             )) |> ignore
  
  
