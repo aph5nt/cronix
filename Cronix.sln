@@ -47,6 +47,27 @@ Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "FSharpSample", "docs\sample
 EndProject
 Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Cronix.Web", "src\Cronix.Web\Cronix.Web.fsproj", "{AE05370B-00DE-47FB-BD1D-24BECF90D68A}"
 EndProject
+Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "Cronix.UI", "http://localhost:4460", "{D227E2E9-FED5-406F-9B83-27B80DCA2AF7}"
+	ProjectSection(WebsiteProperties) = preProject
+		UseIISExpress = "true"
+		TargetFrameworkMoniker = ".NETFramework,Version%3Dv4.0"
+		Debug.AspNetCompiler.VirtualPath = "/localhost_4460"
+		Debug.AspNetCompiler.PhysicalPath = "src\Cronix.UI\"
+		Debug.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_4460\"
+		Debug.AspNetCompiler.Updateable = "true"
+		Debug.AspNetCompiler.ForceOverwrite = "true"
+		Debug.AspNetCompiler.FixedNames = "false"
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.VirtualPath = "/localhost_4460"
+		Release.AspNetCompiler.PhysicalPath = "src\Cronix.UI\"
+		Release.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_4460\"
+		Release.AspNetCompiler.Updateable = "true"
+		Release.AspNetCompiler.ForceOverwrite = "true"
+		Release.AspNetCompiler.FixedNames = "false"
+		Release.AspNetCompiler.Debug = "False"
+		SlnRelativePath = "src\Cronix.UI\"
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -117,6 +138,16 @@ Global
 		{AE05370B-00DE-47FB-BD1D-24BECF90D68A}.Release|Mixed Platforms.Build.0 = Release|x86
 		{AE05370B-00DE-47FB-BD1D-24BECF90D68A}.Release|x86.ActiveCfg = Release|x86
 		{AE05370B-00DE-47FB-BD1D-24BECF90D68A}.Release|x86.Build.0 = Release|x86
+		{D227E2E9-FED5-406F-9B83-27B80DCA2AF7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D227E2E9-FED5-406F-9B83-27B80DCA2AF7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D227E2E9-FED5-406F-9B83-27B80DCA2AF7}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{D227E2E9-FED5-406F-9B83-27B80DCA2AF7}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{D227E2E9-FED5-406F-9B83-27B80DCA2AF7}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{D227E2E9-FED5-406F-9B83-27B80DCA2AF7}.Release|Any CPU.ActiveCfg = Debug|Any CPU
+		{D227E2E9-FED5-406F-9B83-27B80DCA2AF7}.Release|Any CPU.Build.0 = Debug|Any CPU
+		{D227E2E9-FED5-406F-9B83-27B80DCA2AF7}.Release|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{D227E2E9-FED5-406F-9B83-27B80DCA2AF7}.Release|Mixed Platforms.Build.0 = Debug|Any CPU
+		{D227E2E9-FED5-406F-9B83-27B80DCA2AF7}.Release|x86.ActiveCfg = Debug|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
