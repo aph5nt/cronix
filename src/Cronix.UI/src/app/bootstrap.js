@@ -33,15 +33,9 @@
 
       return support && {
         end: (function () {
-          var transitionEnd = "TransitionEnd"
-          if ( $.browser.webkit ) {
-          	transitionEnd = "webkitTransitionEnd"
-          } else if ( $.browser.mozilla ) {
-          	transitionEnd = "transitionend"
-          } else if ( $.browser.opera ) {
-          	transitionEnd = "oTransitionEnd"
-          }
-          return transitionEnd
+            var transitionEnd = "TransitionEnd";
+
+            return transitionEnd;
         }())
       }
     })()
