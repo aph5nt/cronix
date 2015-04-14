@@ -16,6 +16,7 @@
     <!--[if lt IE 9]>
         <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
+
     <script src="bower_modules/jquery/dist/jquery.min.js"></script>
     <script src="app/bootstrap.js"></script>
     <script src="app/excanvas.min.js"></script>
@@ -54,9 +55,9 @@
             <div class="container">
                 <ul class="mainnav">
                     <li><a><i class="icon-list-alt"></i><span>Dashboard</span> </a> </li>
-                    <li class="active"><a href="index.html"><i class="icon-dashboard"></i><span>Job preview</span> </a> </li>
-                    <li><a><i class="icon-list-alt"></i><span>Live log</span> </a> </li>
-                    <li><a><i class="icon-list-alt"></i><span>Reports</span> </a> </li>
+                    <li class="active"><a href="#/job-preview"><i class="icon-dashboard"></i><span>Job preview</span> </a> </li>
+                    <li><a href="#job-preview"><i class="icon-list-alt"></i><span>Live log</span> </a> </li>
+                    <li><a href="index.html#job-preview"><i class="icon-list-alt"></i><span>Reports</span> </a> </li>
                     <li><a><i class="icon-list-alt"></i><span>Schedule calendar</span> </a> </li>
                     <li><a><i class="icon-list-alt"></i><span>Administration</span> </a> </li>
                     <li><a><i class="icon-list-alt"></i><span>Support</span> </a> </li>
@@ -72,7 +73,6 @@
             <div class="container">
                 <div class="row">
                     <div class="span12">
-                        <nav-bar params="route: route"></nav-bar>
                         <div id="page" class="container" data-bind="component: { name: route().page, params: route }"></div>
                     </div>
                      

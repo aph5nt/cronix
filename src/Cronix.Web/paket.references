@@ -19,3 +19,4 @@ Nancy.Viewengines.Razor
 Newtonsoft.Json 
 Owin
 Microsoft.Owin.Diagnostics
+Microsoft.Owin.Cors

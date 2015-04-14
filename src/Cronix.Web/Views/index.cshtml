@@ -9,17 +9,7 @@
     <script src="signalr/hubs"></script>
     <script type="text/javascript">
         $(function() {
-            //$.connection.hub.url = "http://localhost:8111/signalrHub";
-            var hub = $.connection.SampleHub;
-
-            hub.client.getData = function (input) {
-                console.log("client received " + input);
-            };
-
-            $.connection.hub.start().done(function () {
-                console.log("something happened!");
-                hub.server.getData("Dupa");
-            });
+           
         })
     </script>
     <style type="text/css">

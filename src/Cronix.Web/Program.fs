@@ -1,11 +1,19 @@
 ﻿namespace Cronix.Web
 
 open System
-open Nancy
+ 
  
 open Microsoft.Owin.Hosting
 open Microsoft.Owin.Diagnostics
+open Microsoft.Owin.Cors
+open Owin
  
+open Microsoft.AspNet.SignalR
+open Microsoft.AspNet.SignalR.Hubs
+open Microsoft.Owin.Hosting
+open Microsoft.Owin.Cors
+ 
+open System.Diagnostics
 
 module EntryPoint = 
     open Microsoft.AspNet.SignalR
@@ -26,6 +34,8 @@ module EntryPoint =
         
         WebApp.Start(options,
             fun(app : Owin.IAppBuilder) -> (
+                                           app.UseCors(CorsOptions.AllowAll) |> ignore
+                                          // app.MapSignalR("/signalr", config) |> ignore
                                            Owin.OwinExtensions.MapSignalR(app, "/signalr", config) |> ignore
                                            app.Use(Nancy.Owin.NancyMiddleware.UseNancy(nancyOptions)) |> ignore
                                            
