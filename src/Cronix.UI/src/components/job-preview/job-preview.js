@@ -1,62 +1,77 @@
 define(['knockout', 'signalr','text!./job-preview.html'], function(ko, signalr, templateMarkup) {
 
+    var connection = $.hubConnection();
+    connection.url = "http://localhost:8111/signalr";
 
-    var triggerStateType = {
-        Stopped: { name: "Stopped", value: 0 },
-        Idle: { name: "Idle", value: 1 },
-        Executing: { name: "Executing", value: 2 },
-        Terminated: { name: "Terminated", value: 3 },
+    var hub = connection.createHubProxy('ScheduleManager');
+
+    var triggerStateCase = {
+        Stopped: "Stopped",
+        Idle: "Idle",
+        Executing: "Executing",
+        Terminated: "Terminated"
     };
 
     var jobPreviewItem = function() {
         var self = this;
-        var name = "",
-            cronExpr = ko.observable(),
-            triggerState = ko.observable(),
-            start = function() {},
-            stop = function() {},
-            canStart = ko.computed(function() {}),
-            canStop = ko.computed(function() {});
 
-        return {
-            name: name,
-            cronExpr: cronExpr,
-            triggerState: triggerState,
-            start: start,
-            stop: stop,
-            canStart: canStart,
-            canStop: canStop
-        }
+        self.commandToggled = ko.observable(false);
+        self.cronExpr = ko.observable();
+        self.triggerState = ko.observable(triggerStateCase.Idle);
+        self.start = function() {
+            hub.invoke('startJob', self.name);
+            self.commandToggled(true);
+        };
+        self.stop = function() {
+            hub.invoke('stopJob', self.name);
+            self.commandToggled(true);
+        };
+        self.canStart = ko.computed(function() {
+            return self.triggerState() !== triggerStateCase.Executing && self.commandToggled() === false;
+        });
+        self.canStop = ko.computed(function () {
+            return self.triggerState() === triggerStateCase.Executing && self.commandToggled() === false;
+        });
+
+        
     };
 
     function jobPreview(params) {
         var self = this;
 
         self.items = ko.observableArray();
-        self.load = function () {
+        
+        hub.on('getData', function (input) {
+            var items = [];
 
-            var connection = $.hubConnection();
-            connection.url = "http://localhost:8111/signalr";
+            input.forEach(function(jobState) {
+                var item = new jobPreviewItem();
+                item.name = jobState.Name;
+                item.cronExpr(jobState.CronExpr);
+                item.triggerState(jobState.TriggerState.Case);
 
-            var hub = connection.createHubProxy('SampleHub');
-
-            hub.on('getData', function (input) {
-                var i = new jobPreviewItem();
-                i.name = "My Job";
-                i.cronExpr = "* * * * *";
-                i.triggerState = triggerStateType.Idle.name;
-                self.items([i]);
+                items.push(item);
             });
- 
 
-            connection.start().done(function () {
-                hub.invoke('getData', 'duppaaaaa');
-            });
-        }
+            self.items(items);
+        });
 
-        self.load();
+        connection.start().done(function () {
+            hub.invoke('getData');
+        });
     }
 
     return { viewModel: jobPreview, template: templateMarkup };
 
 });
+
+/*
+
+- cronix web --> cronix startup
+- implement on state change + signalr
+
+- durring the build Cronix.UI -> dist -> copy to cronix webui folder
+- fake build, nugetpackage
+- manual how to enable webui (just copy catalog)
+
+ */

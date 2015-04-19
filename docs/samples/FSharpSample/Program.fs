@@ -5,7 +5,7 @@ open System.Threading
 
 let sampleJob (token : CancellationToken) = 
       printf "callback executed at (UTC) %s\n" <| DateTime.UtcNow.ToString()
-      Thread.Sleep 100
+      Thread.Sleep(10000)
  
 [<EntryPoint>]
 let main argv = 

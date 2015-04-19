@@ -20,7 +20,23 @@
                     <td data-bind="text: name"></td>
                     <td data-bind="text: cronExpr"></td>
                     <td data-bind="text: triggerState"></td>
-                    <td class="td-actions"><a href="javascript:;" class="btn btn-small btn-success"><i class="btn-icon-only icon-ok"> </i></a><a href="javascript:;" class="btn btn-danger btn-small"><i class="btn-icon-only icon-remove"> </i></a></td>
+                    <td class="td-actions">
+                        <!-- ko if: canStart -->
+                        <a data-bind="click: start" class=" btn btn-small btn-success">
+                            <i class="btn-icon-only icon-ok"> Start </i>
+                        </a>
+                        <!-- /ko -->
+                        
+                        <!-- ko if: canStop -->
+                        <a data-bind="click: stop" class="btn btn-danger btn-small">
+                            <i class="btn-icon-only icon-remove"> Stop </i>
+                        </a>
+                        <!-- /ko -->
+
+                        <!-- ko if: commandToggled -->
+                        <i>processing request...</i>
+                        <!-- /ko -->
+                    </td>
                 </tr>
             </tbody>
         </table>

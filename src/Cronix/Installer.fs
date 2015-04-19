@@ -65,26 +65,3 @@ module ProjectInstaller =
             with 
             | ex -> fail("failed to uninstall: " + ex.Message)
 
-    /// An adapter responsible for starting, stopping and shutting down the cronix service.
-    type ServiceProcessAdapter(service : IScheduleManager, setup) =
-        inherit ServiceBase()
-        do
-            (* Set default directory for windows service *)
-            Directory.SetCurrentDirectory(AppDomain.CurrentDomain.BaseDirectory)
-
-        ///Starts the ScheduleManager and performs the manager setup
-        override x.OnStart(args : string[]) = 
-            logger.Debug("starting service")
-            service.Start()
-            setup()
-         
-        /// Stops the ScheduleManager
-        override x.OnStop() = 
-            logger.Debug("stopping service")
-            service.Stop()
-
-        /// Stops the ScheduleManager
-        override x.OnShutdown() =
-            logger.Debug("shutting down service")
-            service.Stop()
-

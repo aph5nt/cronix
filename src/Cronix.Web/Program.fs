@@ -35,10 +35,8 @@ module EntryPoint =
         WebApp.Start(options,
             fun(app : Owin.IAppBuilder) -> (
                                            app.UseCors(CorsOptions.AllowAll) |> ignore
-                                          // app.MapSignalR("/signalr", config) |> ignore
                                            Owin.OwinExtensions.MapSignalR(app, "/signalr", config) |> ignore
-                                           app.Use(Nancy.Owin.NancyMiddleware.UseNancy(nancyOptions)) |> ignore
-                                           
+                                           app.Use(Nancy.Owin.NancyMiddleware.UseNancy(nancyOptions)) |> ignore       
             )) |> ignore
  
  

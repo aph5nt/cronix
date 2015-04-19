@@ -6,12 +6,25 @@ open Microsoft.AspNet.SignalR.Hubs
 
 type ISampleHub =
    abstract member GetData: string -> unit
+   abstract member StartJob: string -> unit
+   abstract member StopJob: string -> unit
 
 [<HubName("SampleHub")>]
 type SampleHub() =
     inherit Hub<ISampleHub>()
-    member x.GetData(input : string) =
-        base.Clients.All.GetData(input) |> ignore
+
+    // observable dictionary ->    base.Clients.All.GetData(name) |> ignore
+
+    member x.GetData(name : string) =
+        base.Clients.All.GetData(name) |> ignore
+
+    member x.StartJob(name : string) =
+        System.Threading.Thread.Sleep(3000)
+        base.Clients.All.GetData(name) |> ignore
+
+    member x.StopJob(name : string) =
+        System.Threading.Thread.Sleep(3000)
+        base.Clients.All.GetData(name) |> ignore
 
 type IndexModule() as x =
     inherit NancyModule()
@@ -20,3 +33,4 @@ type IndexModule() as x =
 
     member x.Index() =
         box base.View.["index"]
+
