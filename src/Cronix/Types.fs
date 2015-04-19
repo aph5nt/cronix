@@ -39,6 +39,10 @@ and ITrigger =
     /// Fires the trigger.
     abstract member Fire: unit -> unit
 
+    /// On state change event
+    abstract member OnStateChanged: IEvent<(JobName * TriggerState)> with get
+  
+
 /// The trigger callback delegate
 and Callback = delegate of (CancellationToken) -> unit
 
@@ -92,7 +96,7 @@ and JobState = {
     CronExpr : JobCronExpr;
     TriggerState : TriggerState
 }
-
+   
 (* Scheduling *)
 /// The schedule function signature.
 type Schedule = ScheduleState * ScheduleParams -> Result<ScheduleState, string>
@@ -107,7 +111,17 @@ and Start = ScheduleState * JobName ->  Result<ScheduleState, string>
 and Stop = ScheduleState * JobName ->  Result<ScheduleState, string>
 
 /// The schedule state type.
-and ScheduleState = Dictionary<string, Job>
+and ScheduleState() =
+    inherit Dictionary<string, Job>()
+
+    let mutable onStateChanged : Handler<(JobName * TriggerState)> = null
+    member x.OnStateChanged
+        with get() = onStateChanged
+        and set(value) =  onStateChanged <- value
+
+    member x.Add(name, job) = 
+        job.Trigger.OnStateChanged.AddHandler(onStateChanged)
+        base.Add(name, job)
 
 /// The schedule params type.
 and ScheduleParams = JobName * JobCronExpr * Callback
@@ -126,6 +140,7 @@ and ScheduleManagerCommand =
     | UnScheduleJob of JobName
     | StopJob of JobName
     | StartJob of JobName
+  //  | FiretJob of JobName
 
 /// Manges the job schedules.
 and IScheduleManager = 
@@ -145,11 +160,14 @@ and IScheduleManager =
     /// Returns jobs state.
     abstract member State: seq<JobState>
 
+    abstract member OnStateChanged: IEvent<JobState> with get
+
     /// Stops schedule manager.
     abstract member Stop: unit -> unit
 
     /// Starts schedule manager.
     abstract member Start: unit -> unit
+
 
 /// Describes result message.
 type ResultMessage = 

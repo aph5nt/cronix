@@ -29,30 +29,37 @@ module WebServices =
 
 type IScheduleManagerHub =
    abstract member GetData: JobState[] -> unit
+   abstract member OnStateChanged : JobState -> unit
    abstract member StartJob: string -> unit
+   abstract member FireJob: string -> unit
    abstract member StopJob: string -> unit
 
 
 [<HubName("ScheduleManager")>]
-type ScheduleManagerHub() =
+type ScheduleManagerHub() as self =
     inherit Hub<IScheduleManagerHub>()
-
-    // observable dictionary ->    base.Clients.All.GetData(name) |> ignore
 
     // TODO: Service locator antipattern, but it works just for now...
     let scheduleManager = GlobalHost.DependencyResolver.Resolve(typeof<IScheduleManager>) :?> IScheduleManager
     let state() = scheduleManager.State |> Seq.toArray
 
-    member x.GetData() =
+    do
+        scheduleManager.OnStateChanged.AddHandler(fun sender args -> self.onStateChangedHandler args)
+
+    member private self.onStateChangedHandler args =
+        base.Clients.All.OnStateChanged(args)
+
+    member self.GetData() =
         base.Clients.All.GetData(state()) |> ignore
 
-    member x.StartJob(name : string) =
+    member self.StartJob(name : string) =
         scheduleManager.StartJob(name) |> ignore
+
+    member self.FireJob(name : string) =
         base.Clients.All.GetData(state()) |> ignore
 
-    member x.StopJob(name : string) =
+    member self.StopJob(name : string) =
         scheduleManager.StopJob(name) |> ignore
-        base.Clients.All.GetData(state()) |> ignore
 
 /// An adapter responsible for starting, stopping and shutting down the cronix service.
 type ServiceProcessAdapter(service : IScheduleManager, setup) =
@@ -211,3 +218,14 @@ module BootStrapper =
             else
                printGuide()
                ok("printGuide")
+
+
+
+
+//TODO:
+
+// Start - if strigger is stopped
+// Fire - run just now
+// Stop - stop trigger it will not run
+// Add next occurance date
+// Jobs Preview --> Triggers !!????

@@ -41,20 +41,28 @@ module Triggers =
     type Trigger(name: string, expr : string, jobCallback : Callback) =
         let mutable triggerState = Stopped
         let mutable occurrenceAt = DateTime.UtcNow
+
+        let stateChanged = Event<(JobName * TriggerState)>()
+        let stateChangedHandler = new Handler<(JobName * TriggerState)>(fun sender args -> 
+                                                                               let _, state = args
+                                                                               triggerState <- state)
+        do
+            stateChanged.Publish.AddHandler(stateChangedHandler)
+
         let tokenSource = new CancellationTokenSource()
 
         let timer = new System.Threading.Timer(fun _ -> 
-                triggerState <- TriggerState.Executing
+                stateChanged.Trigger(name, TriggerState.Executing)
                 occurrenceAt <- CrontabSchedule.Parse(expr).GetNextOccurrence DateTime.UtcNow
-                timerCallback(name, jobCallback, tokenSource.Token)
-                triggerState <- TriggerState.Idle         
+                timerCallback(name, jobCallback, tokenSource.Token)    
+                stateChanged.Trigger(name, TriggerState.Idle)
                 )
 
         let terminate() =
             if triggerState <> Terminated then
                 tokenSource.Cancel() |> ignore
                 timer.Dispose() |> ignore
-                triggerState <- TriggerState.Terminated
+                stateChanged.Trigger(name, TriggerState.Terminated)
                 logger.Debug("Trigger<'{0}'> terminated.", name)
 
         override x.Finalize() = 
@@ -67,9 +75,12 @@ module Triggers =
             member x.OccurrenceAt
                 with get () = occurrenceAt
 
+            member x.OnStateChanged
+                with get() = stateChanged.Publish
+
             member x.Start() =
                 if triggerState <> Terminated then
-                    triggerState <- TriggerState.Idle            
+                    stateChanged.Trigger(name, TriggerState.Idle)            
                     occurrenceAt <- calculatetOccurrenceAt(expr, DateTime.UtcNow)
                     let due, interval = calculateTimerArgs(expr, DateTime.UtcNow, occurrenceAt)
 
@@ -83,7 +94,7 @@ module Triggers =
             member x.Stop() =
                 if triggerState <> Terminated then
                     timer.Change(Timeout.Infinite, Timeout.Infinite) |> ignore
-                    triggerState <- TriggerState.Stopped
+                    stateChanged.Trigger(name, TriggerState.Stopped)
                     logger.Debug("Trigger<'{0}'> stopped.", name)
 
             member x.Terminate() = 

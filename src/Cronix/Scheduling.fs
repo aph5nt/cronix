@@ -59,6 +59,11 @@ module Scheduling =
         state.[name].Trigger.Start()
         SuccesMessage(state) StartJobMsg [name]
 
+    /// Fires given trigger.
+    let fireTrigger (state : ScheduleState, name : string) = 
+        state.[name].Trigger.Fire()
+        SuccesMessage(state) StartJobMsg [name]
+        
     /// Schedules  given job. This method performs cron expression validation, job existance check, job adding and logs the output result.
     let scheduleJob : Schedule = 
         fun (state, params') ->
@@ -92,6 +97,14 @@ module Scheduling =
             >>= startTrigger
             |> logResult
 
+    /// Fires given job. This method performs job existane check, starts the job and logs the output result.
+    let firetJob : Start =
+        fun(state, name) ->
+            ok (state, name)
+            >>= jobExists
+            >>= fireTrigger
+            |> logResult
+
     /// Replies the message 
     let reply (reply : AsyncReplyChannel<'a>) (msg : 'a) =
         reply.Reply(msg)
@@ -107,7 +120,19 @@ open Logging
 type ScheduleManager() = 
     let logger = logger()
     let mutable disposed = false;
-    let state = new Dictionary<string, Job>()
+
+    let bubbleUpStateChanged = new Event<JobState>()
+    let state = new ScheduleState()
+
+    do
+        state.OnStateChanged <- (fun sender args -> 
+            let key, _ = args
+            let findJobState() = 
+                    state 
+                    |> Seq.map(fun i -> { Name = i.Value.Name; CronExpr = i.Value.CronExpr; TriggerState = i.Value.Trigger.State })
+                    |> Seq.find (fun(i) -> i.Name = key)
+            bubbleUpStateChanged.Trigger(findJobState()))
+
     let tokenSource = new CancellationTokenSource()
     let agent = new MailboxProcessor<_>((fun inbox ->
         let loop = 
@@ -118,6 +143,7 @@ type ScheduleManager() =
                     | ScheduleJob (name, expr, callback) -> scheduleJob(state, (name, expr, callback)) |> reply replyChannel |> ignore
                     | StopJob name                       -> stopJob(state, name) |> reply replyChannel |> ignore
                     | StartJob name                      -> startJob(state, name) |> reply replyChannel |> ignore
+                 //   | FireJob name                      -> fireJob(state, name) |> reply replyChannel |> ignore
                     | UnScheduleJob name                 -> unscheduleJob(state, name) |> reply replyChannel |> ignore
             }
         loop
@@ -161,6 +187,9 @@ type ScheduleManager() =
 
         member self.State =
             state |> Seq.map(fun i -> { Name = i.Value.Name; CronExpr = i.Value.CronExpr; TriggerState = i.Value.Trigger.State })
+        
+        member x.OnStateChanged
+                with get() = bubbleUpStateChanged.Publish
 
         member self.Stop() = 
             logger.Debug("stopping agent")
