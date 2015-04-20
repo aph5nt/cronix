@@ -34,19 +34,19 @@ type TriggerTests() =
 
     [<Fact>]
     let ``Should not throw on failing jobs`` () =
-       timerCallback("trowing exception", Callback(throwingCallback), tokenSource.Token)
-       timerCallback("throwing OperationCanceledException from job", Callback(cancellingCallback), tokenSource.Token)
+       timerCallback("trowing exception", JobCallback(throwingCallback), tokenSource.Token)
+       timerCallback("throwing OperationCanceledException from job", JobCallback(cancellingCallback), tokenSource.Token)
        tokenSource.Cancel()
-       timerCallback("throwing OperationCanceledException from timerCallback", Callback(callback), tokenSource.Token)
+       timerCallback("throwing OperationCanceledException from timerCallback", JobCallback(callback), tokenSource.Token)
 
 
 [<Trait("Trigger", "Integration Test")>] 
 type TriggerSystemTest() =
 
-    let trigger = new Trigger("job#1", "* * * * *", Callback(callback)) :> ITrigger
-    let overlapTrigger = new Trigger("job#1", "* * * * *", Callback(overlapCallback)) :> ITrigger
-    let throwingTrigger = new Trigger("job#1", "* * * * *", Callback(throwingCallback)) :> ITrigger
-    let cancellingTrigger = new Trigger("job#1", "* * * * *", Callback(cancellingCallback)) :> ITrigger
+    let trigger = new Trigger("job#1", "* * * * *", JobCallback(callback)) :> ITrigger
+    let overlapTrigger = new Trigger("job#1", "* * * * *", JobCallback(overlapCallback)) :> ITrigger
+    let throwingTrigger = new Trigger("job#1", "* * * * *", JobCallback(throwingCallback)) :> ITrigger
+    let cancellingTrigger = new Trigger("job#1", "* * * * *", JobCallback(cancellingCallback)) :> ITrigger
 
     let triggerStateCallback = TriggerStateCallback(fun _ -> trigger.State)
     let throwingStateCallback = TriggerStateCallback(fun _ -> trigger.State)

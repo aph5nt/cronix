@@ -13,8 +13,8 @@ let main argv =
     let startupHandler = 
         new StartupHandler(
             fun(scheduler) ->
-                        scheduler.Schedule "scheduled job" <| "* * * * *" <| Callback( sampleJob ) |> ignore
-                        scheduler.Schedule "second name" <| frequency Hourly <| Callback( sampleJob ) |> ignore
+                        scheduler.ScheduleJob "scheduled job" <| "* * * * *" <| JobCallback( sampleJob ) |> ignore
+                        scheduler.ScheduleJob "second name" <| frequency Hourly <| JobCallback( sampleJob ) |> ignore
             )
 
     let result = BootStrapper.InitService(argv, startupHandler)

@@ -27,13 +27,6 @@ module WebServices =
         with
         | exn ->  logger.Error(exn)
 
-type IScheduleManagerHub =
-   abstract member GetData: JobState[] -> unit
-   abstract member OnStateChanged : JobState -> unit
-   abstract member StartJob: string -> unit
-   abstract member FireJob: string -> unit
-   abstract member StopJob: string -> unit
-
 
 [<HubName("ScheduleManager")>]
 type ScheduleManagerHub() as self =
@@ -41,10 +34,10 @@ type ScheduleManagerHub() as self =
 
     // TODO: Service locator antipattern, but it works just for now...
     let scheduleManager = GlobalHost.DependencyResolver.Resolve(typeof<IScheduleManager>) :?> IScheduleManager
-    let state() = scheduleManager.State |> Seq.toArray
+    let state() = scheduleManager.TriggerDetails |> Seq.toArray
 
     do
-        scheduleManager.OnStateChanged.AddHandler(fun sender args -> self.onStateChangedHandler args)
+        scheduleManager.OnTriggerStateChanged.AddHandler(fun sender args -> self.onStateChangedHandler args)
 
     member private self.onStateChangedHandler args =
         base.Clients.All.OnStateChanged(args)
@@ -53,13 +46,13 @@ type ScheduleManagerHub() as self =
         base.Clients.All.GetData(state()) |> ignore
 
     member self.StartJob(name : string) =
-        scheduleManager.StartJob(name) |> ignore
+        scheduleManager.EnableTrigger(name) |> ignore
 
     member self.FireJob(name : string) =
         base.Clients.All.GetData(state()) |> ignore
 
     member self.StopJob(name : string) =
-        scheduleManager.StopJob(name) |> ignore
+        scheduleManager.DisableTrigger(name) |> ignore
 
 /// An adapter responsible for starting, stopping and shutting down the cronix service.
 type ServiceProcessAdapter(service : IScheduleManager, setup) =
@@ -72,7 +65,7 @@ type ServiceProcessAdapter(service : IScheduleManager, setup) =
     ///Starts the ScheduleManager and performs the manager setup
     override x.OnStart(args : string[]) = 
         logger.Debug("starting service")
-        service.Start()
+        service.StartManager()
         WebServices.hostScheduleManager(service) |> ignore
         setup()
          
@@ -83,12 +76,12 @@ type ServiceProcessAdapter(service : IScheduleManager, setup) =
     /// Stops the ScheduleManager
     override x.OnStop() = 
         logger.Debug("stopping service")
-        service.Stop()
+        service.StopManager()
 
     /// Stops the ScheduleManager
     override x.OnShutdown() =
         logger.Debug("shutting down service")
-        service.Stop()
+        service.StopManager()
 
 /// Module responsible for cronix service initialization.
 module BootStrapper =
@@ -218,14 +211,3 @@ module BootStrapper =
             else
                printGuide()
                ok("printGuide")
-
-
-
-
-//TODO:
-
-// Start - if strigger is stopped
-// Fire - run just now
-// Stop - stop trigger it will not run
-// Add next occurance date
-// Jobs Preview --> Triggers !!????

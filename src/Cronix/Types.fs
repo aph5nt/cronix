@@ -24,8 +24,12 @@ and ITrigger =
     /// Returns the trigger state.
     abstract member State: TriggerState with get
 
+    abstract member Name: TriggerName with get
+   
+    abstract member CronExpr : CronExpr with get
+
     /// Returns the occurance time.
-    abstract member OccurrenceAt: DateTime with get
+    abstract member OccurrenceAt: OccurrenceAt with get
 
     /// Starts the trigger.
     abstract member Start: unit -> unit
@@ -40,26 +44,26 @@ and ITrigger =
     abstract member Fire: unit -> unit
 
     /// On state change event
-    abstract member OnStateChanged: IEvent<(JobName * TriggerState)> with get
+    abstract member OnStateChanged: IEvent<(TriggerName * TriggerState)> with get
   
 
 /// The trigger callback delegate
-and Callback = delegate of (CancellationToken) -> unit
+and JobCallback = delegate of (CancellationToken) -> unit
 
 /// Calculates the timer argument function signature. 
-and CalculateTimerArgs = JobCronExpr * DateTime * DateTime -> ChangeArgs
+and CalculateTimerArgs = CronExpr * DateTime * DateTime -> ChangeArgs
 
 /// The change time argument type
 and ChangeArgs = int * int 
  
 /// The calculates the occurance at time function signature.
-and CalculatetOccurrenceAt = JobCronExpr * DateTime -> DateTime
+and CalculatetOccurrenceAt = CronExpr * DateTime -> DateTime
 
 /// The occurance at type
 and OccurrenceAt = DateTime
 
 /// The trigger callback delegate.
-and TimerCallback = JobName * Callback * CancellationToken -> unit
+and TimerCallback = TriggerName * JobCallback * CancellationToken -> unit
 
 /// The trigger service facade.
 and TriggerServices = {
@@ -69,7 +73,7 @@ and TriggerServices = {
 }
 
 /// Creates new trigger function signature.
-and CreateTrigger = JobName * JobCronExpr * Callback  -> ITrigger
+and CreateTrigger = TriggerName * CronExpr * JobCallback  -> ITrigger
 
 /// The trigger factory.
 and TriggerFactory = {
@@ -78,118 +82,97 @@ and TriggerFactory = {
 
 (* Jobs *)
 /// The job type.
-and Job = {
-    Name : JobName;
-    CronExpr : JobCronExpr;
-    Trigger : ITrigger;
+and TriggerDetail = {
+    Name : TriggerName;
+    CronExpr : CronExpr;
+    TriggerState : TriggerState;
+    NextOccuranceDate : DateTime;
 }
 
 /// The job name.
-and JobName = string
+and TriggerName = string
 
 /// The cron expression type.
-and JobCronExpr = string
-
-/// The job state type.
-and JobState = {
-    Name : JobName;
-    CronExpr : JobCronExpr;
-    TriggerState : TriggerState
-}
-   
+and CronExpr = string
+ 
 (* Scheduling *)
 /// The schedule function signature.
 type Schedule = ScheduleState * ScheduleParams -> Result<ScheduleState, string>
 
 /// The unschedule function signature.
-and UnSchedule = ScheduleState * JobName ->  Result<ScheduleState, string>
+and UnSchedule = ScheduleState * TriggerName ->  Result<ScheduleState, string>
 
 /// The start function signature.
-and Start = ScheduleState * JobName ->  Result<ScheduleState, string>
+and Start = ScheduleState * TriggerName ->  Result<ScheduleState, string>
+
+and Fire = ScheduleState * TriggerName ->  Result<ScheduleState, string>
 
 /// The stop function signature.
-and Stop = ScheduleState * JobName ->  Result<ScheduleState, string>
+and Stop = ScheduleState * TriggerName ->  Result<ScheduleState, string>
 
 /// The schedule state type.
 and ScheduleState() =
-    inherit Dictionary<string, Job>()
+    inherit Dictionary<string, ITrigger>()
 
-    let mutable onStateChanged : Handler<(JobName * TriggerState)> = null
-    member x.OnStateChanged
+    let mutable onStateChanged : Handler<(TriggerName * TriggerState)> = null
+    member x.OnStateChanged 
         with get() = onStateChanged
         and set(value) =  onStateChanged <- value
 
-    member x.Add(name, job) = 
-        job.Trigger.OnStateChanged.AddHandler(onStateChanged)
-        base.Add(name, job)
+    member x.Add(name, trigger : ITrigger) = 
+        trigger.OnStateChanged.AddHandler(onStateChanged)
+        base.Add(name, trigger)
 
 /// The schedule params type.
-and ScheduleParams = JobName * JobCronExpr * Callback
-
-/// The schedule services facade.
-and ScheduleServices = {
-    schedule : Schedule
-    unschedule : UnSchedule
-    start : Start
-    stop : Stop
-}
+and ScheduleParams = TriggerName * CronExpr * JobCallback
 
 /// Describes the schedule mannager commands.
 and ScheduleManagerCommand = 
-    | ScheduleJob of JobName * JobCronExpr * Callback
-    | UnScheduleJob of JobName
-    | StopJob of JobName
-    | StartJob of JobName
-  //  | FiretJob of JobName
-
+    | ScheduleJob of TriggerName * CronExpr * JobCallback
+    | UnScheduleJob of TriggerName
+    | DisableTrigger of TriggerName
+    | EnableTrigger of TriggerName
+    | FireTrigger of TriggerName
+    | TerminateTrigger of TriggerName
+    
 /// Manges the job schedules.
 and IScheduleManager = 
     inherit IDisposable
     /// Schedules new job.
-    abstract member Schedule: string -> string -> Callback -> Result<ScheduleState, string>
+    abstract member ScheduleJob: string -> string -> JobCallback -> Result<ScheduleState, string>
 
     /// Unschedules given job.
-    abstract member UnSchedule: string -> Result<ScheduleState, string>
+    abstract member UnScheduleJob: string -> Result<ScheduleState, string>
 
     /// Starts given job.
-    abstract member StartJob : string -> Result<ScheduleState, string>
+    abstract member EnableTrigger : string -> Result<ScheduleState, string>
 
     /// Stops given job.
-    abstract member StopJob : string -> Result<ScheduleState, string>
+    abstract member DisableTrigger : string -> Result<ScheduleState, string>
+
+    abstract member FireTrigger : string -> Result<ScheduleState, string>
+
+    abstract member TerminateTriggerExecution : string -> Result<ScheduleState, string>
 
     /// Returns jobs state.
-    abstract member State: seq<JobState>
+    abstract member TriggerDetails: seq<TriggerDetail>
 
-    abstract member OnStateChanged: IEvent<JobState> with get
+    abstract member OnTriggerStateChanged: IEvent<TriggerDetail> with get
 
     /// Stops schedule manager.
-    abstract member Stop: unit -> unit
+    abstract member StopManager: unit -> unit
 
     /// Starts schedule manager.
-    abstract member Start: unit -> unit
+    abstract member StartManager: unit -> unit
 
 
-/// Describes result message.
-type ResultMessage = 
-    | FailureMessage of FailureMessage
-    | SuccessMessage of SuccessMessage
-
-/// Describes the failure message.
-and FailureMessage =
-    | InvalidCronExpr
-    | JobExists
-    | JobNotExists
-
-/// Describes the sucess message.
-and SuccessMessage = 
-    | ValidateExprMsg
-    | CanAddJobMsg
-    | AddJobMsg
-    | JobFoundMsg
-    | RemoveJobMsg
-    | StopJobMsg
-    | StartJobMsg
-
+type IScheduleManagerHub =
+   abstract member GetData: TriggerDetail[] -> unit
+   abstract member OnStateChanged : TriggerDetail -> unit
+   abstract member EnableTrigger: TriggerName -> unit
+   abstract member DisableTrigger: TriggerName -> unit
+   abstract member FireJob: TriggerName -> unit
+   abstract member TerminateTrigger: TriggerName -> unit
 
 (* Installer *)
 /// The install function signature.
@@ -228,24 +211,51 @@ and InitService = string[] * StartupHandler -> Result<string, string>
 [<AutoOpen>]
 module Messages = 
 
+    /// Describes result message.
+    type ResultMessage = 
+        | FailureMessage of FailureMessage
+        | SuccessMessage of SuccessMessage
+
+    /// Describes the failure message.
+    and FailureMessage =
+        | InvalidCronExpr
+        | TriggerExists
+        | TriggerNotExists
+
+    /// Describes the sucess message.
+    and SuccessMessage = 
+        | ExpressionValidated
+        | TriggerCanBeAdded
+        | TriggerAdded
+        | TriggerFound
+        | TriggerRemoved
+        | TriggerDisabled
+        | TriggerEnabled
+        | TriggerFired
+        | TriggerTerminated
+
+
     /// Returns the failure messages.
     let FailureMessages : Map<FailureMessage, string> =
         Map.empty.
             Add(InvalidCronExpr, "Expr <{0}> is not valid.")
-            .Add(JobExists, "Job <{0}> already exists.")
-            .Add(JobNotExists, "Job <{0}> does not exists.")
+            .Add(TriggerExists, "Job <{0}> already exists.")
+            .Add(TriggerNotExists, "Job <{0}> does not exists.")
 
     /// Returns the success messages.
     let SuccesMessagess : Map<SuccessMessage, string> =
         Map.empty.
-            Add(ValidateExprMsg, "Expr <{0}> is valid.")
-            .Add(CanAddJobMsg, "Job <{0}> can be added.")
-            .Add(AddJobMsg, "Job <{0}> has been added.")
-            .Add(JobFoundMsg, "Job <{0}> found.")
-            .Add(RemoveJobMsg, "Job <{0}> has been removed.")
-            .Add(StopJobMsg, "Job <{0}> has been stopped.")
-            .Add(StartJobMsg, "Job <{0}> has been started.")
+            Add(ExpressionValidated, "Expr <{0}> is valid.")
+            .Add(TriggerCanBeAdded, "Trigger <{0}> can be added.")
+            .Add(TriggerAdded, "Trigger <{0}> has been added.")
+            .Add(TriggerFound, "Trigger <{0}> found.")
+            .Add(TriggerRemoved, "Trigger <{0}> has been removed.")
+            .Add(TriggerDisabled, "Trigger <{0}> has been disabled.")
+            .Add(TriggerEnabled, "Trigger <{0}> has been enabled.")
+            .Add(TriggerFired, "Trigger <{0}> has been fired.")
+            .Add(TriggerTerminated, "Trigger <{0}> has been terminated.")
         
+
     /// Creates the failure message.
     let FailureMessage (key : FailureMessage) ([<ParamArray>] params' : list<_>) =
         let result = String.Format(FailureMessages.[key], params')

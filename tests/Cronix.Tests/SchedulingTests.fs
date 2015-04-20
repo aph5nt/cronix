@@ -15,7 +15,7 @@ type SchedulingTests() =
     let jobName1 = "jobname1"
     let exprArgValid = "* * * * *"
     let exprArgInValid = "0/15 * * * * *"
-    let mutable state = new Dictionary<string, Job>()
+    let mutable state = new ScheduleState()
 
     let compareResults (actual : Result<'TSuccess, 'TMessage>) (expected : Result<'TSuccess, 'TMessage>)  =
        actual |> should equal expected
@@ -26,37 +26,37 @@ type SchedulingTests() =
 
     [<Fact>]
     let ``validate exprArgValid expression``() = 
-        let params' = (jobName1, exprArgValid, Callback(callback))
+        let params' = (jobName1, exprArgValid, JobCallback(callback))
         let actual = validateExpr(state, params')
-        let expected = SuccesMessage(state, params') ValidateExprMsg [exprArgValid]
+        let expected = SuccesMessage(state, params') ExpressionValidated [exprArgValid]
         compareResults actual expected |> ignore
 
     [<Fact>]
     let ``validate exprArgInValid expression``() = 
-        let params' = (jobName1, exprArgInValid, Callback(callback))
+        let params' = (jobName1, exprArgInValid, JobCallback(callback))
         let actual = validateExpr(state, params')
         let expected = FailureMessage InvalidCronExpr [exprArgInValid]
         compareResults actual expected |> ignore     
 
 
     [<Fact>]
-    let ``can add job``() =
-        let params' = (jobName1, exprArgValid, Callback(callback))
+    let ``can add trigger``() =
+        let params' = (jobName1, exprArgValid, JobCallback(callback))
         let actual = canAddTrigger(state, params') 
-        let expected = SuccesMessage(state, params') CanAddJobMsg [jobName1]
+        let expected = SuccesMessage(state, params') TriggerCanBeAdded [jobName1]
         compareResults actual expected |> ignore
     
-        state.Add(jobName1, { Name = jobName1; CronExpr = exprArgValid; Trigger = createTrigger(jobName1, exprArgValid, Callback(callback)) })
+        state.Add(jobName1, createTrigger(jobName1, exprArgValid, JobCallback(callback)))
 
         let actual2 = canAddTrigger(state, params') 
-        let expected2 = FailureMessage JobExists [jobName1]
+        let expected2 = FailureMessage TriggerExists [jobName1]
         compareResults actual2 expected2 |> ignore
 
     [<Fact>]
-    let ``add job``() =
-        let params' = (jobName1, exprArgValid, Callback(callback))
+    let ``add trigger``() =
+        let params' = (jobName1, exprArgValid, JobCallback(callback))
         let actual = addTrigger(state, params') 
-        let expected = SuccesMessage(state) AddJobMsg [jobName1]
+        let expected = SuccesMessage(state) TriggerAdded [jobName1]
         compareResults actual expected |> ignore
 
 [<Trait("Scheduling", "Integration Test")>]
@@ -66,13 +66,13 @@ type ScheduleManagerTests() =
         printf "callback executed at (UTC) %s\n" <| DateTime.UtcNow.ToString()
         Thread.Sleep 100
     do
-        manager.Start()
+        manager.StartManager()
 
     [<Fact>]
     let ``schedule a job``() =
-        let result = manager.Schedule "job1" 
+        let result = manager.ScheduleJob "job1" 
                      <| "* * * * *" 
-                     <| Callback(sampleJob)
+                     <| JobCallback(sampleJob)
 
         match result with
         | Ok (_, msgs) -> 
@@ -84,21 +84,21 @@ type ScheduleManagerTests() =
 
     [<Fact>]
     let ``schedule not the same job twice``() =
-        manager.Schedule "job1" 
+        manager.ScheduleJob "job1" 
         <| "* * * * *" 
-        <| Callback(sampleJob)  
+        <| JobCallback(sampleJob)  
          |> ignore
 
-        let result = manager.Schedule "job1" "* * * * *" <| Callback(sampleJob)
+        let result = manager.ScheduleJob "job1" "* * * * *" <| JobCallback(sampleJob)
         match result with
         | Fail msgs ->  msgs |> should contain "Job <[job1]> already exists."
         | _  -> failwith "Expected Failure Tee"    
 
     [<Fact>]
     let ``schedule not job with invalid expression``() =
-        let result = manager.Schedule "job1"
+        let result = manager.ScheduleJob "job1"
                      <| "a * * * *"
-                     <| Callback(sampleJob)
+                     <| JobCallback(sampleJob)
 
         match result with
         | Fail msgs ->  msgs |> should contain "Expr <[a * * * *]> is not valid."
@@ -106,12 +106,12 @@ type ScheduleManagerTests() =
 
     [<Fact>]
     let ``unschedule a job``() =
-        manager.Schedule "job1" 
+        manager.ScheduleJob "job1" 
         <| "* * * * *"
-        <| Callback(sampleJob) 
+        <| JobCallback(sampleJob) 
         |> ignore
 
-        let result = manager.UnSchedule "job1"
+        let result = manager.UnScheduleJob "job1"
         match result with
         | Ok (_, msgs) -> 
             msgs |> should contain "Job <[job1]> found."
@@ -120,38 +120,38 @@ type ScheduleManagerTests() =
 
     [<Fact>]
     let ``unschedule not existing job``() =
-        let result = manager.UnSchedule "job1"
+        let result = manager.UnScheduleJob "job1"
         match result with
         | Fail msgs ->  msgs |> should contain "Job <[job1]> does not exists."
         | _ -> failwith "Expected Failure Tee" 
 
     [<Fact>]
-    let ``stop and start a job``() =
-        let result = manager.Schedule "job1" 
+    let ``enable and disable trigger``() =
+        let result = manager.ScheduleJob "job1" 
                      <| "* * * * *" 
-                     <| Callback(sampleJob)
+                     <| JobCallback(sampleJob)
 
-        let stopped = manager.StopJob("job1")
+        let stopped = manager.DisableTrigger("job1")
         Thread.Sleep(200)
         match stopped with
         | Ok (_, msgs) -> 
              msgs |> should contain "Job <[job1]> has been stopped."
         | _ -> failwith "Expected Success Tee"
 
-        let started = manager.StartJob("job1")
+        let started = manager.EnableTrigger("job1")
         match started with
         | Ok (_, msgs) -> 
              msgs |> should contain "Job <[job1]> has been started."
         | _ -> failwith "Expected Success Tee"
 
     [<Fact>]
-    let ``get manager state``() =
-         manager.Schedule "job1" 
+    let ``get trigger details``() =
+         manager.ScheduleJob "job1" 
          <| "* * * * *"
-         <| Callback(sampleJob)
+         <| JobCallback(sampleJob)
           |> ignore
 
-         manager.State |> Seq.toArray |> Array.find(fun(i) -> i.Name = "job1") |> should not' Null
+         manager.TriggerDetails |> Seq.toArray |> Array.find(fun(i) -> i.Name = "job1") |> should not' Null
 
     interface IDisposable with
-        member x.Dispose() = manager.Stop()     
+        member x.Dispose() = manager.StopManager()     

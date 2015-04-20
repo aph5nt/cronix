@@ -34,5 +34,5 @@ module RunAtStartup =
     let start (scheduler : IScheduleManager) =
 
         // schedules goes here!
-        scheduler.Schedule "job1" "* * * * *" <| Callback(sampleJob) |> ignore
+        scheduler.Schedule "job1" "* * * * *" <| JobCallback(sampleJob) |> ignore
         ()

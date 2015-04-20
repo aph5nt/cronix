@@ -38,12 +38,12 @@ module Triggers =
             | _ as ex -> logger.Error("Trigger<'{0}'> failed", name, ex)
         
     /// Mannages the job execution.
-    type Trigger(name: string, expr : string, jobCallback : Callback) =
+    type Trigger(name: string, expr : string, jobCallback : JobCallback) =
         let mutable triggerState = Stopped
         let mutable occurrenceAt = DateTime.UtcNow
 
-        let stateChanged = Event<(JobName * TriggerState)>()
-        let stateChangedHandler = new Handler<(JobName * TriggerState)>(fun sender args -> 
+        let stateChanged = Event<(TriggerName * TriggerState)>()
+        let stateChangedHandler = new Handler<(TriggerName * TriggerState)>(fun sender args -> 
                                                                                let _, state = args
                                                                                triggerState <- state)
         do
@@ -74,6 +74,12 @@ module Triggers =
     
             member x.OccurrenceAt
                 with get () = occurrenceAt
+
+            member x.Name
+                with get() = name
+
+            member x.CronExpr
+                with get() = expr
 
             member x.OnStateChanged
                 with get() = stateChanged.Publish

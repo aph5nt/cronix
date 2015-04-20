@@ -23,8 +23,8 @@ namespace CSharpSample
 			var result = BootStrapper.InitService(args, scheduler =>
 				{
 					// schedule your job here
-					scheduler.Schedule("scheduled job", "* * * * *", EmbededJobs.Callback);
-					scheduler.Schedule("scheduled job", Dsl.frequency(Dsl.CronExpr.Daily), EmbededJobs.Callback);
+					scheduler.ScheduleJob("scheduled job", "* * * * *", EmbededJobs.Callback);
+                    scheduler.ScheduleJob("scheduled job", Dsl.frequency(Dsl.CronExpr.Daily), EmbededJobs.Callback);
 				});
 			result.Match(
 				(state, msgs) =>

@@ -94,3 +94,22 @@ define(['knockout', 'signalr','text!./job-preview.html'], function(ko, signalr, 
 - manual how to enable webui (just copy catalog)
 
  */
+
+
+
+
+/*
+ 
+ - enable / disable --- trigger / job ?
+ - fire trigger
+ - terminate trigger --> back to Idle
+
+
+ ---- schedule manager
+ -- schedule / unschedule
+ ------> terminates disable the trigger, when uncheduling, then delete
+
+
+
+
+ */

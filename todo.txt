@@ -20,6 +20,10 @@ version 0.2
 -- Cronix.Common (types + logging)
 ---Bootstrapper --> Compiler
 
+version 0.3
+- fix unit test namings
+- fix messages
+- 
 
 version 0.3
 - mono support (raspberrypi2?; build server, bitcoin ticker)
