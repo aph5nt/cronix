@@ -84,15 +84,17 @@ type TriggerSystemTest() =
         waitForState triggerStateCallback Terminated 
 
     [<Fact>]
-    let ``Should not allow to Start / Stop / Terminate when trigger was already termianted`` () =
+    let ``Should not allow to enable / disable/ fire terminate when trigger is disposed`` () =
         trigger.Start() |> ignore
-        trigger.Terminate() |> ignore
+        trigger.Dispose() |> ignore
         waitForState triggerStateCallback Terminated
         trigger.Start() |> ignore
         waitForState triggerStateCallback Terminated
         trigger.Stop() |> ignore
         waitForState triggerStateCallback Terminated
         trigger.Terminate() |> ignore
+        waitForState triggerStateCallback Terminated  
+        trigger.Fire() |> ignore
         waitForState triggerStateCallback Terminated   
 
     [<Fact>]

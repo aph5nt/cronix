@@ -38,9 +38,10 @@ module Triggers =
             | _ as ex -> logger.Error("Trigger<'{0}'> failed", name, ex)
         
     /// Mannages the job execution.
-    type Trigger(name: string, expr : string, jobCallback : JobCallback) =
+    type Trigger(name: string, expr : string, jobCallback : JobCallback) as x =
         let mutable triggerState = Stopped
         let mutable occurrenceAt = DateTime.UtcNow
+        let mutable isDisposed = false
 
         let stateChanged = Event<(TriggerName * TriggerState)>()
         let stateChangedHandler = new Handler<(TriggerName * TriggerState)>(fun sender args -> 
@@ -51,6 +52,12 @@ module Triggers =
 
         let tokenSource = new CancellationTokenSource()
 
+        let fireTrigger =
+            stateChanged.Trigger(name, TriggerState.Executing)
+            occurrenceAt <- CrontabSchedule.Parse(expr).GetNextOccurrence DateTime.UtcNow
+            timerCallback(name, jobCallback, tokenSource.Token)    
+            stateChanged.Trigger(name, TriggerState.Idle)
+
         let timer = new System.Threading.Timer(fun _ -> 
                 stateChanged.Trigger(name, TriggerState.Executing)
                 occurrenceAt <- CrontabSchedule.Parse(expr).GetNextOccurrence DateTime.UtcNow
@@ -58,15 +65,21 @@ module Triggers =
                 stateChanged.Trigger(name, TriggerState.Idle)
                 )
 
-        let terminate() =
-            if triggerState <> Terminated then
-                tokenSource.Cancel() |> ignore
-                timer.Dispose() |> ignore
-                stateChanged.Trigger(name, TriggerState.Terminated)
-                logger.Debug("Trigger<'{0}'> terminated.", name)
+        // internal method to cleanup resources
+        let cleanup(disposing : bool) = 
+            if not isDisposed then
+                isDisposed <- true
+                if disposing then
+                    tokenSource.Cancel() |> ignore
+                    timer.Dispose() |> ignore
+                    stateChanged.Trigger(name, TriggerState.Terminated)
+                    isDisposed <- false
+                    logger.Debug("Trigger<'{0}'> has been disposed.", name)
 
-        override x.Finalize() = 
-            terminate()
+        interface IDisposable with
+            member x.Dispose() =
+                cleanup(true)
+                GC.SuppressFinalize(x)
 
         interface ITrigger with 
             member x.State
@@ -85,7 +98,7 @@ module Triggers =
                 with get() = stateChanged.Publish
 
             member x.Start() =
-                if triggerState <> Terminated then
+                if isDisposed = false then
                     stateChanged.Trigger(name, TriggerState.Idle)            
                     occurrenceAt <- calculatetOccurrenceAt(expr, DateTime.UtcNow)
                     let due, interval = calculateTimerArgs(expr, DateTime.UtcNow, occurrenceAt)
@@ -93,15 +106,26 @@ module Triggers =
                     timer.Change(due, interval) |> ignore
                     logger.Debug("Trigger<'{0}'> started. dueTime = {1}; interval '{2}'.", name, due, interval)
 
-            member x.Fire() = 
-                logger.Debug("Firing Trigger<'{0}'>", name)
-                timerCallback(name, jobCallback, tokenSource.Token)
-
             member x.Stop() =
-                if triggerState <> Terminated then
+                if isDisposed = false then
                     timer.Change(Timeout.Infinite, Timeout.Infinite) |> ignore
                     stateChanged.Trigger(name, TriggerState.Stopped)
                     logger.Debug("Trigger<'{0}'> stopped.", name)
 
             member x.Terminate() = 
-                terminate()
+                if isDisposed = false then
+                    tokenSource.Cancel() |> ignore  
+                    stateChanged.Trigger(name, TriggerState.Terminated)
+                    logger.Debug("Trigger<'{0}'> terminated.", name)
+
+            member x.Fire() = 
+                if isDisposed = false then
+                    if triggerState = TriggerState.Idle then
+                        timer.Change(Timeout.Infinite, Timeout.Infinite) |> ignore
+                        stateChanged.Trigger(name, TriggerState.Executing)
+                        timerCallback(name, jobCallback, tokenSource.Token)    
+                        stateChanged.Trigger(name, TriggerState.Idle)            
+                        occurrenceAt <- calculatetOccurrenceAt(expr, DateTime.UtcNow)
+                        let due, interval = calculateTimerArgs(expr, DateTime.UtcNow, occurrenceAt)
+                        timer.Change(due, interval) |> ignore
+                        logger.Debug("Trigger<'{0}'> has been fired.", name)

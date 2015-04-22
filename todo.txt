@@ -19,18 +19,24 @@ version 0.2
 
 -- Cronix.Common (types + logging)
 ---Bootstrapper --> Compiler
+ 
+version - 0.3
+- web ui
+- trigger improvements
+- updated documentation
 
-version 0.3
-- fix unit test namings
-- fix messages
-- 
-
-version 0.3
-- mono support (raspberrypi2?; build server, bitcoin ticker)
-- installation as a service under linux
 
 version 0.4
-- webaservice - state + ui
+- rest api
+
+
+pending:
+- mono support (raspberrypi2?; build server, bitcoin ticker)
+- installation as a service under linux
+- logs preview in app
+- loggary integration
+- more samples
+- videos, tutorials
 
 
 - bitcoin ticker project (SAMPLE)
@@ -43,3 +49,21 @@ version 0.4
 -- (clean up data job)
 -- (sql tune job)
 + documentation + manual
+
+
+-----------------------
+heading 0.3 release
+- trg executed o startup?
+- adjust ui: 2 buttons side by side, no layout changes
+- hide unused tabs
+- integrate nancyfx, run index.html from dist
+
+- run glup on debug build?
+- glup dist task - attach to fake
+- how to nuget with htmlfiles?
+
+- code review
+- write some unit tests (add more)
+- update code documentation
+- mention about how to install service
+-

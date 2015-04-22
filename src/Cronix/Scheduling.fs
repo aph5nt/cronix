@@ -168,7 +168,7 @@ type ScheduleManager() =
         for KeyValue(name, trigger) in state do
             trigger.Terminate() |> ignore
 
-     // internal method to cleanup resources
+    // internal method to cleanup resources
     let cleanup(disposing : bool) = 
         if not disposed then
             disposed <- true

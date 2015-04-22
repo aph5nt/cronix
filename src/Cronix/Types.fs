@@ -21,6 +21,8 @@ and TriggerOption =
 
 /// Describes the trigger.
 and ITrigger =
+    inherit IDisposable
+
     /// Returns the trigger state.
     abstract member State: TriggerState with get
 
@@ -45,7 +47,7 @@ and ITrigger =
 
     /// On state change event
     abstract member OnStateChanged: IEvent<(TriggerName * TriggerState)> with get
-  
+
 
 /// The trigger callback delegate
 and JobCallback = delegate of (CancellationToken) -> unit
@@ -171,7 +173,7 @@ type IScheduleManagerHub =
    abstract member OnStateChanged : TriggerDetail -> unit
    abstract member EnableTrigger: TriggerName -> unit
    abstract member DisableTrigger: TriggerName -> unit
-   abstract member FireJob: TriggerName -> unit
+   abstract member FireTrigger: TriggerName -> unit
    abstract member TerminateTrigger: TriggerName -> unit
 
 (* Installer *)

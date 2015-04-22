@@ -12,3 +12,5 @@ Microsoft.Owin.Host.HttpListener
 Owin
 Microsoft.Owin.Diagnostics
 Microsoft.Owin.Cors
+Nancy
+Nancy.Owin

@@ -10,8 +10,40 @@ open Microsoft.AspNet.SignalR
 open Microsoft.Owin.Hosting
 open Microsoft.Owin.Cors
 
+module Website =
+    open Nancy
+    open Nancy.Conventions
+
+//    type RootPathProvider() =
+//        interface IRootPathProvider with
+//            member x.GetRootPath() = 
+//                    "webui"
+//    
+     type WebBootstrapper() =
+        inherit DefaultNancyBootstrapper()
+
+        override x.ConfigureConventions(conventions : NancyConventions) =
+             conventions.StaticContentsConventions.Add(StaticContentConventionBuilder.AddDirectory("/", "webui"))
+             base.ConfigureConventions(conventions)
+
+//        override x.RootPathProvider 
+//           with get() = new RootPathProvider() :> IRootPathProvider
+
 module WebServices = 
+    open Nancy
+
     let logger = logger()
+
+    (* NancyFx *)
+    type WebUiModule() as self = 
+        inherit NancyModule()
+        do
+            self.Get.["/"] <- fun _ -> self.Index()
+
+        member self.Index() =
+            base.View.["index.html"] :> obj
+
+
     let hostScheduleManager(scheduleManager : IScheduleManager) =
         try
             let options = new StartOptions()
@@ -23,6 +55,7 @@ module WebServices =
                                                GlobalHost.DependencyResolver.Register(typeof<IScheduleManager>, fun() -> scheduleManager :> obj)
                                                app.UseCors(CorsOptions.AllowAll) |> ignore
                                                Owin.OwinExtensions.MapSignalR(app, "/signalr", config) |> ignore
+                                               app.UseNancy() |> ignore
                )) |> ignore
         with
         | exn ->  logger.Error(exn)
@@ -45,14 +78,17 @@ type ScheduleManagerHub() as self =
     member self.GetData() =
         base.Clients.All.GetData(state()) |> ignore
 
-    member self.StartJob(name : string) =
+    member self.EnableTrigger(name : TriggerName) =
         scheduleManager.EnableTrigger(name) |> ignore
 
-    member self.FireJob(name : string) =
-        base.Clients.All.GetData(state()) |> ignore
+    member self.FireTrigger(name : TriggerName) =
+        scheduleManager.FireTrigger(name) |> ignore
 
-    member self.StopJob(name : string) =
+    member self.DisableTrigger(name : TriggerName) =
         scheduleManager.DisableTrigger(name) |> ignore
+
+    member self.TerminateTrigger(name : TriggerName) =
+        scheduleManager.TerminateTriggerExecution(name) |> ignore
 
 /// An adapter responsible for starting, stopping and shutting down the cronix service.
 type ServiceProcessAdapter(service : IScheduleManager, setup) =

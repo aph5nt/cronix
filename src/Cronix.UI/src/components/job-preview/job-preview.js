@@ -19,30 +19,43 @@ define(['knockout', 'signalr','text!./job-preview.html'], function(ko, signalr, 
         self.cronExpr = ko.observable();
         self.triggerState = ko.observable(triggerStateCase.Idle);
 
-        // starts the trigger which will run on next calculated date
-        self.start = function() {
-            hub.invoke('startJob', self.name);
+        self.enableTrigger = function () {
+            hub.invoke('enableTrigger', self.name);
             self.commandToggled(true);
         };
 
-        // stops the trigger
-        self.stop = function() {
-            hub.invoke('stopJob', self.name);
+        self.disableTrigger = function () {
+            hub.invoke('disableTrigger', self.name);
             self.commandToggled(true);
         };
 
-        self.fire = function () {
-            hub.invoke('fireJob', self.name);
+        self.fireTrigger = function () {
+            hub.invoke('fireTrigger', self.name);
             self.commandToggled(true);
         };
 
-        self.canStart = ko.computed(function() {
-            return self.triggerState() !== triggerStateCase.Executing && self.commandToggled() === false;
+        self.terminateTrigger = function () {
+            hub.invoke('terminateTrigger', self.name);
+            self.commandToggled(true);
+        };
+
+        self.canEnableTrigger = ko.computed(function () {
+            return self.triggerState() === triggerStateCase.Stopped && self.commandToggled() === false;
         });
-        self.canStop = ko.computed(function () {
+
+        self.canDisableTrigger = ko.computed(function () {
+            return self.triggerState() !== triggerStateCase.Stopped && self.commandToggled() === false;
+        });
+        
+        self.canFireTrigger = ko.computed(function () {
+            return self.triggerState() === triggerStateCase.Idle && self.commandToggled() === false;
+        });
+
+        self.canTerminateTrigger = ko.computed(function () {
             return self.triggerState() === triggerStateCase.Executing && self.commandToggled() === false;
         });
 
+        
         
     };
 
@@ -56,6 +69,7 @@ define(['knockout', 'signalr','text!./job-preview.html'], function(ko, signalr, 
                 if (item.name === jobState.Name) {
                     item.cronExpr(jobState.CronExpr);
                     item.triggerState(jobState.TriggerState.Case);
+                    item.commandToggled(false);
                 }
             });
         });
@@ -68,7 +82,7 @@ define(['knockout', 'signalr','text!./job-preview.html'], function(ko, signalr, 
                 item.name = jobState.Name;
                 item.cronExpr(jobState.CronExpr);
                 item.triggerState(jobState.TriggerState.Case);
-
+                item.commandToggled(false);
                 items.push(item);
             });
 
