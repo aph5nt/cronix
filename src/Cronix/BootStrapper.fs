@@ -10,29 +10,36 @@ open Microsoft.AspNet.SignalR
 open Microsoft.Owin.Hosting
 open Microsoft.Owin.Cors
 
+
+
 module Website =
     open Nancy
     open Nancy.Conventions
-
-//    type RootPathProvider() =
-//        interface IRootPathProvider with
-//            member x.GetRootPath() = 
-//                    "webui"
-//    
+    open Nancy.TinyIoc
+    open Nancy.Bootstrapper
+ 
      type WebBootstrapper() =
         inherit DefaultNancyBootstrapper()
-
+        
+        override x.ApplicationStartup( container : TinyIoCContainer,  pipelines : IPipelines) =
+            let impl viewName model content = 
+                String.Concat("webui/", viewName)
+            let convestion() = 
+                Func<string, obj, ViewEngines.ViewLocationContext, string>(impl)
+            base.Conventions.ViewLocationConventions.Add( convestion() )
+             
         override x.ConfigureConventions(conventions : NancyConventions) =
              conventions.StaticContentsConventions.Add(StaticContentConventionBuilder.AddDirectory("/", "webui"))
              base.ConfigureConventions(conventions)
-
-//        override x.RootPathProvider 
-//           with get() = new RootPathProvider() :> IRootPathProvider
-
+ 
 module WebServices = 
     open Nancy
+    open FSharp.Configuration
+    open System.Configuration
 
     let logger = logger()
+
+    type Settings = AppSettings<"App.config">
 
     (* NancyFx *)
     type WebUiModule() as self = 
@@ -47,7 +54,7 @@ module WebServices =
     let hostScheduleManager(scheduleManager : IScheduleManager) =
         try
             let options = new StartOptions()
-            options.Port <- new Nullable<int>(8111)
+            options.Port <- new Nullable<int>(Settings.HostPort)
             let config = new HubConfiguration(EnableDetailedErrors = true)
        
             WebApp.Start(options,

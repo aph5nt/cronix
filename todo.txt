@@ -53,17 +53,26 @@ pending:
 
 -----------------------
 heading 0.3 release
-- trg executed o startup?
-- adjust ui: 2 buttons side by side, no layout changes
-- hide unused tabs
-- integrate nancyfx, run index.html from dist
+- trg executed o startup? - done
+- integrate nancyfx, run index.html from dist - done
 
-- run glup on debug build?
-- glup dist task - attach to fake
-- how to nuget with htmlfiles?
 
+Cronix package
+- configuration port setup and defaults -- contribute to other project to have that functionality.
+- module refactoring
 - code review
 - write some unit tests (add more)
 - update code documentation
 - mention about how to install service
--
+
+Cronix UI package
+- adjust ui: 2 buttons side by side, no layout changes
+- hide unused tabs
+- fix gulp build script
+- nuget package
+- fake tasks (+gulp)
+
+ 
+
+
+ 

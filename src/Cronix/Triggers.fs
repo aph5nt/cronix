@@ -52,12 +52,6 @@ module Triggers =
 
         let tokenSource = new CancellationTokenSource()
 
-        let fireTrigger =
-            stateChanged.Trigger(name, TriggerState.Executing)
-            occurrenceAt <- CrontabSchedule.Parse(expr).GetNextOccurrence DateTime.UtcNow
-            timerCallback(name, jobCallback, tokenSource.Token)    
-            stateChanged.Trigger(name, TriggerState.Idle)
-
         let timer = new System.Threading.Timer(fun _ -> 
                 stateChanged.Trigger(name, TriggerState.Executing)
                 occurrenceAt <- CrontabSchedule.Parse(expr).GetNextOccurrence DateTime.UtcNow
