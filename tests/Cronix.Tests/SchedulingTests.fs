@@ -77,10 +77,10 @@ type ScheduleManagerTests() =
         match result with
         | Ok (_, msgs) -> 
             msgs |> should contain "Expr <[* * * * *]> is valid."
-            msgs |> should contain "Job <[job1]> can be added."
-            msgs |> should contain "Job <[job1]> has been added."
+            msgs |> should contain "Trigger <[job1]> can be added."
+            msgs |> should contain "Trigger <[job1]> has been added."
         | _ -> failwith "Expected Success Tee"
-
+    
 
     [<Fact>]
     let ``schedule not the same job twice``() =
@@ -114,10 +114,10 @@ type ScheduleManagerTests() =
         let result = manager.UnScheduleJob "job1"
         match result with
         | Ok (_, msgs) -> 
-            msgs |> should contain "Job <[job1]> found."
-            msgs |> should contain "Job <[job1]> has been removed."
+            msgs |> should contain "Trigger <[job1]> found."
+            msgs |> should contain "Trigger <[job1]> has been removed."
         | _ -> failwith "Expected Success Tee"
-
+        
     [<Fact>]
     let ``unschedule not existing job``() =
         let result = manager.UnScheduleJob "job1"
@@ -132,16 +132,15 @@ type ScheduleManagerTests() =
                      <| JobCallback(sampleJob)
 
         let stopped = manager.DisableTrigger("job1")
-        Thread.Sleep(200)
         match stopped with
         | Ok (_, msgs) -> 
-             msgs |> should contain "Job <[job1]> has been stopped."
+             msgs |> should contain "Trigger <[job1]> has been disabled."
         | _ -> failwith "Expected Success Tee"
 
         let started = manager.EnableTrigger("job1")
         match started with
         | Ok (_, msgs) -> 
-             msgs |> should contain "Job <[job1]> has been started."
+             msgs |> should contain "Trigger <[job1]> has been enabled."
         | _ -> failwith "Expected Success Tee"
 
     [<Fact>]

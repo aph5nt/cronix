@@ -358,8 +358,10 @@
     <Compile Include="Logging.fs" />
     <Compile Include="Triggers.fs" />
     <Compile Include="Scheduling.fs" />
-    <Compile Include="Installer.fs" />
+    <Compile Include="AppSettings.fs" />
     <Compile Include="Compiler.fs" />
+    <Compile Include="WebEndpoints.fs" />
+    <Compile Include="Installer.fs" />
     <Compile Include="BootStrapper.fs" />
     <None Include="Startup.fsx" />
     <Content Include="App.config" />

@@ -58,8 +58,10 @@ heading 0.3 release
 
 
 Cronix package
-- configuration port setup and defaults -- contribute to other project to have that functionality.
-- module refactoring
+- configuration port setup and defaults -- closed
+- module refactoring - done
+- fix tests
+s
 - code review
 - write some unit tests (add more)
 - update code documentation

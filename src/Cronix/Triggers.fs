@@ -67,7 +67,6 @@ module Triggers =
                     tokenSource.Cancel() |> ignore
                     timer.Dispose() |> ignore
                     stateChanged.Trigger(name, TriggerState.Terminated)
-                    isDisposed <- false
                     logger.Debug("Trigger<'{0}'> has been disposed.", name)
 
         interface IDisposable with
