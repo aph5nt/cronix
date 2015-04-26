@@ -32,6 +32,7 @@ nuget Newtonsoft.Json
 nuget Owin
 nuget Microsoft.Owin.Diagnostics
 nuget Microsoft.Owin.Cors
+nuget Foq
  
  
 

@@ -58,6 +58,36 @@
   </Target>
   -->
   <Import Project="..\..\.paket\paket.targets" />
+  <ItemGroup>
+    <None Include="paket.references" />
+    <None Include="paket.template" />
+    <Compile Include="Types.fs" />
+    <Compile Include="Logging.fs" />
+    <Compile Include="Triggers.fs" />
+    <Compile Include="Scheduling.fs" />
+    <Compile Include="AppSettings.fs" />
+    <Compile Include="Compiler.fs" />
+    <Compile Include="WebEndpoints.fs" />
+    <Compile Include="Installer.fs" />
+    <Compile Include="BootStrapper.fs" />
+    <None Include="Startup.fsx" />
+    <Content Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="FSharp.Compiler.CodeDom">
+      <HintPath>..\..\packages\FSharp.Compiler.CodeDom\lib\net40\FSharp.Compiler.CodeDom.dll</HintPath>
+    </Reference>
+    <Reference Include="mscorlib" />
+    <Reference Include="FSharp.Core, Version=$(TargetFSharpCoreVersion), Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Configuration.Install" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Numerics" />
+    <Reference Include="System.ServiceProcess" />
+  </ItemGroup>
   <Choose>
     <When Condition="($(TargetFrameworkIdentifier) == '.NETFramework' And ($(TargetFrameworkVersion) == 'v4.0' Or $(TargetFrameworkVersion) == 'v4.5' Or $(TargetFrameworkVersion) == 'v4.5.1' Or $(TargetFrameworkVersion) == 'v4.5.2' Or $(TargetFrameworkVersion) == 'v4.5.3' Or $(TargetFrameworkVersion) == 'v4.6')) Or ($(TargetFrameworkIdentifier) == 'MonoAndroid') Or ($(TargetFrameworkIdentifier) == 'MonoTouch')">
       <ItemGroup>
@@ -351,34 +381,4 @@
       </ItemGroup>
     </When>
   </Choose>
-  <ItemGroup>
-    <None Include="paket.references" />
-    <None Include="paket.template" />
-    <Compile Include="Types.fs" />
-    <Compile Include="Logging.fs" />
-    <Compile Include="Triggers.fs" />
-    <Compile Include="Scheduling.fs" />
-    <Compile Include="AppSettings.fs" />
-    <Compile Include="Compiler.fs" />
-    <Compile Include="WebEndpoints.fs" />
-    <Compile Include="Installer.fs" />
-    <Compile Include="BootStrapper.fs" />
-    <None Include="Startup.fsx" />
-    <Content Include="App.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <Reference Include="FSharp.Compiler.CodeDom">
-      <HintPath>..\..\packages\FSharp.Compiler.CodeDom\lib\net40\FSharp.Compiler.CodeDom.dll</HintPath>
-    </Reference>
-    <Reference Include="mscorlib" />
-    <Reference Include="FSharp.Core, Version=$(TargetFSharpCoreVersion), Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="System" />
-    <Reference Include="System.Configuration" />
-    <Reference Include="System.Configuration.Install" />
-    <Reference Include="System.Core" />
-    <Reference Include="System.Numerics" />
-    <Reference Include="System.ServiceProcess" />
-  </ItemGroup>
 </Project>

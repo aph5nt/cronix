@@ -22,7 +22,7 @@ type SchedulingTests() =
 
     let callback (token : CancellationToken) = 
        printf "callback executed at (UTC) %s\n" <| DateTime.UtcNow.ToString()
-       Thread.Sleep 100
+       Thread.Sleep 300
 
     [<Fact>]
     let ``validate exprArgValid expression``() = 
@@ -59,9 +59,37 @@ type SchedulingTests() =
         let expected = SuccesMessage(state) TriggerAdded [jobName1]
         compareResults actual expected |> ignore
 
+    [<Fact>]
+    let ``fire trigger``() = 
+         let params' = (jobName1, exprArgValid, JobCallback(callback))
+         addTrigger(state, params') |> ignore
+         let actual = fireTrigger(state, jobName1) 
+         let expected = SuccesMessage(state) TriggerFired [jobName1]
+         compareResults actual expected |> ignore
+        
+
+    [<Fact>]
+    let ``terminate trigger``() = 
+         let params' = (jobName1, exprArgValid, JobCallback(callback))
+         addTrigger(state, params') |> ignore
+         fireTrigger(state, jobName1) |> ignore
+         let actual = terminateTrigger(state, jobName1)
+         let expected = SuccesMessage(state) TriggerTerminated [jobName1]
+         compareResults actual expected |> ignore
+
+    [<Fact>]
+    let ``trigger should do the cleanup when disposing``() = 
+        let params' = (jobName1, exprArgValid, JobCallback(callback))
+        addTrigger(state, params') |> ignore
+        state.[jobName1].State |> should equal Idle
+        state.[jobName1].Dispose()
+        state.[jobName1].State |> should equal Terminated
+
 [<Trait("Scheduling", "Integration Test")>]
 type ScheduleManagerTests() =
     let manager = new ScheduleManager() :> IScheduleManager
+    let mutable triggerState = Idle
+    let stateChangedHandler = new Handler<(TriggerDetail)>(fun sender args -> triggerState <- args.TriggerState)
     let sampleJob (token : CancellationToken) = 
         printf "callback executed at (UTC) %s\n" <| DateTime.UtcNow.ToString()
         Thread.Sleep 100
@@ -127,9 +155,10 @@ type ScheduleManagerTests() =
 
     [<Fact>]
     let ``enable and disable trigger``() =
-        let result = manager.ScheduleJob "job1" 
-                     <| "* * * * *" 
-                     <| JobCallback(sampleJob)
+        manager.ScheduleJob "job1" 
+                <| "* * * * *" 
+                <| JobCallback(sampleJob)
+                 |> ignore
 
         let stopped = manager.DisableTrigger("job1")
         match stopped with
@@ -137,8 +166,8 @@ type ScheduleManagerTests() =
              msgs |> should contain "Trigger <[job1]> has been disabled."
         | _ -> failwith "Expected Success Tee"
 
-        let started = manager.EnableTrigger("job1")
-        match started with
+        let result = manager.EnableTrigger("job1")
+        match result with
         | Ok (_, msgs) -> 
              msgs |> should contain "Trigger <[job1]> has been enabled."
         | _ -> failwith "Expected Success Tee"
@@ -151,6 +180,44 @@ type ScheduleManagerTests() =
           |> ignore
 
          manager.TriggerDetails |> Seq.toArray |> Array.find(fun(i) -> i.Name = "job1") |> should not' Null
+    
+    [<Fact>]
+    let ``fire trigger``() = 
+        manager.ScheduleJob "job1" 
+                     <| "* * * * *" 
+                     <| JobCallback(sampleJob)
+                      |> ignore
+        let result = manager.FireTrigger("job1")
+        match result with
+        | Ok (_, msgs) -> 
+             msgs |> should contain "Trigger <[job1]> has been fired."
+        | _ -> failwith "Expected Success Tee"
+
+    [<Fact>]
+    let ``terminate trigger execution``() = 
+        manager.ScheduleJob "job1" 
+                     <| "* * * * *" 
+                     <| JobCallback(sampleJob)
+                      |> ignore
+        manager.FireTrigger("job1") |> ignore
+
+        let result = manager.TerminateTriggerExecution("job1")
+        match result with
+        | Ok (_, msgs) -> 
+             msgs |> should contain "Trigger <[job1]> has been terminated."
+        | _ -> failwith "Expected Success Tee"
+
+    [<Fact>]
+    let ``handle OnTriggerStateChanged event``() = 
+         triggerState <- Terminated
+         manager.OnTriggerStateChanged.AddHandler(stateChangedHandler)
+         manager.ScheduleJob "job1" 
+                     <| "* * * * *" 
+                     <| JobCallback(sampleJob)
+                      |> ignore
+         manager.FireTrigger("job1") |> ignore
+         triggerState |> should equal Idle
+         
 
     interface IDisposable with
         member x.Dispose() = manager.StopManager()     

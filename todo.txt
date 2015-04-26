@@ -60,10 +60,12 @@ heading 0.3 release
 Cronix package
 - configuration port setup and defaults -- closed
 - module refactoring - done
-- fix tests
-s
+- fix tests - done?
+
 - code review
 - write some unit tests (add more)
+---> use ncrounch test coverage!!
+
 - update code documentation
 - mention about how to install service
 
