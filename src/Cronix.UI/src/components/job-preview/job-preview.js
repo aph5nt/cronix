@@ -1,4 +1,4 @@
-define(['knockout', 'signalr','text!./job-preview.html'], function(ko, signalr, templateMarkup) {
+define(['knockout', 'moment', 'signalr', 'text!./job-preview.html'], function (ko, moment, signalr, templateMarkup) {
 
     var connection = $.hubConnection();
     connection.url = "http://localhost:8111/signalr";
@@ -12,11 +12,16 @@ define(['knockout', 'signalr','text!./job-preview.html'], function(ko, signalr, 
         Terminated: "Terminated"
     };
 
+    function formatDate(date) {
+        return moment(date).format('YYYY-MM-DD HH:mm');
+    }
+
     var jobPreviewItem = function() {
         var self = this;
 
         self.commandToggled = ko.observable(false);
         self.cronExpr = ko.observable();
+        self.nextOccuranceDate = ko.observable();
         self.triggerState = ko.observable(triggerStateCase.Idle);
 
         self.enableTrigger = function () {
@@ -54,9 +59,6 @@ define(['knockout', 'signalr','text!./job-preview.html'], function(ko, signalr, 
         self.canTerminateTrigger = ko.computed(function () {
             return self.triggerState() === triggerStateCase.Executing && self.commandToggled() === false;
         });
-
-        
-        
     };
 
     function jobPreview(params) {
@@ -69,6 +71,7 @@ define(['knockout', 'signalr','text!./job-preview.html'], function(ko, signalr, 
                 if (item.name === jobState.Name) {
                     item.cronExpr(jobState.CronExpr);
                     item.triggerState(jobState.TriggerState.Case);
+                    item.nextOccuranceDate(formatDate(jobState.NextOccuranceDate));
                     item.commandToggled(false);
                 }
             });
@@ -82,6 +85,7 @@ define(['knockout', 'signalr','text!./job-preview.html'], function(ko, signalr, 
                 item.name = jobState.Name;
                 item.cronExpr(jobState.CronExpr);
                 item.triggerState(jobState.TriggerState.Case);
+                item.nextOccuranceDate(formatDate(jobState.NextOccuranceDate));
                 item.commandToggled(false);
                 items.push(item);
             });
@@ -97,33 +101,3 @@ define(['knockout', 'signalr','text!./job-preview.html'], function(ko, signalr, 
     return { viewModel: jobPreview, template: templateMarkup };
 
 });
-
-/*
-
-- cronix web --> cronix startup
-- implement on state change + signalr
-
-- durring the build Cronix.UI -> dist -> copy to cronix webui folder
-- fake build, nugetpackage
-- manual how to enable webui (just copy catalog)
-
- */
-
-
-
-
-/*
- 
- - enable / disable --- trigger / job ?
- - fire trigger
- - terminate trigger --> back to Idle
-
-
- ---- schedule manager
- -- schedule / unschedule
- ------> terminates disable the trigger, when uncheduling, then delete
-
-
-
-
- */

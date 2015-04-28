@@ -26,10 +26,6 @@ version - 0.3
 - updated documentation
 
 
-version 0.4
-- rest api
-
-
 pending:
 - mono support (raspberrypi2?; build server, bitcoin ticker)
 - installation as a service under linux
@@ -53,26 +49,21 @@ pending:
 
 -----------------------
 heading 0.3 release
-- trg executed o startup? - done
-- integrate nancyfx, run index.html from dist - done
-
+ 
+ 
+- fix compiler errors (module or namespace problem?)
+- signalr communication transport logging (websockers or?)
+- http://momentjs.com/timezone/ format nextoccurances
+- layout fixes
+--- footer fix
+--- distro layout must match dev layout
 
 Cronix package
-- configuration port setup and defaults -- closed
-- module refactoring - done
-- fix tests - done?
-
-- code review
-- write some unit tests (add more)
----> use ncrounch test coverage!!
-
+- remove FSharp.Core.optdata
 - update code documentation
 - mention about how to install service
 
 Cronix UI package
-- adjust ui: 2 buttons side by side, no layout changes
-- hide unused tabs
-- fix gulp build script
 - nuget package
 - fake tasks (+gulp)
 

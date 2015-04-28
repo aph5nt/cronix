@@ -1,7 +1,7 @@
 <div class="widget widget-table action-table">
     <div class="widget-header">
         <i class="icon-th-list"></i>
-        <h3>Jobs preview</h3>
+        <h3>Current triggers</h3>
     </div>
 
     <div class="widget-content">
@@ -11,44 +11,42 @@
                 <tr>
                     <th> Name </th>
                     <th> Cron expression</th>
+                    <th> Next occurance</th>
                     <th> State</th>
-                    <th class="td-actions"></th>
+                    <th class="td-actions">Actions</th>
                 </tr>
             </thead>
             <tbody data-bind="foreach: items">
                 <tr>
                     <td data-bind="text: name"></td>
                     <td data-bind="text: cronExpr"></td>
-                    <td data-bind="text: triggerState"></td>
-                    <td class="td-actions">
+                    <td data-bind="text: nextOccuranceDate"></td>
+                    <td data-bind="text: triggerState" ></td>
+                    <td class="td-actions" style="width: 160px">
                         <!-- ko if: canEnableTrigger -->
                         <a data-bind="click: enableTrigger" class=" btn btn-small btn-success">
                             <i class="btn-icon-only icon-ok"> Enable </i>
                         </a>
                         <!-- /ko -->
-                        
                         <!-- ko if: canDisableTrigger -->
                         <a data-bind="click: disableTrigger" class="btn btn-danger btn-small">
                             <i class="btn-icon-only icon-remove"> Disable </i>
                         </a>
                         <!-- /ko -->
-                      
                         <!-- ko if: canFireTrigger -->
                         <a data-bind="click: fireTrigger" class=" btn btn-small btn-success">
                             <i class="btn-icon-only icon-ok"> Fire </i>
                         </a>
                         <!-- /ko -->
-
                         <!-- ko if: canTerminateTrigger -->
                         <a data-bind="click: terminateTrigger" class="btn btn-danger btn-small">
                             <i class="btn-icon-only icon-remove"> Terminate </i>
                         </a>
                         <!-- /ko -->
-
                         <!-- ko if: commandToggled -->
                         <i>processing request...</i>
                         <!-- /ko -->
-                       
+
                     </td>
                 </tr>
             </tbody>

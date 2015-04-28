@@ -38,12 +38,11 @@ gulp.task('js', function () {
 
 // Concatenates CSS files, rewrites relative paths to Bootstrap fonts, copies Bootstrap fonts
 gulp.task('css', function () {
-    var bowerCss = gulp.src('src/css/bootstrap.css')
-            .pipe(replace(/url\((')?\.\.\/fonts\//g, 'url($1fonts/')),
+    var bowerCss = gulp.src('src/css/bootstrap.css').pipe(replace(/url\((')?\.\/fonts\//g, 'url($1fonts/')),
         appCss = gulp.src('src/css/*.css'),
         combinedCss = es.concat(bowerCss, appCss).pipe(concat('css.css')),
-        fontFiles = gulp.src('./src/fonts/*',
-        { base: './src/css/' });
+        fontFiles = gulp.src('./src/fonts/*', { base: './src/css/' });
+
     return es.concat(combinedCss, fontFiles)
         .pipe(gulp.dest(output));
 });
@@ -58,13 +57,18 @@ gulp.task('html', function() {
         .pipe(gulp.dest(output));
 });
 
+gulp.task('font', function () {
+    gulp.src('./src/font/*')
+       .pipe(gulp.dest(output + '/font'));
+});
+
 // Removes all files from ./dist/
 gulp.task('clean', function() {
     return gulp.src(output + '**/*', { read: false })
         .pipe(clean());
 });
 
-gulp.task('default', ['html', 'js', 'css'], function(callback) {
+gulp.task('default', ['html', 'js', 'css', 'font'], function(callback) {
     callback();
     console.log('\nPlaced optimized files in ' + chalk.magenta(output));
 });
