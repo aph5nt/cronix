@@ -9,7 +9,8 @@ define(['knockout', 'moment', 'signalr', 'text!./job-preview.html'], function (k
         Stopped: "Stopped",
         Idle: "Idle",
         Executing: "Executing",
-        Terminated: "Terminated"
+        Terminated: "Terminated",
+        Removed: "Removed"
     };
 
     function formatDate(date) {
@@ -66,15 +67,34 @@ define(['knockout', 'moment', 'signalr', 'text!./job-preview.html'], function (k
 
         self.items = ko.observableArray();
 
-        hub.on('onStateChanged', function (jobState) {
-            self.items().forEach(function(item) {
-                if (item.name === jobState.Name) {
-                    item.cronExpr(jobState.CronExpr);
-                    item.triggerState(jobState.TriggerState.Case);
-                    item.nextOccuranceDate(formatDate(jobState.NextOccuranceDate));
-                    item.commandToggled(false);
-                }
+        hub.on('onStateChanged', function(jobState) {
+            // update existing
+            var existing = ko.utils.arrayFirst(self.items(), function(item) {
+                return item.name === jobState.Name;
             });
+
+            if (existing !== null) {
+                if (existing.triggerState() === triggerStateCase.Removed) {
+                    self.items.remove(existing);
+
+                } else {
+                    existing.cronExpr(jobState.CronExpr);
+                    existing.triggerState(jobState.TriggerState.Case);
+                    existing.nextOccuranceDate(formatDate(jobState.NextOccuranceDate));
+                    existing.commandToggled(false);
+                }
+            } else {
+
+                // add new item
+                var item = new jobPreviewItem();
+                item.name = jobState.Name;
+                item.cronExpr(jobState.CronExpr);
+                item.triggerState(jobState.TriggerState.Case);
+                item.nextOccuranceDate(formatDate(jobState.NextOccuranceDate));
+                item.commandToggled(false);
+
+                self.items.push(item);
+            }
         });
 
         hub.on('getData', function (input) {

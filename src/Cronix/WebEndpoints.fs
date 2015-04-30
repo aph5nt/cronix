@@ -32,12 +32,12 @@ module Hubs =
             scheduleManager.EnableTrigger(name) |> ignore
 
         member self.FireTrigger(name : TriggerName) =
-            scheduleManager.FireTrigger(name) |> ignore
+                scheduleManager.FireTrigger(name) |> ignore
 
         member self.DisableTrigger(name : TriggerName) =
             scheduleManager.DisableTrigger(name) |> ignore
 
-        member self.TerminateTrigger(name : TriggerName) =
+        member self.TerminateTrigger(name : TriggerName) = // cancel trigger / stop execution?
             scheduleManager.TerminateTriggerExecution(name) |> ignore
 
 module Website =
@@ -77,7 +77,8 @@ module WebHost =
             let options = new StartOptions()
             options.Port <- new Nullable<int>(AppSettings.port 8111)
             let config = new HubConfiguration(EnableDetailedErrors = true)
-       
+            config.EnableJSONP <- true    
+
             WebApp.Start(options,
                fun(app : Owin.IAppBuilder) -> (
                                                GlobalHost.DependencyResolver.Register(typeof<IScheduleManager>, fun() -> scheduleManager :> obj)

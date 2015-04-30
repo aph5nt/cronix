@@ -13,6 +13,7 @@ type TriggerState =
     | Idle
     | Executing
     | Terminated 
+    | Removed
 
 /// Describers the trigger options.
 and TriggerOption =
@@ -44,6 +45,9 @@ and ITrigger =
 
     /// Fires the trigger.
     abstract member Fire: unit -> unit
+
+    /// Publish remove event
+    abstract member PublishRemovedEvent : unit -> unit
 
     /// On state change event
     abstract member OnStateChanged: IEvent<(TriggerName * TriggerState)> with get
@@ -124,6 +128,9 @@ and ScheduleState() =
     member x.Add(name, trigger : ITrigger) = 
         trigger.OnStateChanged.AddHandler(onStateChanged)
         base.Add(name, trigger)
+
+    member x.Remove(name) =
+        base.Remove(name) |> ignore
 
 /// The schedule params type.
 and ScheduleParams = TriggerName * CronExpr * JobCallback

@@ -46,6 +46,7 @@ module Scheduling =
     /// Removes given trigger.
     let removeTrigger (state : ScheduleState, name : string) =
         state.[name].Terminate() |> ignore
+        state.[name].PublishRemovedEvent() |> ignore
         state.Remove name |> ignore
         SuccesMessage(state) TriggerRemoved [name]
     
