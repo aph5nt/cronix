@@ -2,6 +2,7 @@
 open Cronix
 open Chessie.ErrorHandling
 open System.Threading
+open Cronix.Web
 
 let sampleJob (token : CancellationToken) = 
       printf "callback executed at (UTC) %s\n" <| DateTime.UtcNow.ToString()
@@ -13,6 +14,9 @@ let main argv =
     let startupHandler = 
         new StartupHandler(
             fun(scheduler) ->
+
+                        WebPlugin.InitPlugin(scheduler) |> ignore
+
                         scheduler.ScheduleJob "scheduled job" <| "* * * * *" <| JobCallback( sampleJob ) |> ignore
                         scheduler.ScheduleJob "second name" <| frequency Hourly <| JobCallback( sampleJob ) |> ignore
             )

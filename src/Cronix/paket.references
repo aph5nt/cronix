@@ -2,16 +2,3 @@ NLog
 NCronTab
 chessie
 FSharp.Configuration
-
-Microsoft.AspNet.SignalR.Core 
-Microsoft.AspNet.SignalR.SystemWeb 
-Microsoft.Owin 
-Microsoft.Owin.Hosting
-Microsoft.Owin.Host.SystemWeb 
-Microsoft.Owin.Security
-Microsoft.Owin.Host.HttpListener
-Owin
-Microsoft.Owin.Diagnostics
-Microsoft.Owin.Cors
-Nancy
-Nancy.Owin

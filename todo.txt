@@ -25,7 +25,6 @@ version - 0.3
 - trigger improvements
 - updated documentation
 
-
 pending:
 - mono support (raspberrypi2?; build server, bitcoin ticker)
 - installation as a service under linux
@@ -34,9 +33,7 @@ pending:
 - more samples
 - videos, tutorials
 
-
 - hrmsc - exchange rate notifier 
-
 
 - bitcoin ticker project (SAMPLE)
 -- sql provider
@@ -53,25 +50,19 @@ pending:
 -----------------------
 heading 0.3 release
  
- 
-- fix compiler errors (module or namespace problem?)
-- signalr communication transport logging (websockers or?)
+Minor bug fixes:
+ - BK: fix compiler errors (module or namespace problem?); remove FSharp.Core.optdata
+ - BK: Fire trigger -> reschedule to run now; then recalculate next occurance !!
+ - FT: layout fixes
 
-- layout fixes
---- footer fix
---- distro layout must match dev layout
---- settings.js (specify host.port there)
 
---- when new job is added or deleted it does not referesh the ui
---- processing request not hiding
-
-Cronix package
-- remove FSharp.Core.optdata
+Documentation:
 - update code documentation
 - mention about how to install service
+- mention how to configure urls
 
-Cronix UI package
-- nuget package
+Deploytment:
+- nuget package for ui (install dll + webui files)
 - fake tasks (+gulp)
 
  

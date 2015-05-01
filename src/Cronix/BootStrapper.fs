@@ -17,7 +17,7 @@ type ServiceProcessAdapter(service : IScheduleManager, setup) =
     override x.OnStart(args : string[]) = 
         logger.Debug("starting service")
         service.StartManager()
-        WebHost.run(service) |> ignore
+        //WebHost.run(service) |> ignore
         setup()
          
     /// Manually starts the schedulemanager

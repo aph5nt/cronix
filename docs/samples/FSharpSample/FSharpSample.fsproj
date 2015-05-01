@@ -94,6 +94,11 @@
     <Reference Include="System.Numerics" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\..\src\Cronix.Web\Cronix.Web.fsproj">
+      <Name>Cronix.Web</Name>
+      <Project>{14621a39-b196-41a7-a370-907c9381bc3f}</Project>
+      <Private>True</Private>
+    </ProjectReference>
     <ProjectReference Include="..\..\..\src\Cronix\Cronix.fsproj">
       <Name>Cronix</Name>
       <Project>{1ab7e0b7-c56e-4a50-b5fa-7ad04f56c17c}</Project>

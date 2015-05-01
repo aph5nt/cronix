@@ -7,7 +7,7 @@ Bootstrap Admin Template by EGrappler.com
 /*------------------------------------------------------------------
 [1. Global]
 */
-
+ 
 body {
 	background: #f9f6f1;
 	font: 13px/1.7em 'Open Sans';
@@ -252,8 +252,6 @@ textarea {
 
 .main {
 	padding-bottom: 2em;
-	
-	border-bottom: 1px solid #000;
 }
 
 
@@ -309,7 +307,7 @@ textarea {
 .footer {
 	margin-top: 0;
 	
-	border-top: 1px solid #292929;
+	 
 }
 
 .footer-inner {

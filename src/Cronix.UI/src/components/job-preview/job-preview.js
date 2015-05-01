@@ -1,7 +1,7 @@
 define(['knockout', 'moment', 'signalr', 'text!./job-preview.html'], function (ko, moment, signalr, templateMarkup) {
 
     var connection = $.hubConnection();
-    connection.url = "http://localhost:8111/signalr";
+    connection.url = connectionUrl;
 
     var hub = connection.createHubProxy('ScheduleManager');
 
@@ -66,6 +66,7 @@ define(['knockout', 'moment', 'signalr', 'text!./job-preview.html'], function (k
         var self = this;
 
         self.items = ko.observableArray();
+        self.isConnected = ko.observable(false);
 
         hub.on('onStateChanged', function(jobState) {
             // update existing
@@ -114,7 +115,26 @@ define(['knockout', 'moment', 'signalr', 'text!./job-preview.html'], function (k
         });
 
         connection.start().done(function () {
+            self.isConnected(true);
             hub.invoke('getData');
+        });
+
+        //connection.reconnect(function () {
+        //    console.warn("trying to reconnect...");
+        //    self.items([]);
+        //    self.isConnected(false);
+        //});
+
+        connection.disconnected(function () {
+            setTimeout(function () {
+                console.warn("server disconnected... reconnection in 10 seconds.");
+                self.items([]);
+                self.isConnected(false);
+                connection.start().done(function () {
+                    self.isConnected(true);
+                    hub.invoke('getData');
+                });
+            }, 10000);
         });
     }
 

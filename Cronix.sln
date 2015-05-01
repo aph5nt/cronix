@@ -66,6 +66,8 @@ Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "Cronix.UI", "http://localho
 		SlnRelativePath = "src\Cronix.UI\"
 	EndProjectSection
 EndProject
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Cronix.Web", "src\Cronix.Web\Cronix.Web.fsproj", "{14621A39-B196-41A7-A370-907C9381BC3F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -136,6 +138,16 @@ Global
 		{D227E2E9-FED5-406F-9B83-27B80DCA2AF7}.Release|Mixed Platforms.ActiveCfg = Debug|Any CPU
 		{D227E2E9-FED5-406F-9B83-27B80DCA2AF7}.Release|Mixed Platforms.Build.0 = Debug|Any CPU
 		{D227E2E9-FED5-406F-9B83-27B80DCA2AF7}.Release|x86.ActiveCfg = Debug|Any CPU
+		{14621A39-B196-41A7-A370-907C9381BC3F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{14621A39-B196-41A7-A370-907C9381BC3F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{14621A39-B196-41A7-A370-907C9381BC3F}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{14621A39-B196-41A7-A370-907C9381BC3F}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{14621A39-B196-41A7-A370-907C9381BC3F}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{14621A39-B196-41A7-A370-907C9381BC3F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{14621A39-B196-41A7-A370-907C9381BC3F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{14621A39-B196-41A7-A370-907C9381BC3F}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{14621A39-B196-41A7-A370-907C9381BC3F}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{14621A39-B196-41A7-A370-907C9381BC3F}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -212,6 +212,8 @@ and StartupHandler = delegate of (IScheduleManager) -> unit
 /// The run service function signature.
 and RunService = IScheduleManager -> Option<StartupHandler> -> unit
 
+and InitPlugin = IScheduleManager -> unit
+
 /// The initialize service function signature.
 and InitService = string[] * StartupHandler -> Result<string, string>
 
