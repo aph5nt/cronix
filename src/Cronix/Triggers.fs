@@ -91,8 +91,7 @@ module Triggers =
                 with get() = stateChanged.Publish
 
             member x.Start() =
-                if isDisposed = false then
-                              
+                if isDisposed = false then      
                     occurrenceAt <- calculatetOccurrenceAt(expr, DateTime.UtcNow)
                     let due, interval = calculateTimerArgs(expr, DateTime.UtcNow, occurrenceAt)
                     timer.Change(due, interval) |> ignore
@@ -114,15 +113,11 @@ module Triggers =
             member x.Fire() = 
                 if isDisposed = false then
                     if triggerState = TriggerState.Idle then
-                        timer.Change(Timeout.Infinite, Timeout.Infinite) |> ignore
-                        stateChanged.Trigger(name, TriggerState.Executing)
-                        timerCallback(name, jobCallback, tokenSource.Token)    
-                        occurrenceAt <- calculatetOccurrenceAt(expr, DateTime.UtcNow)
+                        timer.Change(0, Timeout.Infinite) |> ignore
+                        logger.Debug("Trigger<'{0}'> has been fired.", name)   
                         let due, interval = calculateTimerArgs(expr, DateTime.UtcNow, occurrenceAt)
                         timer.Change(due, interval) |> ignore
-                        stateChanged.Trigger(name, TriggerState.Idle)        
-                        logger.Debug("Trigger<'{0}'> has been fired.", name)
-
+                         
             member x.PublishRemovedEvent() =
                  stateChanged.Trigger(name, TriggerState.Removed)   
                  logger.Debug("Trigger<'{0}'> published removed event.", name)     
