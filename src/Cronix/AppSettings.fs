@@ -1,4 +1,5 @@
-﻿[<AutoOpen>]
+﻿/// Module responsible for getting configuration settings.
+[<AutoOpen>]
 module AppSettings
     open System
     open System.Configuration

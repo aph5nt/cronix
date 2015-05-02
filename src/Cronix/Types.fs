@@ -27,8 +27,10 @@ and ITrigger =
     /// Returns the trigger state.
     abstract member State: TriggerState with get
 
+    /// Returns the trigger name.
     abstract member Name: TriggerName with get
    
+    /// Returns the cron expression.
     abstract member CronExpr : CronExpr with get
 
     /// Returns the occurance time.
@@ -86,8 +88,7 @@ and TriggerFactory = {
     create: CreateTrigger
 }
 
-(* Jobs *)
-/// The job type.
+/// The trigger detail dto.
 and TriggerDetail = {
     Name : TriggerName;
     CronExpr : CronExpr;
@@ -95,10 +96,10 @@ and TriggerDetail = {
     NextOccuranceDate : DateTime;
 }
 
-/// The job name.
+/// The trigger name.
 and TriggerName = string
 
-/// The cron expression type.
+/// The cron expression.
 and CronExpr = string
  
 (* Scheduling *)
@@ -111,6 +112,7 @@ and UnSchedule = ScheduleState * TriggerName ->  Result<ScheduleState, string>
 /// The start function signature.
 and Start = ScheduleState * TriggerName ->  Result<ScheduleState, string>
 
+/// The fire trigger function signature.
 and Fire = ScheduleState * TriggerName ->  Result<ScheduleState, string>
 
 /// The stop function signature.
@@ -125,10 +127,12 @@ and ScheduleState() =
         with get() = onStateChanged
         and set(value) =  onStateChanged <- value
 
+    /// Adds trigger.
     member x.Add(name, trigger : ITrigger) = 
         trigger.OnStateChanged.AddHandler(onStateChanged)
         base.Add(name, trigger)
 
+    /// Removes trigger by name.
     member x.Remove(name) =
         base.Remove(name) |> ignore
 
@@ -153,19 +157,22 @@ and IScheduleManager =
     /// Unschedules given job.
     abstract member UnScheduleJob: string -> Result<ScheduleState, string>
 
-    /// Starts given job.
+    /// Starts given trigger.
     abstract member EnableTrigger : string -> Result<ScheduleState, string>
 
-    /// Stops given job.
+    /// Stops given trigger.
     abstract member DisableTrigger : string -> Result<ScheduleState, string>
 
+    /// Fires given trigger.
     abstract member FireTrigger : string -> Result<ScheduleState, string>
 
+    /// Terminates given trigger execution.
     abstract member TerminateTriggerExecution : string -> Result<ScheduleState, string>
 
     /// Returns jobs state.
     abstract member TriggerDetails: seq<TriggerDetail>
 
+    /// Returns OnTriggerStateChanged event
     abstract member OnTriggerStateChanged: IEvent<TriggerDetail> with get
 
     /// Stops schedule manager.
@@ -174,13 +181,24 @@ and IScheduleManager =
     /// Starts schedule manager.
     abstract member StartManager: unit -> unit
 
-
+/// Schedule Manager hub.
 type IScheduleManagerHub =
+   /// Returns all triggers state.
    abstract member GetData: TriggerDetail[] -> unit
+
+   /// Returns OnStateChanged event.
    abstract member OnStateChanged : TriggerDetail -> unit
+
+   /// Enables given trigger.
    abstract member EnableTrigger: TriggerName -> unit
+
+   /// Disables given trigger.
    abstract member DisableTrigger: TriggerName -> unit
+
+   /// Fires given trigger.
    abstract member FireTrigger: TriggerName -> unit
+
+   /// Terminates given trigger execution.
    abstract member TerminateTrigger: TriggerName -> unit
 
 (* Installer *)
@@ -212,6 +230,7 @@ and StartupHandler = delegate of (IScheduleManager) -> unit
 /// The run service function signature.
 and RunService = IScheduleManager -> Option<StartupHandler> -> unit
 
+/// The init plugin function signature.
 and InitPlugin = IScheduleManager -> unit
 
 /// The initialize service function signature.
