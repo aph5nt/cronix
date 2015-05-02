@@ -14,10 +14,11 @@ requireLicenseAcceptance
 copyright
     Copyright 2015
 tags
-    cronix ui cron ncron ncrontab scheduler service
+    cron ncron ncrontab scheduler service
 summary
-    Cronix Web Interface
+    F# / C# Cron Service
 description
-    Cronix Web Interface
-
+    Simple Cron Library / Service
+files
+	 ../bin/webui/*.* ==> ../bin/webui/*.*
 

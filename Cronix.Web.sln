@@ -10,13 +10,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".paket", ".paket", "{63297B
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "docs", "docs", "{A6A6AF7D-D6E3-442D-9B1E-58CC91879BE1}"
 EndProject
-Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Cronix", "src\Cronix\Cronix.fsproj", "{1AB7E0B7-C56E-4A50-B5FA-7AD04F56C17C}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "project", "project", "{BF60BC93-E09B-4E5F-9D85-95A519479D54}"
 	ProjectSection(SolutionItems) = preProject
-		build.fsx = build.fsx
-		README.md = README.md
-		RELEASE_NOTES.md = RELEASE_NOTES.md
+		build.web.fsx = build.web.fsx
+		RELEASE_NOTES_WEB.md = RELEASE_NOTES_WEB.md
 		todo.txt = todo.txt
 	EndProjectSection
 EndProject
@@ -33,10 +30,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "content", "content", "{8E6D
 		docs\content\startup script.fsx = docs\content\startup script.fsx
 	EndProjectSection
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{ED8079DD-2B06-4030-9F0F-DC548F98E1C4}"
-EndProject
-Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Cronix.Tests", "tests\Cronix.Tests\Cronix.Tests.fsproj", "{F0620B10-2EC7-426D-88F4-FBD6762BAABE}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "samples", "samples", "{B6255659-79E8-4AC2-AD13-321960F13DF4}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CSharpSample", "docs\samples\CSharpSample\CSharpSample.csproj", "{06322D90-9A28-423C-9805-AC1393A8F18D}"
@@ -45,7 +38,30 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CSharpSample.Jobs", "docs\s
 EndProject
 Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "FSharpSample", "docs\samples\FSharpSample\FSharpSample.fsproj", "{1CBB9793-714B-42A9-AD03-12B15FB71967}"
 EndProject
+Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "Cronix.UI", "http://localhost:4460", "{D227E2E9-FED5-406F-9B83-27B80DCA2AF7}"
+	ProjectSection(WebsiteProperties) = preProject
+		UseIISExpress = "true"
+		TargetFrameworkMoniker = ".NETFramework,Version%3Dv4.0"
+		Debug.AspNetCompiler.VirtualPath = "/localhost_4460"
+		Debug.AspNetCompiler.PhysicalPath = "src\Cronix.UI\"
+		Debug.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_4460\"
+		Debug.AspNetCompiler.Updateable = "true"
+		Debug.AspNetCompiler.ForceOverwrite = "true"
+		Debug.AspNetCompiler.FixedNames = "false"
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.VirtualPath = "/localhost_4460"
+		Release.AspNetCompiler.PhysicalPath = "src\Cronix.UI\"
+		Release.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_4460\"
+		Release.AspNetCompiler.Updateable = "true"
+		Release.AspNetCompiler.ForceOverwrite = "true"
+		Release.AspNetCompiler.FixedNames = "false"
+		Release.AspNetCompiler.Debug = "False"
+		SlnRelativePath = "src\Cronix.UI\"
+	EndProjectSection
+EndProject
 Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Cronix.Web", "src\Cronix.Web\Cronix.Web.fsproj", "{14621A39-B196-41A7-A370-907C9381BC3F}"
+EndProject
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Cronix", "src\Cronix\Cronix.fsproj", "{1AB7E0B7-C56E-4A50-B5FA-7AD04F56C17C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -57,26 +73,6 @@ Global
 		Release|x86 = Release|x86
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{1AB7E0B7-C56E-4A50-B5FA-7AD04F56C17C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{1AB7E0B7-C56E-4A50-B5FA-7AD04F56C17C}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{1AB7E0B7-C56E-4A50-B5FA-7AD04F56C17C}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
-		{1AB7E0B7-C56E-4A50-B5FA-7AD04F56C17C}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
-		{1AB7E0B7-C56E-4A50-B5FA-7AD04F56C17C}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{1AB7E0B7-C56E-4A50-B5FA-7AD04F56C17C}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{1AB7E0B7-C56E-4A50-B5FA-7AD04F56C17C}.Release|Any CPU.Build.0 = Release|Any CPU
-		{1AB7E0B7-C56E-4A50-B5FA-7AD04F56C17C}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
-		{1AB7E0B7-C56E-4A50-B5FA-7AD04F56C17C}.Release|Mixed Platforms.Build.0 = Release|Any CPU
-		{1AB7E0B7-C56E-4A50-B5FA-7AD04F56C17C}.Release|x86.ActiveCfg = Release|Any CPU
-		{F0620B10-2EC7-426D-88F4-FBD6762BAABE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{F0620B10-2EC7-426D-88F4-FBD6762BAABE}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{F0620B10-2EC7-426D-88F4-FBD6762BAABE}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
-		{F0620B10-2EC7-426D-88F4-FBD6762BAABE}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
-		{F0620B10-2EC7-426D-88F4-FBD6762BAABE}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{F0620B10-2EC7-426D-88F4-FBD6762BAABE}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{F0620B10-2EC7-426D-88F4-FBD6762BAABE}.Release|Any CPU.Build.0 = Release|Any CPU
-		{F0620B10-2EC7-426D-88F4-FBD6762BAABE}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
-		{F0620B10-2EC7-426D-88F4-FBD6762BAABE}.Release|Mixed Platforms.Build.0 = Release|Any CPU
-		{F0620B10-2EC7-426D-88F4-FBD6762BAABE}.Release|x86.ActiveCfg = Release|Any CPU
 		{06322D90-9A28-423C-9805-AC1393A8F18D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{06322D90-9A28-423C-9805-AC1393A8F18D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{06322D90-9A28-423C-9805-AC1393A8F18D}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
@@ -107,6 +103,16 @@ Global
 		{1CBB9793-714B-42A9-AD03-12B15FB71967}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{1CBB9793-714B-42A9-AD03-12B15FB71967}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{1CBB9793-714B-42A9-AD03-12B15FB71967}.Release|x86.ActiveCfg = Release|Any CPU
+		{D227E2E9-FED5-406F-9B83-27B80DCA2AF7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D227E2E9-FED5-406F-9B83-27B80DCA2AF7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D227E2E9-FED5-406F-9B83-27B80DCA2AF7}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{D227E2E9-FED5-406F-9B83-27B80DCA2AF7}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{D227E2E9-FED5-406F-9B83-27B80DCA2AF7}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{D227E2E9-FED5-406F-9B83-27B80DCA2AF7}.Release|Any CPU.ActiveCfg = Debug|Any CPU
+		{D227E2E9-FED5-406F-9B83-27B80DCA2AF7}.Release|Any CPU.Build.0 = Debug|Any CPU
+		{D227E2E9-FED5-406F-9B83-27B80DCA2AF7}.Release|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{D227E2E9-FED5-406F-9B83-27B80DCA2AF7}.Release|Mixed Platforms.Build.0 = Debug|Any CPU
+		{D227E2E9-FED5-406F-9B83-27B80DCA2AF7}.Release|x86.ActiveCfg = Debug|Any CPU
 		{14621A39-B196-41A7-A370-907C9381BC3F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{14621A39-B196-41A7-A370-907C9381BC3F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{14621A39-B196-41A7-A370-907C9381BC3F}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
@@ -117,6 +123,16 @@ Global
 		{14621A39-B196-41A7-A370-907C9381BC3F}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{14621A39-B196-41A7-A370-907C9381BC3F}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{14621A39-B196-41A7-A370-907C9381BC3F}.Release|x86.ActiveCfg = Release|Any CPU
+		{1AB7E0B7-C56E-4A50-B5FA-7AD04F56C17C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1AB7E0B7-C56E-4A50-B5FA-7AD04F56C17C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1AB7E0B7-C56E-4A50-B5FA-7AD04F56C17C}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{1AB7E0B7-C56E-4A50-B5FA-7AD04F56C17C}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{1AB7E0B7-C56E-4A50-B5FA-7AD04F56C17C}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{1AB7E0B7-C56E-4A50-B5FA-7AD04F56C17C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1AB7E0B7-C56E-4A50-B5FA-7AD04F56C17C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1AB7E0B7-C56E-4A50-B5FA-7AD04F56C17C}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{1AB7E0B7-C56E-4A50-B5FA-7AD04F56C17C}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{1AB7E0B7-C56E-4A50-B5FA-7AD04F56C17C}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -124,7 +140,6 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{83F16175-43B1-4C90-A1EE-8E351C33435D} = {A6A6AF7D-D6E3-442D-9B1E-58CC91879BE1}
 		{8E6D5255-776D-4B61-85F9-73C37AA1FB9A} = {A6A6AF7D-D6E3-442D-9B1E-58CC91879BE1}
-		{F0620B10-2EC7-426D-88F4-FBD6762BAABE} = {ED8079DD-2B06-4030-9F0F-DC548F98E1C4}
 		{B6255659-79E8-4AC2-AD13-321960F13DF4} = {A6A6AF7D-D6E3-442D-9B1E-58CC91879BE1}
 		{06322D90-9A28-423C-9805-AC1393A8F18D} = {B6255659-79E8-4AC2-AD13-321960F13DF4}
 		{5C018694-E498-4971-AF52-4E4343DC38FC} = {B6255659-79E8-4AC2-AD13-321960F13DF4}

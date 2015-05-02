@@ -51,9 +51,8 @@ pending:
 heading 0.3 release
  
 Minor bug fixes:
- - BK: fix compiler errors (module or namespace problem?); remove FSharp.Core.optdata
- - BK: Fire trigger -> reschedule to run now; then recalculate next occurance !!
- - FT: layout fixes
+ - BK: remove FSharp.Core.optdata
+ - FT: layout fixes in distro
 
 
 Documentation:

@@ -15,8 +15,10 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "project", "project", "{BF60BC93-E09B-4E5F-9D85-95A519479D54}"
 	ProjectSection(SolutionItems) = preProject
 		build.fsx = build.fsx
+		build.web.fsx = build.web.fsx
 		README.md = README.md
 		RELEASE_NOTES.md = RELEASE_NOTES.md
+		RELEASE_NOTES_WEB.md = RELEASE_NOTES_WEB.md
 		todo.txt = todo.txt
 	EndProjectSection
 EndProject
@@ -44,6 +46,27 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CSharpSample.Jobs", "docs\samples\CSharpSample.Jobs\CSharpSample.Jobs.csproj", "{5C018694-E498-4971-AF52-4E4343DC38FC}"
 EndProject
 Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "FSharpSample", "docs\samples\FSharpSample\FSharpSample.fsproj", "{1CBB9793-714B-42A9-AD03-12B15FB71967}"
+EndProject
+Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "Cronix.UI", "http://localhost:4460", "{D227E2E9-FED5-406F-9B83-27B80DCA2AF7}"
+	ProjectSection(WebsiteProperties) = preProject
+		UseIISExpress = "true"
+		TargetFrameworkMoniker = ".NETFramework,Version%3Dv4.0"
+		Debug.AspNetCompiler.VirtualPath = "/localhost_4460"
+		Debug.AspNetCompiler.PhysicalPath = "src\Cronix.UI\"
+		Debug.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_4460\"
+		Debug.AspNetCompiler.Updateable = "true"
+		Debug.AspNetCompiler.ForceOverwrite = "true"
+		Debug.AspNetCompiler.FixedNames = "false"
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.VirtualPath = "/localhost_4460"
+		Release.AspNetCompiler.PhysicalPath = "src\Cronix.UI\"
+		Release.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_4460\"
+		Release.AspNetCompiler.Updateable = "true"
+		Release.AspNetCompiler.ForceOverwrite = "true"
+		Release.AspNetCompiler.FixedNames = "false"
+		Release.AspNetCompiler.Debug = "False"
+		SlnRelativePath = "src\Cronix.UI\"
+	EndProjectSection
 EndProject
 Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Cronix.Web", "src\Cronix.Web\Cronix.Web.fsproj", "{14621A39-B196-41A7-A370-907C9381BC3F}"
 EndProject
@@ -107,6 +130,16 @@ Global
 		{1CBB9793-714B-42A9-AD03-12B15FB71967}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{1CBB9793-714B-42A9-AD03-12B15FB71967}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{1CBB9793-714B-42A9-AD03-12B15FB71967}.Release|x86.ActiveCfg = Release|Any CPU
+		{D227E2E9-FED5-406F-9B83-27B80DCA2AF7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D227E2E9-FED5-406F-9B83-27B80DCA2AF7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D227E2E9-FED5-406F-9B83-27B80DCA2AF7}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{D227E2E9-FED5-406F-9B83-27B80DCA2AF7}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{D227E2E9-FED5-406F-9B83-27B80DCA2AF7}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{D227E2E9-FED5-406F-9B83-27B80DCA2AF7}.Release|Any CPU.ActiveCfg = Debug|Any CPU
+		{D227E2E9-FED5-406F-9B83-27B80DCA2AF7}.Release|Any CPU.Build.0 = Debug|Any CPU
+		{D227E2E9-FED5-406F-9B83-27B80DCA2AF7}.Release|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{D227E2E9-FED5-406F-9B83-27B80DCA2AF7}.Release|Mixed Platforms.Build.0 = Debug|Any CPU
+		{D227E2E9-FED5-406F-9B83-27B80DCA2AF7}.Release|x86.ActiveCfg = Debug|Any CPU
 		{14621A39-B196-41A7-A370-907C9381BC3F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{14621A39-B196-41A7-A370-907C9381BC3F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{14621A39-B196-41A7-A370-907C9381BC3F}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU

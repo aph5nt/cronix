@@ -43,6 +43,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="paket.references" />
+    <None Include="paket.template" />
     <Compile Include="Hubs.fs" />
     <Compile Include="Website.fs" />
     <Compile Include="WebPlugin.fs" />

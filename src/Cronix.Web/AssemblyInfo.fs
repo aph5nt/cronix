@@ -1,7 +1,7 @@
 ﻿namespace System
 open System.Reflection
 
-[<assembly: AssemblyTitleAttribute("Cronix")>]
+[<assembly: AssemblyTitleAttribute("Cronix.Web")>]
 [<assembly: AssemblyProductAttribute("cronix web")>]
 [<assembly: AssemblyDescriptionAttribute("Cronix Web Interface")>]
 [<assembly: AssemblyVersionAttribute("0.3")>]
