@@ -67,18 +67,13 @@
   -->
   <Import Project="..\..\.paket\paket.targets" />
   <ItemGroup>
-    <Content Include="net40\Foq.Usage.fsx">
-      <Paket>True</Paket>
-    </Content>
-    <Content Include="net45\Foq.Usage.fsx">
-      <Paket>True</Paket>
-    </Content>
     <None Include="paket.references" />
     <Compile Include="TriggerEnviroment.fs" />
     <Compile Include="TriggerTests.fs" />
     <Compile Include="SchedulingTests.fs" />
     <Compile Include="ServiceEnviroment.fs" />
     <Compile Include="ServiceSystemTest.fs" />
+    <Compile Include="AppSettingsTests.fs" />
     <Content Include="App.config" />
     <None Include="Startup.fsx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
@@ -89,7 +84,6 @@
     <None Include="FSharp.Core.sigdata">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <Compile Include="AppSettingsTests.fs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="mscorlib" />

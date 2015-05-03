@@ -7,11 +7,13 @@ open Microsoft.AspNet.SignalR
 open Microsoft.Owin.Hosting
 open Microsoft.Owin.Cors
 
+/// Module responsible for webui plugin functionality.
 module WebPlugin = 
     open Cronix
 
     let logger = logger()
 
+    /// Plugin implementation.
     let InitPlugin : InitPlugin =
         fun(scheduleManager) ->
             try

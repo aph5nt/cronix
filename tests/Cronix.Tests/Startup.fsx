@@ -20,4 +20,4 @@ module RunAtStartup =
       Thread.Sleep 100
 
     let start (scheduler : IScheduleManager) =
-        scheduler.Schedule "job1" "* * * * *" <| Callback(sampleJob) |> ignore
+        scheduler.ScheduleJob "job1" "* * * * *" <| JobCallback(sampleJob) |> ignore

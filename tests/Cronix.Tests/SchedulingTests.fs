@@ -216,6 +216,7 @@ type ScheduleManagerTests() =
                      <| JobCallback(sampleJob)
                       |> ignore
          manager.FireTrigger("job1") |> ignore
+         Thread.Sleep(1000)
          triggerState |> should equal Idle
          
 

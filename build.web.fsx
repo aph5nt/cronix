@@ -163,7 +163,12 @@ Target "SourceLink" (fun _ ->
 // Build a Web UI
 
 Target "BuildWebUI" (fun _ ->
-    ExecProcessElevated "gulp"  "" <| TimeSpan.FromSeconds(60.0) |> ignore
+    ExecProcess (fun info ->
+                    info.FileName <- ".\\node_modules\gulp\bin\gulp"
+                    info.WorkingDirectory <- ".\\src\Cronix.UI"
+                    info.Arguments <- "") (TimeSpan.FromMinutes 5.) |> ignore
+
+  //  ExecProcessElevated "gulp"  "" <| TimeSpan.FromSeconds(60.0) |> ignore
     //shellExec({ ExecParams.WorkingDirectory = "src/Cronix.UI"; Program = "gulp"; ExecParams.Args = []; ExecParams.CommandLine="" }) |> ignore
 )
 

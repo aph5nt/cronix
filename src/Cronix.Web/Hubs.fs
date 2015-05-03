@@ -1,5 +1,6 @@
 ﻿namespace Cronix.Web
 
+/// Module responsible for signalr hubs.
 module Hubs = 
     open Microsoft.AspNet.SignalR.Hubs
     open Microsoft.AspNet.SignalR
@@ -31,6 +32,6 @@ module Hubs =
         member self.DisableTrigger(name : TriggerName) =
             scheduleManager.DisableTrigger(name) |> ignore
 
-        member self.TerminateTrigger(name : TriggerName) = // cancel trigger / stop execution?
+        member self.TerminateTrigger(name : TriggerName) =
             scheduleManager.TerminateTriggerExecution(name) |> ignore
 

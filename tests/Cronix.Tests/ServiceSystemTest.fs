@@ -129,6 +129,7 @@ type ServiceSystemTest() =
     let ``Run in debug mode``() =
         createEnviroment "debugEnv"
         createProcess "debugEnv" "debug"
+        Thread.Sleep(10000)
         exit()
         wait()
         result |> should contain "runService"
@@ -144,6 +145,7 @@ type ServiceSystemTest() =
     let ``Run installed service``() =
         createEnviroment "serviceEnv"
         createProcess "serviceEnv" "install"
+        Thread.Sleep(5000)
         wait()
         result |> should contain "installed"
         startService()

@@ -1,5 +1,6 @@
 ﻿namespace Cronix.Web
 
+/// Module responsible for nancy settings.
 module Website =
    
     open System
@@ -8,6 +9,7 @@ module Website =
     open Nancy.Bootstrapper
     open Nancy
  
+     /// Nancy web boostrapper
      type WebBootstrapper() =
         inherit DefaultNancyBootstrapper()
         
@@ -22,10 +24,11 @@ module Website =
              conventions.StaticContentsConventions.Add(StaticContentConventionBuilder.AddDirectory("/", "webui"))
              base.ConfigureConventions(conventions)
     
-        type WebUiModule() as self = 
-            inherit NancyModule()
-            do
-                self.Get.["/"] <- fun _ -> self.Index()
+    /// WebUi nancy module
+    type WebUiModule() as self = 
+        inherit NancyModule()
+        do
+            self.Get.["/"] <- fun _ -> self.Index()
 
-            member self.Index() =
-                base.View.["index.html"] :> obj
+        member self.Index() =
+            base.View.["index.html"] :> obj

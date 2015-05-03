@@ -1,25 +1,3 @@
-version 0.1
--todo
--- schedule manager integration test - DONE
--- setup service integration test - DONE
--- method documentation - DONE
--- readme - DONE
--- release notes - DONE
--- github documentation page - DONE
--- samples (create F# Sample, C# sample, rename CSharpSample to TestService + update tests) - DONE
--- create a sample with nugetpackate - bitcoin ticker! and run it in a background - OPTIONAL
--- CI vs long running tests, and systeminstaller tests - DONE
-
-
-version 0.2
-- support for stopping and starting job (unit test for starting, stopping job) - DONE
-- dsl for cron expressions - DONE
-- c# extensions (for less mess) -DONE
-- refactoring:
-
--- Cronix.Common (types + logging)
----Bootstrapper --> Compiler
- 
 version - 0.3
 - web ui
 - trigger improvements
@@ -57,7 +35,8 @@ Minor bug fixes:
 
 Documentation:
 - update code documentation
-- mention about how to install service
+- mention about how to install service *
+- enabling webui
 - mention how to configure urls
 
 Deploytment:
