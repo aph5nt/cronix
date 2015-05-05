@@ -61,16 +61,10 @@
     <None Include="NLog.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Include="paket.references" />
     <None Include="Startup.fsx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="FSharp.Core.optdata">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="FSharp.Core.sigdata">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="paket.references" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Chessie">

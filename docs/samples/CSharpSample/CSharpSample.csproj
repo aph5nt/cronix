@@ -86,12 +86,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="FSharp.Core.optdata">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="FSharp.Core.sigdata">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
     <None Include="paket.references" />
     <None Include="Startup.fsx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>

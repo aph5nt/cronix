@@ -3,7 +3,6 @@
 #I "bin\Debug"
 #I "bin\Release"
 #r "Cronix.dll"
-#r "FSharpSample.exe"
 #r "Chessie.dll"
 #endif
 
@@ -14,12 +13,16 @@ module RunAtStartup =
     open System.Threading
     open System
     open Cronix
-    open Messages
 
+    
+    /// sample job
     let sampleJob (token : CancellationToken) = 
       printf "callback executed at (UTC) %s\n" <| DateTime.UtcNow.ToString()
       Thread.Sleep 100
 
+    /// open your dll with tasks here
     let start (scheduler : IScheduleManager) =
-        scheduler.ScheduleJob "job1" <| "* * * * *" <| JobCallback(sampleJob) |> ignore       
+
+        // schedules goes here!
+        scheduler.ScheduleJob "job1" "* * * * *" <| JobCallback(sampleJob) |> ignore
         ()

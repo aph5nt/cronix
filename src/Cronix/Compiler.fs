@@ -48,6 +48,16 @@ module Compiler =
 
         ok asm
 
+    /// cleans up the working directory
+    let compileSetup() =
+        try
+            if File.Exists(outputAssembly) then
+                File.SetAttributes(outputAssembly, FileAttributes.Normal)
+                File.Delete(outputAssembly)
+        with
+        | exn -> failwith(exn.Message)
+       
+
      /// Loads the startup script.
     let getStartupScript() =
         try
@@ -61,6 +71,7 @@ module Compiler =
         try
             let provider = new FSharpCodeProvider()
             let params'= CompilerParameters()
+             
             params'.GenerateExecutable <- false
             params'.OutputAssembly <- IO.Path.Combine(System.Environment.CurrentDirectory, outputAssembly)
             params'.IncludeDebugInformation <- true

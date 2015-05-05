@@ -73,6 +73,9 @@ module BootStrapper =
 
     /// Setups up the cronix service
     let setupService(scheduleManager : IScheduleManager) (startupHandler : Option<StartupHandler>) =
+
+        compileSetup()
+
         let startupScriptState scheduleManager referencedAssemblies  source = 
             { StartupScriptState.scheduleManager = scheduleManager; 
               referencedAssemblies = referencedAssemblies;
@@ -94,6 +97,7 @@ module BootStrapper =
             <!> ok scheduleManager
             <*> loadAssemblies()
             <*> getStartupScript()
+            
             >>= compileScript
             >>= invokeStartupScript
             |> logResult 

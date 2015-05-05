@@ -29,9 +29,8 @@ pending:
 heading 0.3 release
  
 Minor bug fixes:
- - BK: remove FSharp.Core.optdata
  - FT: layout fixes in distro
-
+ - BK: fix FSharpSample startup script compilation errors
 
 Documentation:
 - update code documentation

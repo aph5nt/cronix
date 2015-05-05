@@ -71,6 +71,12 @@
     <Compile Include="BootStrapper.fs" />
     <None Include="Startup.fsx" />
     <Content Include="App.config" />
+    <EmbeddedResource Include="FSharp.Core.optdata">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FSharp.Core.sigdata">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <Reference Include="FSharp.Compiler.CodeDom">
