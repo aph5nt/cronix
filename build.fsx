@@ -334,6 +334,15 @@ Target "Release" (fun _ ->
     |> Async.RunSynchronously
 )
 
+Target "BuildWebUI" (fun _ ->
+    
+    trace System.Environment.CurrentDirectory
+    ExecProcess (fun info ->
+                    info.FileName <- "cmd.exe"
+                    info.WorkingDirectory <- ".\\src\\Cronix.UI"
+                    info.Arguments <- "/C gulp") (TimeSpan.FromMinutes 5.) |> ignore
+)
+
 Target "BuildPackage" DoNothing
 
 // --------------------------------------------------------------------------------------
@@ -345,9 +354,10 @@ Target "All" DoNothing
   ==> "AssemblyInfo"
   ==> "Build"
   ==> "CopyBinaries"
-  ==> "RunTests"
-  =?> ("GenerateReferenceDocs",isLocalBuild)
-  =?> ("GenerateDocs",isLocalBuild)
+  //==> "RunTests"
+  //=?> ("GenerateReferenceDocs",isLocalBuild)
+  //=?> ("GenerateDocs",isLocalBuild)
+  ==> "BuildWebUI"
   ==> "All"
   =?> ("ReleaseDocs",isLocalBuild)
 

@@ -191,3 +191,5 @@ output
 /Cronix.Tests.dll.html
 src/Cronix/webui/
 _NCrunch_Cronix
+/_NCrunch_Cronix.All
+/PrecompiledWeb

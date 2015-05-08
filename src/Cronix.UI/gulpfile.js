@@ -1,6 +1,6 @@
 // Node modules
 var fs = require('fs'), vm = require('vm'), merge = require('deeply'), chalk = require('chalk'), es = require('event-stream');
-var output = '../../bin/webui/';
+var output = 'dist';
 
 // Gulp and plugins
 var gulp = require('gulp'), rjs = require('gulp-requirejs-bundler'), concat = require('gulp-concat'), clean = require('gulp-clean'),

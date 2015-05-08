@@ -163,10 +163,12 @@ Target "SourceLink" (fun _ ->
 // Build a Web UI
 
 Target "BuildWebUI" (fun _ ->
+    
+    trace System.Environment.CurrentDirectory
     ExecProcess (fun info ->
-                    info.FileName <- ".\\node_modules\gulp\bin\gulp"
-                    info.WorkingDirectory <- ".\\src\Cronix.UI"
-                    info.Arguments <- "") (TimeSpan.FromMinutes 5.) |> ignore
+                    info.FileName <- "cmd.exe"
+                    info.WorkingDirectory <- ".\\src\\Cronix.UI"
+                    info.Arguments <- "/C gulp") (TimeSpan.FromMinutes 5.) |> ignore
 
   //  ExecProcessElevated "gulp"  "" <| TimeSpan.FromSeconds(60.0) |> ignore
     //shellExec({ ExecParams.WorkingDirectory = "src/Cronix.UI"; Program = "gulp"; ExecParams.Args = []; ExecParams.CommandLine="" }) |> ignore
@@ -218,9 +220,9 @@ Target "BuildPackage" DoNothing
 Target "All" DoNothing
 
 "Clean"
-  ==> "AssemblyInfo"
-  ==> "Build"
-  ==> "CopyBinaries"
+ // ==> "AssemblyInfo"
+ // ==> "Build"
+ // ==> "CopyBinaries"
   ==> "All"
 
 "All" 
@@ -229,8 +231,8 @@ Target "All" DoNothing
   =?> ("SourceLink", Pdbstr.tryFind().IsSome )
 #endif
   ==> "BuildWebUI"
-  ==> "NuGet"
-  ==> "BuildPackage"
+//  ==> "NuGet"
+//  ==> "BuildPackage"
 
 "BuildPackage"
   ==> "PublishNuget"

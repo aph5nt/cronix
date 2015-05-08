@@ -1,8 +1,3 @@
-version - 0.3
-- web ui
-- trigger improvements
-- updated documentation
-
 pending:
 - mono support (raspberrypi2?; build server, bitcoin ticker)
 - installation as a service under linux
@@ -24,24 +19,46 @@ pending:
 -- (sql tune job)
 + documentation + manual
 
-
+0.3.3
 -----------------------
-heading 0.3 release
- 
-Minor bug fixes:
+Bug fixes: 
  - FT: layout fixes in distro
- - BK: fix FSharpSample startup script compilation errors
+
+Todo:
+ - configure CI to compile only from master
+
+0.3.2
+-----------------------
+ - BK: run without param should display help page! (write system test for that!)
+ - FT: fix font problem
 
 Documentation:
-- update code documentation
-- mention about how to install service *
-- enabling webui
-- mention how to configure urls
+	General:
+	- cronix functionality
 
-Deploytment:
-- nuget package for ui (install dll + webui files)
-- fake tasks (+gulp)
+	How to series:
+	- creating new cronix project (+nlog configuration)
+	- scheduling building jobs
+	- scheduling external jobs
+	- installing as windows service
+	- hosting webui
 
+	Sample Series:
+	- bitcoin ticker
+	- hrmsc exchange rate notifier
+
+	Video:
+	- (live) creating a cronix service
+
+* Add 'user voice' to github page
+
+ Todo:
+ - stable build
+
+ Promotion:
+ - linkedin groups
+ - facebook groups
+ - F# groups (fpfish, reddit, twiteer)
  
 
 

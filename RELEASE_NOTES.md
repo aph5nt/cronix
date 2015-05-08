@@ -1,6 +1,8 @@
+### 0.3.1 - Released
+* Package description fix
+
 ### 0.3 - Released
 * Added web interface (Cronix.Web package)
-* Plugins support
 * Trigger improvements
 * Code refactoring and bug fixes
 

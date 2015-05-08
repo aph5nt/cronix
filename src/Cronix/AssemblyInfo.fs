@@ -2,11 +2,11 @@
 open System.Reflection
 
 [<assembly: AssemblyTitleAttribute("Cronix")>]
-[<assembly: AssemblyProductAttribute("cronix web")>]
-[<assembly: AssemblyDescriptionAttribute("Cronix Web Interface")>]
-[<assembly: AssemblyVersionAttribute("0.3")>]
-[<assembly: AssemblyFileVersionAttribute("0.3")>]
+[<assembly: AssemblyProductAttribute("cronix")>]
+[<assembly: AssemblyDescriptionAttribute("Cron Service")>]
+[<assembly: AssemblyVersionAttribute("0.3.1")>]
+[<assembly: AssemblyFileVersionAttribute("0.3.1")>]
 do ()
 
 module internal AssemblyVersionInformation =
-    let [<Literal>] Version = "0.3"
+    let [<Literal>] Version = "0.3.1"

@@ -44,6 +44,7 @@ module BootStrapper =
     open System
     open System.ServiceProcess
     open System.Reflection
+    open System.Diagnostics
 
     /// Boostrapper module specific logger.
     let logger = logger()
@@ -147,11 +148,10 @@ module BootStrapper =
     /// Initializes the cronix service
     let InitService : InitService =
         fun (args, startupHandler) ->
-           
             let args' = parseOption(Some(args))
             let startupHandler' = parseOption(Some(startupHandler))
-            
-            if args'.IsNone || (args'.IsSome && args'.Value.Length = 0) then 
+
+            if args'.IsSome && args'.Value.Length = 0 && isDebug() = false then 
                 runService startupHandler' <| isDebug()
                 ok("runService")
 

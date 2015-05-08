@@ -176,6 +176,13 @@ type ServiceSystemTest() =
         wait()
         result |> should contain "printGuide" 
 
+    [<Fact>]
+    let ``Print guide for no param``() =
+        createEnviroment "serviceEnv"
+        createProcess "serviceEnv" ""
+        wait()
+        result |> should contain "printGuide" 
+
     interface IDisposable with
         member x.Dispose() =
             if process' <> null then
