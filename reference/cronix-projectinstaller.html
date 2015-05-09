@@ -18,16 +18,6 @@
     <!--[if lt IE 9]>
       <script src="https://html5shim.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
-	<script>
-  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-
-  ga('create', 'UA-61301639-1', 'auto');
-  ga('send', 'pageview');
-
-</script>
   </head>
   <body>
     <div class="container">
@@ -47,27 +37,11 @@
 <h1>ProjectInstaller</h1>
 <div class="xmldoc">
 <p>Module responsible for installing, uninstalling and starting up the cronix service</p>
+
+
 </div>
 
 <!-- Render nested types and modules, if there are any -->
-  <h2>Nested types and modules</h2>
-  <div>
-      <table class="table table-bordered type-list">
-    <thead>
-      <tr><td>Type</td><td>Description</td></tr>
-    </thead>
-    <tbody>
-        <tr>
-          <td class="type-name">
-            <a href="cronix-projectinstaller-serviceprocessadapter.html">ServiceProcessAdapter</a>
-          </td>
-          <td class="xmldoc"><p>An adapter responsible for starting, stopping and shutting down the cronix service.</p>
-</td>
-        </tr>
-    </tbody>
-  </table>
-
-  </div>
 
   <h3>Functions and values</h3>
   <table class="table table-bordered member-list">
@@ -78,10 +52,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '20', 20)" onmouseover="showTip(event, '20', 20)">
+          <code onmouseout="hideTip(event, '21', 21)" onmouseover="showTip(event, '21', 21)">
             initialize installer assembly
           </code>
-          <div class="tip" id="20">
+          <div class="tip" id="21">
             <strong>Signature:</strong> installer:Installer -&gt; assembly:Assembly -&gt; unit<br />
                       </div>
         </td>
@@ -92,15 +66,17 @@
             </a>
           <p>Performs required initialization steps in order to install or uninstall the cronix service</p>
 
+
+
         </td>
       </tr>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '21', 21)" onmouseover="showTip(event, '21', 21)">
+          <code onmouseout="hideTip(event, '22', 22)" onmouseover="showTip(event, '22', 22)">
             Install assembly
           </code>
-          <div class="tip" id="21">
+          <div class="tip" id="22">
             <strong>Signature:</strong> assembly:Assembly -&gt; Result&lt;string,string&gt;<br />
                       </div>
         </td>
@@ -111,15 +87,17 @@
             </a>
           <p>Installs the cronix service. An installation rollback will be done on failure.</p>
 
+
+
         </td>
       </tr>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '22', 22)" onmouseover="showTip(event, '22', 22)">
+          <code onmouseout="hideTip(event, '23', 23)" onmouseover="showTip(event, '23', 23)">
             logger 
           </code>
-          <div class="tip" id="22">
+          <div class="tip" id="23">
             <strong>Signature:</strong> Logger<br />
                       </div>
         </td>
@@ -130,15 +108,17 @@
             </a>
           <p>Project installer module specific logger</p>
 
+
+
         </td>
       </tr>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '23', 23)" onmouseover="showTip(event, '23', 23)">
+          <code onmouseout="hideTip(event, '24', 24)" onmouseover="showTip(event, '24', 24)">
             Uninstall assembly
           </code>
-          <div class="tip" id="23">
+          <div class="tip" id="24">
             <strong>Signature:</strong> assembly:Assembly -&gt; Result&lt;string,string&gt;<br />
                       </div>
         </td>
@@ -148,6 +128,8 @@
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
           <p>Uninstalls the cronix service.</p>
+
+
 
         </td>
       </tr>
@@ -168,15 +150,24 @@
             <li><a href="/cronix/license.html">License</a></li>
             <li><a href="/cronix/release-notes.html">Release Notes</a></li>
             
-            <li class="nav-header">Getting started</li>
 
-            <li><a href="/cronix/cronix setup.html">Cronix setup manual</a></li>
-		  	<li><a href="/cronix/startup script.html">Startup script configuration manual</a></li>
-		  	<li><a href="https://github.com/aph5nt/cronix/tree/master/docs/samples">Samples</a></li>
-		  	
+			<li class="nav-header">The Architecture Overview</li>
+			<li><a href="/cronix/the-big-picture.html">The Big Picture</a></li>
+			
+            <li class="nav-header">The developer's guide</li>
+			<li><a href="/cronix/reference/index.html">Installation</a></li>
+			<li><a href="/cronix/reference/index.html">Configuration</a></li>
+			<li><a href="/cronix/reference/index.html">Job scheduling</a></li>
+			<li><a href="/cronix/reference/index.html">Web UI</a></li>
+			<li><a href="/cronix/reference/index.html">Windows service</a></li>
+			<li><a href="/cronix/reference/index.html">API Reference</a></li>
+			
+			<li class="nav-header">Samples</li>
+		  	<li><a href="https://github.com/aph5nt/cronix/tree/master/docs/samples/FSharpSample">Generic F# sample</a></li>
+			<li><a href="https://github.com/aph5nt/cronix/tree/master/docs/samples/CSharpSample">Generic C# sample</a></li>
 
-            <li class="nav-header">Documentation</li>
-            <li><a href="/cronix/reference/index.html">API Reference</a></li>
+ 
+			
           </ul>
         </div>
       </div>

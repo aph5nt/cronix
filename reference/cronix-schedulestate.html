@@ -18,16 +18,6 @@
     <!--[if lt IE 9]>
       <script src="https://html5shim.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
-	<script>
-  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-
-  ga('create', 'UA-61301639-1', 'auto');
-  ga('send', 'pageview');
-
-</script>
   </head>
   <body>
     <div class="container">
@@ -47,7 +37,35 @@
 <h1>ScheduleState</h1>
 <div class="xmldoc">
 <p>The schedule state type.</p>
+
+
 </div>
+  <h3>Constructors</h3>
+  <table class="table table-bordered member-list">
+    <thead>
+      <tr><td>Constructor</td><td>Description</td></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '122', 122)" onmouseover="showTip(event, '122', 122)">
+            new()
+          </code>
+          <div class="tip" id="122">
+            <strong>Signature:</strong> unit -&gt; ScheduleState<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+            <a href="http://github.com/aph5nt/cronix/tree/master/src/Cronix/Types.fs#L122-122" class="github-link">
+              <img src="../content/img/github.png" class="normal" />
+              <img src="../content/img/github-blue.png" class="hover" />
+            </a>
+          
+        </td>
+      </tr>
+    </tbody>
+  </table>
   <h3>Instance members</h3>
   <table class="table table-bordered member-list">
     <thead>
@@ -57,73 +75,79 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '103', 103)" onmouseover="showTip(event, '103', 103)">
-            Comparer
+          <code onmouseout="hideTip(event, '123', 123)" onmouseover="showTip(event, '123', 123)">
+            Add(name, trigger)
           </code>
-          <div class="tip" id="103">
-            <strong>Signature:</strong> IEqualityComparer&lt;string&gt;<br />
+          <div class="tip" id="123">
+            <strong>Signature:</strong> (name:string * trigger:ITrigger) -&gt; unit<br />
                       </div>
         </td>
         <td class="xmldoc">
+            <a href="http://github.com/aph5nt/cronix/tree/master/src/Cronix/Types.fs#L131-131" class="github-link">
+              <img src="../content/img/github.png" class="normal" />
+              <img src="../content/img/github-blue.png" class="hover" />
+            </a>
+          <p>Adds trigger.</p>
+
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '124', 124)" onmouseover="showTip(event, '124', 124)">
+            OnStateChanged()
+          </code>
+          <div class="tip" id="124">
+            <strong>Signature:</strong> unit -&gt; Handler&lt;TriggerName * TriggerState&gt;<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+            <a href="http://github.com/aph5nt/cronix/tree/master/src/Cronix/Types.fs#L128-128" class="github-link">
+              <img src="../content/img/github.png" class="normal" />
+              <img src="../content/img/github-blue.png" class="hover" />
+            </a>
           
         </td>
       </tr>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '104', 104)" onmouseover="showTip(event, '104', 104)">
-            Count
+          <code onmouseout="hideTip(event, '125', 125)" onmouseover="showTip(event, '125', 125)">
+            OnStateChanged()
           </code>
-          <div class="tip" id="104">
-            <strong>Signature:</strong> int<br />
-              <strong>Modifiers:</strong> abstract<br />
+          <div class="tip" id="125">
+            <strong>Signature:</strong> unit -&gt; unit<br />
                       </div>
         </td>
         <td class="xmldoc">
+            <a href="http://github.com/aph5nt/cronix/tree/master/src/Cronix/Types.fs#L127-127" class="github-link">
+              <img src="../content/img/github.png" class="normal" />
+              <img src="../content/img/github-blue.png" class="hover" />
+            </a>
           
         </td>
       </tr>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '105', 105)" onmouseover="showTip(event, '105', 105)">
-            [()]
+          <code onmouseout="hideTip(event, '126', 126)" onmouseover="showTip(event, '126', 126)">
+            Remove(name)
           </code>
-          <div class="tip" id="105">
-            <strong>Signature:</strong> unit -&gt; string<br />
-              <strong>Modifiers:</strong> abstract<br />
+          <div class="tip" id="126">
+            <strong>Signature:</strong> name:string -&gt; unit<br />
                       </div>
         </td>
         <td class="xmldoc">
-          
-        </td>
-      </tr>
-      <tr>
-        <td class="member-name">
+            <a href="http://github.com/aph5nt/cronix/tree/master/src/Cronix/Types.fs#L136-136" class="github-link">
+              <img src="../content/img/github.png" class="normal" />
+              <img src="../content/img/github-blue.png" class="hover" />
+            </a>
+          <p>Removes trigger by name.</p>
 
-          <code onmouseout="hideTip(event, '106', 106)" onmouseover="showTip(event, '106', 106)">
-            Keys
-          </code>
-          <div class="tip" id="106">
-            <strong>Signature:</strong> KeyCollection&lt;string,Job&gt;<br />
-                      </div>
-        </td>
-        <td class="xmldoc">
-          
-        </td>
-      </tr>
-      <tr>
-        <td class="member-name">
 
-          <code onmouseout="hideTip(event, '107', 107)" onmouseover="showTip(event, '107', 107)">
-            Values
-          </code>
-          <div class="tip" id="107">
-            <strong>Signature:</strong> ValueCollection&lt;string,Job&gt;<br />
-                      </div>
-        </td>
-        <td class="xmldoc">
-          
+
         </td>
       </tr>
     </tbody>
@@ -143,15 +167,24 @@
             <li><a href="/cronix/license.html">License</a></li>
             <li><a href="/cronix/release-notes.html">Release Notes</a></li>
             
-            <li class="nav-header">Getting started</li>
 
-            <li><a href="/cronix/cronix setup.html">Cronix setup manual</a></li>
-		  	<li><a href="/cronix/startup script.html">Startup script configuration manual</a></li>
-		  	<li><a href="https://github.com/aph5nt/cronix/tree/master/docs/samples">Samples</a></li>
-		  	
+			<li class="nav-header">The Architecture Overview</li>
+			<li><a href="/cronix/the-big-picture.html">The Big Picture</a></li>
+			
+            <li class="nav-header">The developer's guide</li>
+			<li><a href="/cronix/reference/index.html">Installation</a></li>
+			<li><a href="/cronix/reference/index.html">Configuration</a></li>
+			<li><a href="/cronix/reference/index.html">Job scheduling</a></li>
+			<li><a href="/cronix/reference/index.html">Web UI</a></li>
+			<li><a href="/cronix/reference/index.html">Windows service</a></li>
+			<li><a href="/cronix/reference/index.html">API Reference</a></li>
+			
+			<li class="nav-header">Samples</li>
+		  	<li><a href="https://github.com/aph5nt/cronix/tree/master/docs/samples/FSharpSample">Generic F# sample</a></li>
+			<li><a href="https://github.com/aph5nt/cronix/tree/master/docs/samples/CSharpSample">Generic C# sample</a></li>
 
-            <li class="nav-header">Documentation</li>
-            <li><a href="/cronix/reference/index.html">API Reference</a></li>
+ 
+			
           </ul>
         </div>
       </div>

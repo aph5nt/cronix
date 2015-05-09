@@ -18,16 +18,6 @@
     <!--[if lt IE 9]>
       <script src="https://html5shim.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
-	<script>
-  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-
-  ga('create', 'UA-61301639-1', 'auto');
-  ga('send', 'pageview');
-
-</script>
   </head>
   <body>
     <div class="container">
@@ -47,9 +37,49 @@
 <h1>Messages</h1>
 <div class="xmldoc">
 <p>Module responsible for generic messages.</p>
+
+
 </div>
 
 <!-- Render nested types and modules, if there are any -->
+  <h2>Nested types and modules</h2>
+  <div>
+      <table class="table table-bordered type-list">
+    <thead>
+      <tr><td>Type</td><td>Description</td></tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td class="type-name">
+            <a href="cronix-messages-failuremessage.html">FailureMessage</a>
+          </td>
+          <td class="xmldoc"><p>Describes the failure message.</p>
+
+
+</td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="cronix-messages-resultmessage.html">ResultMessage</a>
+          </td>
+          <td class="xmldoc"><p>Describes result message.</p>
+
+
+</td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="cronix-messages-successmessage.html">SuccessMessage</a>
+          </td>
+          <td class="xmldoc"><p>Describes the sucess message.</p>
+
+
+</td>
+        </tr>
+    </tbody>
+  </table>
+
+  </div>
 
   <h3>Functions and values</h3>
   <table class="table table-bordered member-list">
@@ -60,38 +90,21 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '16', 16)" onmouseover="showTip(event, '16', 16)">
+          <code onmouseout="hideTip(event, '17', 17)" onmouseover="showTip(event, '17', 17)">
             FailureMessage key params&#39;
           </code>
-          <div class="tip" id="16">
-            <strong>Signature:</strong> key:FailureMessage -&gt; params&#39;:&#39;?6272 list -&gt; Result&lt;&#39;?6273,string&gt;<br />
-                          <strong>Type parameters:</strong> '?6272, '?6273          </div>
+          <div class="tip" id="17">
+            <strong>Signature:</strong> key:FailureMessage -&gt; params&#39;:&#39;?7085 list -&gt; Result&lt;&#39;?7086,string&gt;<br />
+                          <strong>Type parameters:</strong> '?7085, '?7086          </div>
         </td>
         <td class="xmldoc">
-            <a href="http://github.com/aph5nt/cronix/tree/master/src/Cronix/Types.fs#L232-232" class="github-link">
+            <a href="http://github.com/aph5nt/cronix/tree/master/src/Cronix/Types.fs#L290-290" class="github-link">
               <img src="../content/img/github.png" class="normal" />
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
           <p>Creates the failure message.</p>
 
-        </td>
-      </tr>
-      <tr>
-        <td class="member-name">
 
-          <code onmouseout="hideTip(event, '17', 17)" onmouseover="showTip(event, '17', 17)">
-            FailureMessages 
-          </code>
-          <div class="tip" id="17">
-            <strong>Signature:</strong> Map&lt;FailureMessage,string&gt;<br />
-                      </div>
-        </td>
-        <td class="xmldoc">
-            <a href="http://github.com/aph5nt/cronix/tree/master/src/Cronix/Types.fs#L214-214" class="github-link">
-              <img src="../content/img/github.png" class="normal" />
-              <img src="../content/img/github-blue.png" class="hover" />
-            </a>
-          <p>Returns the failure messages.</p>
 
         </td>
       </tr>
@@ -99,18 +112,20 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '18', 18)" onmouseover="showTip(event, '18', 18)">
-            SuccesMessage state key params&#39;
+            FailureMessages 
           </code>
           <div class="tip" id="18">
-            <strong>Signature:</strong> state:&#39;?6275 -&gt; key:SuccessMessage -&gt; params&#39;:&#39;?6276 list -&gt; Result&lt;&#39;?6275,string&gt;<br />
-                          <strong>Type parameters:</strong> '?6275, '?6276          </div>
+            <strong>Signature:</strong> Map&lt;FailureMessage,string&gt;<br />
+                      </div>
         </td>
         <td class="xmldoc">
-            <a href="http://github.com/aph5nt/cronix/tree/master/src/Cronix/Types.fs#L237-237" class="github-link">
+            <a href="http://github.com/aph5nt/cronix/tree/master/src/Cronix/Types.fs#L269-269" class="github-link">
               <img src="../content/img/github.png" class="normal" />
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
-          <p>Creates the sucess message.</p>
+          <p>Returns the failure messages.</p>
+
+
 
         </td>
       </tr>
@@ -118,18 +133,41 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '19', 19)" onmouseover="showTip(event, '19', 19)">
-            SuccesMessagess 
+            SuccesMessage state key params&#39;
           </code>
           <div class="tip" id="19">
+            <strong>Signature:</strong> state:&#39;?7088 -&gt; key:SuccessMessage -&gt; params&#39;:&#39;?7089 list -&gt; Result&lt;&#39;?7088,string&gt;<br />
+                          <strong>Type parameters:</strong> '?7088, '?7089          </div>
+        </td>
+        <td class="xmldoc">
+            <a href="http://github.com/aph5nt/cronix/tree/master/src/Cronix/Types.fs#L295-295" class="github-link">
+              <img src="../content/img/github.png" class="normal" />
+              <img src="../content/img/github-blue.png" class="hover" />
+            </a>
+          <p>Creates the sucess message.</p>
+
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '20', 20)" onmouseover="showTip(event, '20', 20)">
+            SuccesMessagess 
+          </code>
+          <div class="tip" id="20">
             <strong>Signature:</strong> Map&lt;SuccessMessage,string&gt;<br />
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="http://github.com/aph5nt/cronix/tree/master/src/Cronix/Types.fs#L221-221" class="github-link">
+            <a href="http://github.com/aph5nt/cronix/tree/master/src/Cronix/Types.fs#L276-276" class="github-link">
               <img src="../content/img/github.png" class="normal" />
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
           <p>Returns the success messages.</p>
+
+
 
         </td>
       </tr>
@@ -150,15 +188,24 @@
             <li><a href="/cronix/license.html">License</a></li>
             <li><a href="/cronix/release-notes.html">Release Notes</a></li>
             
-            <li class="nav-header">Getting started</li>
 
-            <li><a href="/cronix/cronix setup.html">Cronix setup manual</a></li>
-		  	<li><a href="/cronix/startup script.html">Startup script configuration manual</a></li>
-		  	<li><a href="https://github.com/aph5nt/cronix/tree/master/docs/samples">Samples</a></li>
-		  	
+			<li class="nav-header">The Architecture Overview</li>
+			<li><a href="/cronix/the-big-picture.html">The Big Picture</a></li>
+			
+            <li class="nav-header">The developer's guide</li>
+			<li><a href="/cronix/reference/index.html">Installation</a></li>
+			<li><a href="/cronix/reference/index.html">Configuration</a></li>
+			<li><a href="/cronix/reference/index.html">Job scheduling</a></li>
+			<li><a href="/cronix/reference/index.html">Web UI</a></li>
+			<li><a href="/cronix/reference/index.html">Windows service</a></li>
+			<li><a href="/cronix/reference/index.html">API Reference</a></li>
+			
+			<li class="nav-header">Samples</li>
+		  	<li><a href="https://github.com/aph5nt/cronix/tree/master/docs/samples/FSharpSample">Generic F# sample</a></li>
+			<li><a href="https://github.com/aph5nt/cronix/tree/master/docs/samples/CSharpSample">Generic C# sample</a></li>
 
-            <li class="nav-header">Documentation</li>
-            <li><a href="/cronix/reference/index.html">API Reference</a></li>
+ 
+			
           </ul>
         </div>
       </div>

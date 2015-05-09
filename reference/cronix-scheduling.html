@@ -18,16 +18,6 @@
     <!--[if lt IE 9]>
       <script src="https://html5shim.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
-	<script>
-  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-
-  ga('create', 'UA-61301639-1', 'auto');
-  ga('send', 'pageview');
-
-</script>
   </head>
   <body>
     <div class="container">
@@ -47,6 +37,8 @@
 <h1>Scheduling</h1>
 <div class="xmldoc">
 <p>Module responsible for managing the job schedules.</p>
+
+
 </div>
 
 <!-- Render nested types and modules, if there are any -->
@@ -60,10 +52,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '24', 24)" onmouseover="showTip(event, '24', 24)">
+          <code onmouseout="hideTip(event, '25', 25)" onmouseover="showTip(event, '25', 25)">
             addTrigger (state, params&#39;)
           </code>
-          <div class="tip" id="24">
+          <div class="tip" id="25">
             <strong>Signature:</strong> (state:ScheduleState * params&#39;:ScheduleParams) -&gt; Result&lt;ScheduleState,string&gt;<br />
                       </div>
         </td>
@@ -74,15 +66,17 @@
             </a>
           <p>Adds the job to the trigger.</p>
 
+
+
         </td>
       </tr>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '25', 25)" onmouseover="showTip(event, '25', 25)">
+          <code onmouseout="hideTip(event, '26', 26)" onmouseover="showTip(event, '26', 26)">
             canAddTrigger (state, params&#39;)
           </code>
-          <div class="tip" id="25">
+          <div class="tip" id="26">
             <strong>Signature:</strong> (state:ScheduleState * params&#39;:ScheduleParams) -&gt; Result&lt;(ScheduleState * ScheduleParams),string&gt;<br />
                       </div>
         </td>
@@ -93,16 +87,18 @@
             </a>
           <p>Checks if a job trigger can be added.</p>
 
+
+
         </td>
       </tr>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '26', 26)" onmouseover="showTip(event, '26', 26)">
+          <code onmouseout="hideTip(event, '27', 27)" onmouseover="showTip(event, '27', 27)">
             createTrigger (name, expr, callback)
           </code>
-          <div class="tip" id="26">
-            <strong>Signature:</strong> (name:JobName * expr:JobCronExpr * callback:Callback) -&gt; ITrigger<br />
+          <div class="tip" id="27">
+            <strong>Signature:</strong> (name:TriggerName * expr:CronExpr * callback:JobCallback) -&gt; ITrigger<br />
                       </div>
         </td>
         <td class="xmldoc">
@@ -112,24 +108,7 @@
             </a>
           <p>Creates the job trigger</p>
 
-        </td>
-      </tr>
-      <tr>
-        <td class="member-name">
 
-          <code onmouseout="hideTip(event, '27', 27)" onmouseover="showTip(event, '27', 27)">
-            jobExists (state, name)
-          </code>
-          <div class="tip" id="27">
-            <strong>Signature:</strong> (state:ScheduleState * name:string) -&gt; Result&lt;(ScheduleState * string),string&gt;<br />
-                      </div>
-        </td>
-        <td class="xmldoc">
-            <a href="http://github.com/aph5nt/cronix/tree/master/src/Cronix/Scheduling.fs#L41-41" class="github-link">
-              <img src="../content/img/github.png" class="normal" />
-              <img src="../content/img/github-blue.png" class="hover" />
-            </a>
-          <p>Checks if given job exists.</p>
 
         </td>
       </tr>
@@ -137,9 +116,93 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '28', 28)" onmouseover="showTip(event, '28', 28)">
-            removeTrigger (state, name)
+            disableTrigger (state, name)
           </code>
           <div class="tip" id="28">
+            <strong>Signature:</strong> (state:ScheduleState * name:TriggerName) -&gt; Result&lt;ScheduleState,string&gt;<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+            <a href="http://github.com/aph5nt/cronix/tree/master/src/Cronix/Scheduling.fs#L91-91" class="github-link">
+              <img src="../content/img/github.png" class="normal" />
+              <img src="../content/img/github-blue.png" class="hover" />
+            </a>
+          <p>Stops given job. This method performs job existance check, stops the job and logs the output result.</p>
+
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '29', 29)" onmouseover="showTip(event, '29', 29)">
+            enableTrigger (state, name)
+          </code>
+          <div class="tip" id="29">
+            <strong>Signature:</strong> (state:ScheduleState * name:TriggerName) -&gt; Result&lt;ScheduleState,string&gt;<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+            <a href="http://github.com/aph5nt/cronix/tree/master/src/Cronix/Scheduling.fs#L99-99" class="github-link">
+              <img src="../content/img/github.png" class="normal" />
+              <img src="../content/img/github-blue.png" class="hover" />
+            </a>
+          <p>Starts given job. This method performs job existane check, starts the job and logs the output result.</p>
+
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '30', 30)" onmouseover="showTip(event, '30', 30)">
+            fireTrigger (state, name)
+          </code>
+          <div class="tip" id="30">
+            <strong>Signature:</strong> (state:ScheduleState * name:string) -&gt; Result&lt;ScheduleState,string&gt;<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+            <a href="http://github.com/aph5nt/cronix/tree/master/src/Cronix/Scheduling.fs#L64-64" class="github-link">
+              <img src="../content/img/github.png" class="normal" />
+              <img src="../content/img/github-blue.png" class="hover" />
+            </a>
+          <p>Fires given trigger.</p>
+
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '31', 31)" onmouseover="showTip(event, '31', 31)">
+            fireTriggerR (state, name)
+          </code>
+          <div class="tip" id="31">
+            <strong>Signature:</strong> (state:ScheduleState * name:TriggerName) -&gt; Result&lt;ScheduleState,string&gt;<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+            <a href="http://github.com/aph5nt/cronix/tree/master/src/Cronix/Scheduling.fs#L107-107" class="github-link">
+              <img src="../content/img/github.png" class="normal" />
+              <img src="../content/img/github-blue.png" class="hover" />
+            </a>
+          <p>Fires given job. This method performs job existane check, starts the job and logs the output result.</p>
+
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '32', 32)" onmouseover="showTip(event, '32', 32)">
+            removeTrigger (state, name)
+          </code>
+          <div class="tip" id="32">
             <strong>Signature:</strong> (state:ScheduleState * name:string) -&gt; Result&lt;ScheduleState,string&gt;<br />
                       </div>
         </td>
@@ -150,81 +213,7 @@
             </a>
           <p>Removes given trigger.</p>
 
-        </td>
-      </tr>
-      <tr>
-        <td class="member-name">
 
-          <code onmouseout="hideTip(event, '29', 29)" onmouseover="showTip(event, '29', 29)">
-            reply reply msg
-          </code>
-          <div class="tip" id="29">
-            <strong>Signature:</strong> reply:AsyncReplyChannel&lt;&#39;a&gt; -&gt; msg:&#39;a -&gt; unit<br />
-                          <strong>Type parameters:</strong> 'a          </div>
-        </td>
-        <td class="xmldoc">
-            <a href="http://github.com/aph5nt/cronix/tree/master/src/Cronix/Scheduling.fs#L96-96" class="github-link">
-              <img src="../content/img/github.png" class="normal" />
-              <img src="../content/img/github-blue.png" class="hover" />
-            </a>
-          <p>Replies the message</p>
-
-        </td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '30', 30)" onmouseover="showTip(event, '30', 30)">
-            scheduleJob (state, params&#39;)
-          </code>
-          <div class="tip" id="30">
-            <strong>Signature:</strong> (state:ScheduleState * params&#39;:ScheduleParams) -&gt; Result&lt;ScheduleState,string&gt;<br />
-                      </div>
-        </td>
-        <td class="xmldoc">
-            <a href="http://github.com/aph5nt/cronix/tree/master/src/Cronix/Scheduling.fs#L63-63" class="github-link">
-              <img src="../content/img/github.png" class="normal" />
-              <img src="../content/img/github-blue.png" class="hover" />
-            </a>
-          <p>Schedules  given job. This method performs cron expression validation, job existance check, job adding and logs the output result.</p>
-
-        </td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '31', 31)" onmouseover="showTip(event, '31', 31)">
-            startJob (state, name)
-          </code>
-          <div class="tip" id="31">
-            <strong>Signature:</strong> (state:ScheduleState * name:JobName) -&gt; Result&lt;ScheduleState,string&gt;<br />
-                      </div>
-        </td>
-        <td class="xmldoc">
-            <a href="http://github.com/aph5nt/cronix/tree/master/src/Cronix/Scheduling.fs#L88-88" class="github-link">
-              <img src="../content/img/github.png" class="normal" />
-              <img src="../content/img/github-blue.png" class="hover" />
-            </a>
-          <p>Starts given job. This method performs job existane check, starts the job and logs the output result.</p>
-
-        </td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '32', 32)" onmouseover="showTip(event, '32', 32)">
-            startTrigger (state, name)
-          </code>
-          <div class="tip" id="32">
-            <strong>Signature:</strong> (state:ScheduleState * name:string) -&gt; Result&lt;ScheduleState,string&gt;<br />
-                      </div>
-        </td>
-        <td class="xmldoc">
-            <a href="http://github.com/aph5nt/cronix/tree/master/src/Cronix/Scheduling.fs#L58-58" class="github-link">
-              <img src="../content/img/github.png" class="normal" />
-              <img src="../content/img/github-blue.png" class="hover" />
-            </a>
-          <p>Starts given trigger.</p>
 
         </td>
       </tr>
@@ -232,18 +221,20 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '33', 33)" onmouseover="showTip(event, '33', 33)">
-            stopJob (state, name)
+            reply reply msg
           </code>
           <div class="tip" id="33">
-            <strong>Signature:</strong> (state:ScheduleState * name:JobName) -&gt; Result&lt;ScheduleState,string&gt;<br />
-                      </div>
+            <strong>Signature:</strong> reply:AsyncReplyChannel&lt;&#39;a&gt; -&gt; msg:&#39;a -&gt; unit<br />
+                          <strong>Type parameters:</strong> 'a          </div>
         </td>
         <td class="xmldoc">
-            <a href="http://github.com/aph5nt/cronix/tree/master/src/Cronix/Scheduling.fs#L80-80" class="github-link">
+            <a href="http://github.com/aph5nt/cronix/tree/master/src/Cronix/Scheduling.fs#L123-123" class="github-link">
               <img src="../content/img/github.png" class="normal" />
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
-          <p>Stops given job. This method performs job existance check, stops the job and logs the output result.</p>
+          <p>Replies the message</p>
+
+
 
         </td>
       </tr>
@@ -251,18 +242,20 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '34', 34)" onmouseover="showTip(event, '34', 34)">
-            stopTrigger (state, name)
+            scheduleJob (state, params&#39;)
           </code>
           <div class="tip" id="34">
-            <strong>Signature:</strong> (state:ScheduleState * name:string) -&gt; Result&lt;ScheduleState,string&gt;<br />
+            <strong>Signature:</strong> (state:ScheduleState * params&#39;:ScheduleParams) -&gt; Result&lt;ScheduleState,string&gt;<br />
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="http://github.com/aph5nt/cronix/tree/master/src/Cronix/Scheduling.fs#L53-53" class="github-link">
+            <a href="http://github.com/aph5nt/cronix/tree/master/src/Cronix/Scheduling.fs#L74-74" class="github-link">
               <img src="../content/img/github.png" class="normal" />
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
-          <p>Stops given trigger execution.</p>
+          <p>Schedules  given job. This method performs cron expression validation, job existance check, job adding and logs the output result.</p>
+
+
 
         </td>
       </tr>
@@ -270,18 +263,20 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '35', 35)" onmouseover="showTip(event, '35', 35)">
-            unscheduleJob (state, name)
+            startTrigger (state, name)
           </code>
           <div class="tip" id="35">
-            <strong>Signature:</strong> (state:ScheduleState * name:JobName) -&gt; Result&lt;ScheduleState,string&gt;<br />
+            <strong>Signature:</strong> (state:ScheduleState * name:string) -&gt; Result&lt;ScheduleState,string&gt;<br />
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="http://github.com/aph5nt/cronix/tree/master/src/Cronix/Scheduling.fs#L72-72" class="github-link">
+            <a href="http://github.com/aph5nt/cronix/tree/master/src/Cronix/Scheduling.fs#L59-59" class="github-link">
               <img src="../content/img/github.png" class="normal" />
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
-          <p>Unschedules given job. This method performs job existance check, job removal and logs the output result.</p>
+          <p>Starts given trigger.</p>
+
+
 
         </td>
       </tr>
@@ -289,9 +284,114 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '36', 36)" onmouseover="showTip(event, '36', 36)">
-            validateExpr (state, params&#39;)
+            stopTrigger (state, name)
           </code>
           <div class="tip" id="36">
+            <strong>Signature:</strong> (state:ScheduleState * name:string) -&gt; Result&lt;ScheduleState,string&gt;<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+            <a href="http://github.com/aph5nt/cronix/tree/master/src/Cronix/Scheduling.fs#L54-54" class="github-link">
+              <img src="../content/img/github.png" class="normal" />
+              <img src="../content/img/github-blue.png" class="hover" />
+            </a>
+          <p>Stops given trigger execution.</p>
+
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '37', 37)" onmouseover="showTip(event, '37', 37)">
+            terminateTrigger (state, name)
+          </code>
+          <div class="tip" id="37">
+            <strong>Signature:</strong> (state:ScheduleState * name:string) -&gt; Result&lt;ScheduleState,string&gt;<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+            <a href="http://github.com/aph5nt/cronix/tree/master/src/Cronix/Scheduling.fs#L69-69" class="github-link">
+              <img src="../content/img/github.png" class="normal" />
+              <img src="../content/img/github-blue.png" class="hover" />
+            </a>
+          <p>Fires given trigger.</p>
+
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '38', 38)" onmouseover="showTip(event, '38', 38)">
+            terminateTriggerR (state, name)
+          </code>
+          <div class="tip" id="38">
+            <strong>Signature:</strong> (state:ScheduleState * name:TriggerName) -&gt; Result&lt;ScheduleState,string&gt;<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+            <a href="http://github.com/aph5nt/cronix/tree/master/src/Cronix/Scheduling.fs#L115-115" class="github-link">
+              <img src="../content/img/github.png" class="normal" />
+              <img src="../content/img/github-blue.png" class="hover" />
+            </a>
+          <p>Fires given job. This method performs job existane check, starts the job and logs the output result.</p>
+
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '39', 39)" onmouseover="showTip(event, '39', 39)">
+            triggerExists (state, name)
+          </code>
+          <div class="tip" id="39">
+            <strong>Signature:</strong> (state:ScheduleState * name:string) -&gt; Result&lt;(ScheduleState * string),string&gt;<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+            <a href="http://github.com/aph5nt/cronix/tree/master/src/Cronix/Scheduling.fs#L41-41" class="github-link">
+              <img src="../content/img/github.png" class="normal" />
+              <img src="../content/img/github-blue.png" class="hover" />
+            </a>
+          <p>Checks if given job exists.</p>
+
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '40', 40)" onmouseover="showTip(event, '40', 40)">
+            unscheduleJob (state, name)
+          </code>
+          <div class="tip" id="40">
+            <strong>Signature:</strong> (state:ScheduleState * name:TriggerName) -&gt; Result&lt;ScheduleState,string&gt;<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+            <a href="http://github.com/aph5nt/cronix/tree/master/src/Cronix/Scheduling.fs#L83-83" class="github-link">
+              <img src="../content/img/github.png" class="normal" />
+              <img src="../content/img/github-blue.png" class="hover" />
+            </a>
+          <p>Unschedules given job. This method performs job existance check, job removal and logs the output result.</p>
+
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '41', 41)" onmouseover="showTip(event, '41', 41)">
+            validateExpr (state, params&#39;)
+          </code>
+          <div class="tip" id="41">
             <strong>Signature:</strong> (state:ScheduleState * params&#39;:ScheduleParams) -&gt; Result&lt;(ScheduleState * ScheduleParams),string&gt;<br />
                       </div>
         </td>
@@ -301,6 +401,8 @@
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
           <p>Validates the job cron expression</p>
+
+
 
         </td>
       </tr>
@@ -321,15 +423,24 @@
             <li><a href="/cronix/license.html">License</a></li>
             <li><a href="/cronix/release-notes.html">Release Notes</a></li>
             
-            <li class="nav-header">Getting started</li>
 
-            <li><a href="/cronix/cronix setup.html">Cronix setup manual</a></li>
-		  	<li><a href="/cronix/startup script.html">Startup script configuration manual</a></li>
-		  	<li><a href="https://github.com/aph5nt/cronix/tree/master/docs/samples">Samples</a></li>
-		  	
+			<li class="nav-header">The Architecture Overview</li>
+			<li><a href="/cronix/the-big-picture.html">The Big Picture</a></li>
+			
+            <li class="nav-header">The developer's guide</li>
+			<li><a href="/cronix/reference/index.html">Installation</a></li>
+			<li><a href="/cronix/reference/index.html">Configuration</a></li>
+			<li><a href="/cronix/reference/index.html">Job scheduling</a></li>
+			<li><a href="/cronix/reference/index.html">Web UI</a></li>
+			<li><a href="/cronix/reference/index.html">Windows service</a></li>
+			<li><a href="/cronix/reference/index.html">API Reference</a></li>
+			
+			<li class="nav-header">Samples</li>
+		  	<li><a href="https://github.com/aph5nt/cronix/tree/master/docs/samples/FSharpSample">Generic F# sample</a></li>
+			<li><a href="https://github.com/aph5nt/cronix/tree/master/docs/samples/CSharpSample">Generic C# sample</a></li>
 
-            <li class="nav-header">Documentation</li>
-            <li><a href="/cronix/reference/index.html">API Reference</a></li>
+ 
+			
           </ul>
         </div>
       </div>

@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="utf-8"/>
-    <title>Compiler - cronix</title>
+    <title>IScheduleManagerHub - cronix</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <meta name="description" content=""/>
     <meta name="author" content="aph5nt"/>
@@ -34,37 +34,35 @@
 
 
 
-<h1>Compiler</h1>
+<h1>IScheduleManagerHub</h1>
 <div class="xmldoc">
-<p>Module responsible for compiling the startup.fsx script.</p>
+<p>Schedule Manager hub.</p>
 
 
 </div>
-
-<!-- Render nested types and modules, if there are any -->
-
-  <h3>Functions and values</h3>
+  <h3>Instance members</h3>
   <table class="table table-bordered member-list">
     <thead>
-      <tr><td>Function or value</td><td>Description</td></tr>
+      <tr><td>Instance member</td><td>Description</td></tr>
     </thead>
     <tbody>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '10', 10)" onmouseover="showTip(event, '10', 10)">
-            compileScript state
+          <code onmouseout="hideTip(event, '82', 82)" onmouseover="showTip(event, '82', 82)">
+            DisableTrigger(arg1)
           </code>
-          <div class="tip" id="10">
-            <strong>Signature:</strong> state:StartupScriptState -&gt; Result&lt;StartupScriptState,string&gt;<br />
+          <div class="tip" id="82">
+            <strong>Signature:</strong> TriggerName -&gt; unit<br />
+              <strong>Modifiers:</strong> abstract<br />
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="http://github.com/aph5nt/cronix/tree/master/src/Cronix/Compiler.fs#L70-70" class="github-link">
+            <a href="http://github.com/aph5nt/cronix/tree/master/src/Cronix/Types.fs#L196-196" class="github-link">
               <img src="../content/img/github.png" class="normal" />
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
-          <p>Compiles the startup script.</p>
+          <p>Disables given trigger.</p>
 
 
 
@@ -73,19 +71,20 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '11', 11)" onmouseover="showTip(event, '11', 11)">
-            compileSetup ()
+          <code onmouseout="hideTip(event, '83', 83)" onmouseover="showTip(event, '83', 83)">
+            EnableTrigger(arg1)
           </code>
-          <div class="tip" id="11">
-            <strong>Signature:</strong> unit -&gt; unit<br />
+          <div class="tip" id="83">
+            <strong>Signature:</strong> TriggerName -&gt; unit<br />
+              <strong>Modifiers:</strong> abstract<br />
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="http://github.com/aph5nt/cronix/tree/master/src/Cronix/Compiler.fs#L52-52" class="github-link">
+            <a href="http://github.com/aph5nt/cronix/tree/master/src/Cronix/Types.fs#L193-193" class="github-link">
               <img src="../content/img/github.png" class="normal" />
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
-          <p>cleans up the working directory</p>
+          <p>Enables given trigger.</p>
 
 
 
@@ -94,19 +93,20 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '12', 12)" onmouseover="showTip(event, '12', 12)">
-            getStartupScript ()
+          <code onmouseout="hideTip(event, '84', 84)" onmouseover="showTip(event, '84', 84)">
+            FireTrigger(arg1)
           </code>
-          <div class="tip" id="12">
-            <strong>Signature:</strong> unit -&gt; Result&lt;string,string&gt;<br />
+          <div class="tip" id="84">
+            <strong>Signature:</strong> TriggerName -&gt; unit<br />
+              <strong>Modifiers:</strong> abstract<br />
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="http://github.com/aph5nt/cronix/tree/master/src/Cronix/Compiler.fs#L62-62" class="github-link">
+            <a href="http://github.com/aph5nt/cronix/tree/master/src/Cronix/Types.fs#L199-199" class="github-link">
               <img src="../content/img/github.png" class="normal" />
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
-          <p>Loads the startup script.</p>
+          <p>Fires given trigger.</p>
 
 
 
@@ -115,19 +115,20 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '13', 13)" onmouseover="showTip(event, '13', 13)">
-            loadAssemblies ()
+          <code onmouseout="hideTip(event, '85', 85)" onmouseover="showTip(event, '85', 85)">
+            GetData(arg1)
           </code>
-          <div class="tip" id="13">
-            <strong>Signature:</strong> unit -&gt; Result&lt;string [],&#39;?7121&gt;<br />
-                          <strong>Type parameters:</strong> '?7121          </div>
+          <div class="tip" id="85">
+            <strong>Signature:</strong> (TriggerDetail []) -&gt; unit<br />
+              <strong>Modifiers:</strong> abstract<br />
+                      </div>
         </td>
         <td class="xmldoc">
-            <a href="http://github.com/aph5nt/cronix/tree/master/src/Cronix/Compiler.fs#L26-26" class="github-link">
+            <a href="http://github.com/aph5nt/cronix/tree/master/src/Cronix/Types.fs#L187-187" class="github-link">
               <img src="../content/img/github.png" class="normal" />
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
-          <p>Scans for assemblies in the cronix service directory. Returns assembly name list.</p>
+          <p>Returns all triggers state.</p>
 
 
 
@@ -136,19 +137,20 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '14', 14)" onmouseover="showTip(event, '14', 14)">
-            outputAssembly 
+          <code onmouseout="hideTip(event, '86', 86)" onmouseover="showTip(event, '86', 86)">
+            OnStateChanged(arg1)
           </code>
-          <div class="tip" id="14">
-            <strong>Signature:</strong> string<br />
+          <div class="tip" id="86">
+            <strong>Signature:</strong> TriggerDetail -&gt; unit<br />
+              <strong>Modifiers:</strong> abstract<br />
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="http://github.com/aph5nt/cronix/tree/master/src/Cronix/Compiler.fs#L20-20" class="github-link">
+            <a href="http://github.com/aph5nt/cronix/tree/master/src/Cronix/Types.fs#L190-190" class="github-link">
               <img src="../content/img/github.png" class="normal" />
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
-          <p>Output assembly name constant.</p>
+          <p>Returns OnStateChanged event.</p>
 
 
 
@@ -157,19 +159,20 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '15', 15)" onmouseover="showTip(event, '15', 15)">
-            startupFile 
+          <code onmouseout="hideTip(event, '87', 87)" onmouseover="showTip(event, '87', 87)">
+            TerminateTrigger(arg1)
           </code>
-          <div class="tip" id="15">
-            <strong>Signature:</strong> string<br />
+          <div class="tip" id="87">
+            <strong>Signature:</strong> TriggerName -&gt; unit<br />
+              <strong>Modifiers:</strong> abstract<br />
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="http://github.com/aph5nt/cronix/tree/master/src/Cronix/Compiler.fs#L17-17" class="github-link">
+            <a href="http://github.com/aph5nt/cronix/tree/master/src/Cronix/Types.fs#L202-202" class="github-link">
               <img src="../content/img/github.png" class="normal" />
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
-          <p>Statup script name constant.</p>
+          <p>Terminates given trigger execution.</p>
 
 
 

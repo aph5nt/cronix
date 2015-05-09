@@ -18,16 +18,6 @@
     <!--[if lt IE 9]>
       <script src="https://html5shim.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
-	<script>
-  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-
-  ga('create', 'UA-61301639-1', 'auto');
-  ga('send', 'pageview');
-
-</script>
   </head>
   <body>
     <div class="container">
@@ -47,6 +37,8 @@
 <h1>ScheduleManagerCommand</h1>
 <div class="xmldoc">
 <p>Describes the schedule mannager commands.</p>
+
+
 </div>
   <h3>Union Cases</h3>
   <table class="table table-bordered member-list">
@@ -57,15 +49,69 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '95', 95)" onmouseover="showTip(event, '95', 95)">
+          <code onmouseout="hideTip(event, '116', 116)" onmouseover="showTip(event, '116', 116)">
+            DisableTrigger(TriggerName)
+          </code>
+          <div class="tip" id="116">
+            <strong>Signature:</strong> TriggerName<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+            <a href="http://github.com/aph5nt/cronix/tree/master/src/Cronix/Types.fs#L146-146" class="github-link">
+              <img src="../content/img/github.png" class="normal" />
+              <img src="../content/img/github-blue.png" class="hover" />
+            </a>
+          
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '117', 117)" onmouseover="showTip(event, '117', 117)">
+            EnableTrigger(TriggerName)
+          </code>
+          <div class="tip" id="117">
+            <strong>Signature:</strong> TriggerName<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+            <a href="http://github.com/aph5nt/cronix/tree/master/src/Cronix/Types.fs#L147-147" class="github-link">
+              <img src="../content/img/github.png" class="normal" />
+              <img src="../content/img/github-blue.png" class="hover" />
+            </a>
+          
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '118', 118)" onmouseover="showTip(event, '118', 118)">
+            FireTrigger(TriggerName)
+          </code>
+          <div class="tip" id="118">
+            <strong>Signature:</strong> TriggerName<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+            <a href="http://github.com/aph5nt/cronix/tree/master/src/Cronix/Types.fs#L148-148" class="github-link">
+              <img src="../content/img/github.png" class="normal" />
+              <img src="../content/img/github-blue.png" class="hover" />
+            </a>
+          
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '119', 119)" onmouseover="showTip(event, '119', 119)">
             ScheduleJob(...)
           </code>
-          <div class="tip" id="95">
-            <strong>Signature:</strong> JobName * JobCronExpr * Callback<br />
+          <div class="tip" id="119">
+            <strong>Signature:</strong> TriggerName * CronExpr * JobCallback<br />
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="http://github.com/aph5nt/cronix/tree/master/src/Cronix/Types.fs#L125-125" class="github-link">
+            <a href="http://github.com/aph5nt/cronix/tree/master/src/Cronix/Types.fs#L144-144" class="github-link">
               <img src="../content/img/github.png" class="normal" />
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
@@ -75,15 +121,15 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '96', 96)" onmouseover="showTip(event, '96', 96)">
-            StartJob(JobName)
+          <code onmouseout="hideTip(event, '120', 120)" onmouseover="showTip(event, '120', 120)">
+            TerminateTrigger(TriggerName)
           </code>
-          <div class="tip" id="96">
-            <strong>Signature:</strong> JobName<br />
+          <div class="tip" id="120">
+            <strong>Signature:</strong> TriggerName<br />
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="http://github.com/aph5nt/cronix/tree/master/src/Cronix/Types.fs#L128-128" class="github-link">
+            <a href="http://github.com/aph5nt/cronix/tree/master/src/Cronix/Types.fs#L149-149" class="github-link">
               <img src="../content/img/github.png" class="normal" />
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
@@ -93,33 +139,15 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '97', 97)" onmouseover="showTip(event, '97', 97)">
-            StopJob(JobName)
+          <code onmouseout="hideTip(event, '121', 121)" onmouseover="showTip(event, '121', 121)">
+            UnScheduleJob(TriggerName)
           </code>
-          <div class="tip" id="97">
-            <strong>Signature:</strong> JobName<br />
+          <div class="tip" id="121">
+            <strong>Signature:</strong> TriggerName<br />
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="http://github.com/aph5nt/cronix/tree/master/src/Cronix/Types.fs#L127-127" class="github-link">
-              <img src="../content/img/github.png" class="normal" />
-              <img src="../content/img/github-blue.png" class="hover" />
-            </a>
-          
-        </td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '98', 98)" onmouseover="showTip(event, '98', 98)">
-            UnScheduleJob(JobName)
-          </code>
-          <div class="tip" id="98">
-            <strong>Signature:</strong> JobName<br />
-                      </div>
-        </td>
-        <td class="xmldoc">
-            <a href="http://github.com/aph5nt/cronix/tree/master/src/Cronix/Types.fs#L126-126" class="github-link">
+            <a href="http://github.com/aph5nt/cronix/tree/master/src/Cronix/Types.fs#L145-145" class="github-link">
               <img src="../content/img/github.png" class="normal" />
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
@@ -143,15 +171,24 @@
             <li><a href="/cronix/license.html">License</a></li>
             <li><a href="/cronix/release-notes.html">Release Notes</a></li>
             
-            <li class="nav-header">Getting started</li>
 
-            <li><a href="/cronix/cronix setup.html">Cronix setup manual</a></li>
-		  	<li><a href="/cronix/startup script.html">Startup script configuration manual</a></li>
-		  	<li><a href="https://github.com/aph5nt/cronix/tree/master/docs/samples">Samples</a></li>
-		  	
+			<li class="nav-header">The Architecture Overview</li>
+			<li><a href="/cronix/the-big-picture.html">The Big Picture</a></li>
+			
+            <li class="nav-header">The developer's guide</li>
+			<li><a href="/cronix/reference/index.html">Installation</a></li>
+			<li><a href="/cronix/reference/index.html">Configuration</a></li>
+			<li><a href="/cronix/reference/index.html">Job scheduling</a></li>
+			<li><a href="/cronix/reference/index.html">Web UI</a></li>
+			<li><a href="/cronix/reference/index.html">Windows service</a></li>
+			<li><a href="/cronix/reference/index.html">API Reference</a></li>
+			
+			<li class="nav-header">Samples</li>
+		  	<li><a href="https://github.com/aph5nt/cronix/tree/master/docs/samples/FSharpSample">Generic F# sample</a></li>
+			<li><a href="https://github.com/aph5nt/cronix/tree/master/docs/samples/CSharpSample">Generic C# sample</a></li>
 
-            <li class="nav-header">Documentation</li>
-            <li><a href="/cronix/reference/index.html">API Reference</a></li>
+ 
+			
           </ul>
         </div>
       </div>
