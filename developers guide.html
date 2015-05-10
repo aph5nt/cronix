@@ -50,16 +50,22 @@ By deafult, Cronix uses NLOG library for logging. To enable logging the NLOG.con
 
 <ul>
 <li><p>Configuration
-Cronix supports self-hosted web interface. By default it uses the 8111 port. In order to change it, add the following key in the app.config file into appSettings section
-<add key="host.port" value="8080"/>
-If the default port value is changed, then the global variable named �connectionUrl� in the webui/index.html file must also be changed.</p>
-<!-- GLOBAL CONFIGURATION -->
-<script type="text/javascript">
+Cronix supports self-hosted web interface. By default it uses the 8111 port. In order to change it, add the following key in the app.config file into appSettings section</p>
+<pre>&lt;add key="host.port" value="8080" /&gt; </pre>
+<p>If the default port value is changed, then the global variable named "connectionUrl" in the webui/index.html file must also be changed.</p>
+<pre>
+&lt;!-- GLOBAL CONFIGURATION --> 
+&lt;script type="text/javascript"&gt;
 var connectionUrl = "http://localhost:8111/signalr";
-</script></li>
-<li><p>Overview
-<img src="img/webui.png"/></p>
-<p>In order to enable webui, the Cronix.Web package must be installed and the WebPlugin initialized while bootstraping.</p></li>
+&lt;/script&gt;
+</pre></li>
+</ul>
+
+<ul>
+<li><p>Overview</p>
+<p><img src="img/webui.png"/></p>
+<p>In order to enable webui, the Cronix.Web package must be installed and the WebPlugin initialized while bootstraping (as on snippet bellow).</p>
+<p>F# Sample</p></li>
 </ul>
 
 <table class="pre"><tr><td class="lines"><pre class="fssnip">
@@ -105,12 +111,148 @@ var connectionUrl = "http://localhost:8111/signalr";
 </tr>
 </table>
 
+<table class="pre"><tr><td class="lines"><pre class="fssnip">
+<span class="l">1: </span>
+</pre>
+</td>
+<td class="snippet"><pre class="fssnip">
+<span class="i">C#</span> <span class="i">Sample</span>
+</pre>
+</td>
+</tr>
+</table>
+
+<table class="pre"><tr><td class="lines"><pre class="fssnip">
+<span class="l">1: </span>
+<span class="l">2: </span>
+<span class="l">3: </span>
+<span class="l">4: </span>
+<span class="l">5: </span>
+<span class="l">6: </span>
+<span class="l">7: </span>
+</pre>
+</td>
+<td class="snippet"><pre class="fssnip">
+<span class="k">public</span> <span class="k">static</span> <span class="k">void</span> <span class="i">Main</span>(<span onmouseout="hideTip(event, 'fs9', 13)" onmouseover="showTip(event, 'fs9', 13)" class="i">string</span>[] <span class="i">args</span>)
+{
+	<span class="i">BootStrapper</span><span class="o">.</span><span class="i">InitService</span>(<span class="i">args</span>, <span class="i">scheduler</span> <span class="o">=&gt;</span>
+	{
+        <span class="i">WebPlugin</span><span class="o">.</span><span class="i">InitPlugin</span>(<span class="i">scheduler</span>);
+	});
+}
+</pre>
+</td>
+</tr>
+</table>
+
 <h2><a name="Job-scheduling" class="anchor" href="#Job-scheduling">Job scheduling</a></h2>
 
 <ul>
-<li>Build-in Schedules</li>
-<li>StartupScript</li>
+<li>Build-in schedules
+A Build in schedule is a hardcoded schedule definition that will create a trigger for a job at each Cronix application startup. Even if that trigger will be uncheduled, it will reschedule again after restart of your application.</li>
 </ul>
+
+<p>C# Sample - build-in schedule:</p>
+
+<table class="pre"><tr><td class="lines"><pre class="fssnip">
+<span class="l">1: </span>
+<span class="l">2: </span>
+<span class="l">3: </span>
+<span class="l">4: </span>
+<span class="l">5: </span>
+<span class="l">6: </span>
+<span class="l">7: </span>
+<span class="l">8: </span>
+</pre>
+</td>
+<td class="snippet"><pre class="fssnip">
+<span class="k">public</span> <span class="k">static</span> <span class="k">void</span> <span class="i">Main</span>(<span onmouseout="hideTip(event, 'fs9', 14)" onmouseover="showTip(event, 'fs9', 14)" class="i">string</span>[] <span class="i">args</span>)
+{
+	<span class="i">BootStrapper</span><span class="o">.</span><span class="i">InitService</span>(<span class="i">args</span>, <span class="i">scheduler</span> <span class="o">=&gt;</span>
+	{
+        <span class="i">scheduler</span><span class="o">.</span><span class="i">ScheduleJob</span>(<span class="s">&quot;scheduled job&quot;</span>, <span class="s">&quot;* * * * *&quot;</span>, <span class="i">EmbededJobs</span><span class="o">.</span><span class="i">Callback</span>);
+        <span class="i">scheduler</span><span class="o">.</span><span class="i">ScheduleJob</span>(<span class="s">&quot;scheduled job&quot;</span>, <span class="i">Dsl</span><span class="o">.</span><span class="i">frequency</span>(<span class="i">Dsl</span><span class="o">.</span><span class="i">CronExpr</span><span class="o">.</span><span class="i">Daily</span>), <span class="i">EmbededJobs</span><span class="o">.</span><span class="i">Callback</span>);
+	});
+}
+</pre>
+</td>
+</tr>
+</table>
+
+<ul>
+<li>StartupScript
+Having a startup script gives the ability to add custom jobs to your application without the need od recompilation of your Cronix project.
+Custom dll's can be referenced, and the new schedule definitions can be freely modified.
+The Startup.fsx file must be placed in your Cronix project (it must have 'Copy to build directory' property set to True).
+It must follow the namespace module and start method convention.</li>
+</ul>
+
+<p>Sample startup script:</p>
+
+<table class="pre"><tr><td class="lines"><pre class="fssnip">
+<span class="l"> 1: </span>
+<span class="l"> 2: </span>
+<span class="l"> 3: </span>
+<span class="l"> 4: </span>
+<span class="l"> 5: </span>
+<span class="l"> 6: </span>
+<span class="l"> 7: </span>
+<span class="l"> 8: </span>
+<span class="l"> 9: </span>
+<span class="l">10: </span>
+<span class="l">11: </span>
+<span class="l">12: </span>
+<span class="l">13: </span>
+<span class="l">14: </span>
+<span class="l">15: </span>
+<span class="l">16: </span>
+<span class="l">17: </span>
+<span class="l">18: </span>
+<span class="l">19: </span>
+<span class="l">20: </span>
+<span class="l">21: </span>
+<span class="l">22: </span>
+<span class="l">23: </span>
+<span class="l">24: </span>
+<span class="l">25: </span>
+<span class="l">26: </span>
+<span class="l">27: </span>
+<span class="l">28: </span>
+</pre>
+</td>
+<td class="snippet"><pre class="fssnip">
+<span class="prep">#if</span> <span class="i">INTERACTIVE</span>
+<span class="inactive">#I</span><span class="inactive"> </span><span class="inactive">&quot;.&quot;</span>
+<span class="inactive">#I</span><span class="inactive"> </span><span class="inactive">&quot;bin\Debug&quot;</span>
+<span class="inactive">#I</span><span class="inactive"> </span><span class="inactive">&quot;bin\Release&quot;</span>
+<span class="inactive">#r</span><span class="inactive"> </span><span class="inactive">&quot;Cronix.dll&quot;</span>
+<span class="inactive">#r</span><span class="inactive"> </span><span class="inactive">&quot;Chessie.dll&quot;</span>
+<span class="prep">#endif</span>
+
+<span class="k">namespace</span> <span class="i">Cronix</span><span class="o">.</span><span class="i">Startup</span>
+
+<span class="k">module</span> <span class="i">RunAtStartup</span> <span class="o">=</span>
+    
+    <span class="k">open</span> <span onmouseout="hideTip(event, 'fs1', 15)" onmouseover="showTip(event, 'fs1', 15)" class="i">System</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs2', 16)" onmouseover="showTip(event, 'fs2', 16)" class="i">Threading</span>
+    <span class="k">open</span> <span onmouseout="hideTip(event, 'fs1', 17)" onmouseover="showTip(event, 'fs1', 17)" class="i">System</span>
+    <span class="k">open</span> <span class="i">Cronix</span>
+
+    
+    <span class="c">/// sample job</span>
+    <span class="k">let</span> <span class="i">sampleJob</span> (<span class="i">token</span> <span class="o">:</span> <span onmouseout="hideTip(event, 'fs10', 18)" onmouseover="showTip(event, 'fs10', 18)" class="i">CancellationToken</span>) <span class="o">=</span> 
+      <span onmouseout="hideTip(event, 'fs11', 19)" onmouseover="showTip(event, 'fs11', 19)" class="i">printf</span> <span class="s">&quot;callback executed at (UTC) %s\n&quot;</span> <span class="o">&lt;|</span> <span onmouseout="hideTip(event, 'fs12', 20)" onmouseover="showTip(event, 'fs12', 20)" class="i">DateTime</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs13', 21)" onmouseover="showTip(event, 'fs13', 21)" class="i">UtcNow</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs14', 22)" onmouseover="showTip(event, 'fs14', 22)" class="i">ToString</span>()
+      <span onmouseout="hideTip(event, 'fs15', 23)" onmouseover="showTip(event, 'fs15', 23)" class="i">Thread</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs16', 24)" onmouseover="showTip(event, 'fs16', 24)" class="i">Sleep</span> <span class="n">100</span>
+
+    <span class="c">/// open your dll with tasks here</span>
+    <span class="k">let</span> <span class="i">start</span> (<span class="i">scheduler</span> <span class="o">:</span> <span class="i">IScheduleManager</span>) <span class="o">=</span>
+
+        <span class="c">// schedules goes here!</span>
+        <span class="i">scheduler</span><span class="o">.</span><span class="i">ScheduleJob</span> <span class="s">&quot;job1&quot;</span> <span class="s">&quot;* * * * *&quot;</span> <span class="o">&lt;|</span> <span class="i">JobCallback</span>(<span class="i">sampleJob</span>) <span class="o">|&gt;</span> <span onmouseout="hideTip(event, 'fs8', 25)" onmouseover="showTip(event, 'fs8', 25)" class="i">ignore</span>
+        ()
+</pre>
+</td>
+</tr>
+</table>
 
 <h2><a name="Windows-service" class="anchor" href="#Windows-service">Windows service</a></h2>
 
@@ -129,6 +271,14 @@ var connectionUrl = "http://localhost:8111/signalr";
 <div class="tip" id="fs6">val argv : string []</div>
 <div class="tip" id="fs7">val startupHandler : obj</div>
 <div class="tip" id="fs8">val ignore : value:&#39;T -&gt; unit<br /><br />Full name: Microsoft.FSharp.Core.Operators.ignore</div>
+<div class="tip" id="fs9">Multiple items<br />val string : value:&#39;T -&gt; string<br /><br />Full name: Microsoft.FSharp.Core.Operators.string<br /><br />--------------------<br />type string = String<br /><br />Full name: Microsoft.FSharp.Core.string</div>
+<div class="tip" id="fs10">Multiple items<br />type CancellationToken =<br />&#160;&#160;struct<br />&#160;&#160;&#160;&#160;new : canceled:bool -&gt; CancellationToken<br />&#160;&#160;&#160;&#160;member CanBeCanceled : bool<br />&#160;&#160;&#160;&#160;member Equals : other:CancellationToken -&gt; bool + 1 overload<br />&#160;&#160;&#160;&#160;member GetHashCode : unit -&gt; int<br />&#160;&#160;&#160;&#160;member IsCancellationRequested : bool<br />&#160;&#160;&#160;&#160;member Register : callback:Action -&gt; CancellationTokenRegistration + 3 overloads<br />&#160;&#160;&#160;&#160;member ThrowIfCancellationRequested : unit -&gt; unit<br />&#160;&#160;&#160;&#160;member WaitHandle : WaitHandle<br />&#160;&#160;&#160;&#160;static member None : CancellationToken<br />&#160;&#160;end<br /><br />Full name: System.Threading.CancellationToken<br /><br />--------------------<br />CancellationToken()<br />CancellationToken(canceled: bool) : unit</div>
+<div class="tip" id="fs11">val printf : format:Printf.TextWriterFormat&lt;&#39;T&gt; -&gt; &#39;T<br /><br />Full name: Microsoft.FSharp.Core.ExtraTopLevelOperators.printf</div>
+<div class="tip" id="fs12">Multiple items<br />type DateTime =<br />&#160;&#160;struct<br />&#160;&#160;&#160;&#160;new : ticks:int64 -&gt; DateTime + 10 overloads<br />&#160;&#160;&#160;&#160;member Add : value:TimeSpan -&gt; DateTime<br />&#160;&#160;&#160;&#160;member AddDays : value:float -&gt; DateTime<br />&#160;&#160;&#160;&#160;member AddHours : value:float -&gt; DateTime<br />&#160;&#160;&#160;&#160;member AddMilliseconds : value:float -&gt; DateTime<br />&#160;&#160;&#160;&#160;member AddMinutes : value:float -&gt; DateTime<br />&#160;&#160;&#160;&#160;member AddMonths : months:int -&gt; DateTime<br />&#160;&#160;&#160;&#160;member AddSeconds : value:float -&gt; DateTime<br />&#160;&#160;&#160;&#160;member AddTicks : value:int64 -&gt; DateTime<br />&#160;&#160;&#160;&#160;member AddYears : value:int -&gt; DateTime<br />&#160;&#160;&#160;&#160;...<br />&#160;&#160;end<br /><br />Full name: System.DateTime<br /><br />--------------------<br />DateTime()<br />&#160;&#160;&#160;<em>(+0 other overloads)</em><br />DateTime(ticks: int64) : unit<br />&#160;&#160;&#160;<em>(+0 other overloads)</em><br />DateTime(ticks: int64, kind: DateTimeKind) : unit<br />&#160;&#160;&#160;<em>(+0 other overloads)</em><br />DateTime(year: int, month: int, day: int) : unit<br />&#160;&#160;&#160;<em>(+0 other overloads)</em><br />DateTime(year: int, month: int, day: int, calendar: Globalization.Calendar) : unit<br />&#160;&#160;&#160;<em>(+0 other overloads)</em><br />DateTime(year: int, month: int, day: int, hour: int, minute: int, second: int) : unit<br />&#160;&#160;&#160;<em>(+0 other overloads)</em><br />DateTime(year: int, month: int, day: int, hour: int, minute: int, second: int, kind: DateTimeKind) : unit<br />&#160;&#160;&#160;<em>(+0 other overloads)</em><br />DateTime(year: int, month: int, day: int, hour: int, minute: int, second: int, calendar: Globalization.Calendar) : unit<br />&#160;&#160;&#160;<em>(+0 other overloads)</em><br />DateTime(year: int, month: int, day: int, hour: int, minute: int, second: int, millisecond: int) : unit<br />&#160;&#160;&#160;<em>(+0 other overloads)</em><br />DateTime(year: int, month: int, day: int, hour: int, minute: int, second: int, millisecond: int, kind: DateTimeKind) : unit<br />&#160;&#160;&#160;<em>(+0 other overloads)</em></div>
+<div class="tip" id="fs13">property DateTime.UtcNow: DateTime</div>
+<div class="tip" id="fs14">DateTime.ToString() : string<br />DateTime.ToString(provider: IFormatProvider) : string<br />DateTime.ToString(format: string) : string<br />DateTime.ToString(format: string, provider: IFormatProvider) : string</div>
+<div class="tip" id="fs15">Multiple items<br />type Thread =<br />&#160;&#160;inherit CriticalFinalizerObject<br />&#160;&#160;new : start:ThreadStart -&gt; Thread + 3 overloads<br />&#160;&#160;member Abort : unit -&gt; unit + 1 overload<br />&#160;&#160;member ApartmentState : ApartmentState with get, set<br />&#160;&#160;member CurrentCulture : CultureInfo with get, set<br />&#160;&#160;member CurrentUICulture : CultureInfo with get, set<br />&#160;&#160;member DisableComObjectEagerCleanup : unit -&gt; unit<br />&#160;&#160;member ExecutionContext : ExecutionContext<br />&#160;&#160;member GetApartmentState : unit -&gt; ApartmentState<br />&#160;&#160;member GetCompressedStack : unit -&gt; CompressedStack<br />&#160;&#160;member GetHashCode : unit -&gt; int<br />&#160;&#160;...<br /><br />Full name: System.Threading.Thread<br /><br />--------------------<br />Thread(start: ThreadStart) : unit<br />Thread(start: ParameterizedThreadStart) : unit<br />Thread(start: ThreadStart, maxStackSize: int) : unit<br />Thread(start: ParameterizedThreadStart, maxStackSize: int) : unit</div>
+<div class="tip" id="fs16">Thread.Sleep(timeout: TimeSpan) : unit<br />Thread.Sleep(millisecondsTimeout: int) : unit</div>
 
         </div>
         <div class="span3">
@@ -151,8 +301,9 @@ var connectionUrl = "http://localhost:8111/signalr";
             <li class="nav-header">The developer's guide</li>
 			<li><a href="/cronix/developers guide.html#creating new project">Creating new project</a></li>
 			<li><a href="/cronix/developers guide.html#configuration">Configuration</a></li>
-			<li><a href="/cronix/developers guide.html#job scheduling">Job scheduling</a></li>
 			<li><a href="/cronix/developers guide.html#web ui">Web UI</a></li>
+			<li><a href="/cronix/developers guide.html#job scheduling">Job scheduling</a></li>
+			
 			<li><a href="/cronix/developers guide.html#windows service">Windows service</a></li>
 			<li><a href="/cronix/reference/index.html">API Reference</a></li>
 			
