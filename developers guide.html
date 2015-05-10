@@ -245,12 +245,49 @@ It must follow the namespace, module and start method convention.</p>
 
 <h2><a name="Windows-service" class="anchor" href="#Windows-service">Windows service</a></h2>
 
-<ul>
-<li>installing as windows service</li>
-<li>uninstall</li>
-<li>run in debug mode</li>
-<li>displaying help</li>
-</ul>
+<p>In order to see what the availiable command line options, run your Cronix application in command line without any parameter.
+The sample usage will be shown as in sample bellow.</p>
+
+<div class="row">
+  <div class="span1"></div>
+  <div class="span6">
+    <div class="well well-small" id="nuget">
+
+<pre>
+C:\>YourCronixApp.exe
+Usage:
+YourCronixApp debug
+    - Starts 'YourCronixApp' in the interactive mode.
+YourCronixApp install
+    - Installs 'YourCronixApp' as a Windows service.
+YourCronixApp uninstall
+    - Uninstalls 'YourCronixApp' as a Windows service.
+</pre>
+
+<table class="pre"><tr><td class="lines"><pre class="fssnip">
+<span class="l">1: </span>
+</pre>
+</td>
+<td class="snippet"><pre class="fssnip">
+<span class="o">&lt;/</span><span class="i">div</span><span class="o">&gt;</span>
+</pre>
+</td>
+</tr>
+</table>
+
+<p></div>
+  <div class="span1"></div>
+</div></p>
+
+<pre>
+Usage:
+YourCronixApp debug
+   - Starts 'YourCronixApp' in the interactive mode.
+YourCronixApp install
+   - Installs 'YourCronixApp' as a Windows service.
+YourCronixApp uninstall
+   - Uninstalls 'YourCronixApp' as a Windows service.
+</pre>
 
 <div class="tip" id="fs1">namespace System</div>
 <div class="tip" id="fs2">namespace System.Threading</div>
