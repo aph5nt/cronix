@@ -1,8 +1,6 @@
 NLog
 NCronTab
 chessie
-FSharp.Configuration
-
 Microsoft.AspNet.SignalR.Core 
 Microsoft.AspNet.SignalR.SystemWeb 
 Microsoft.Owin 

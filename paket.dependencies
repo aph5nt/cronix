@@ -1,6 +1,5 @@
 source https://nuget.org/api/v2
 
-nuget FSharp.Configuration
 nuget FSharp.Formatting
 nuget xUnit ~> 1.9.2
 nuget xUnit.runners ~> 1.9.2
@@ -11,6 +10,7 @@ nuget SourceLink.Fake
 nuget NCrontab
 nuget NLog
 nuget chessie
+
 nuget FSharp.Compiler.CodeDom
 
 nuget jQuery

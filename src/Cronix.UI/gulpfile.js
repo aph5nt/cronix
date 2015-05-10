@@ -41,7 +41,7 @@ gulp.task('css', function () {
     var bowerCss = gulp.src('src/css/bootstrap.css').pipe(replace(/url\((')?\.\/fonts\//g, 'url($1fonts/')),
         appCss = gulp.src('src/css/*.css'),
         combinedCss = es.concat(bowerCss, appCss).pipe(concat('css.css')),
-        fontFiles = gulp.src('./src/fonts/*', { base: './src/css/' });
+        fontFiles = gulp.src('./src/css/fonts/*', { base: './src/css/' });
 
     return es.concat(combinedCss, fontFiles)
         .pipe(gulp.dest(output));
@@ -58,7 +58,7 @@ gulp.task('html', function() {
 });
 
 gulp.task('font', function () {
-    gulp.src('./src/font/*')
+    gulp.src('./src/css/font/*')
        .pipe(gulp.dest(output + '/font'));
 });
 

@@ -14,11 +14,13 @@ The following developer's guide will briefly walk througth some important topics
 
 ## Configuration
 * Logging
+
   By deafult, Cronix uses NLOG library for logging. To enable logging the NLOG.config file should be added to your Cronix project.
 
 
 ## WebUI
   * Configuration
+
     Cronix supports self-hosted web interface. By default it uses the 8111 port. In order to change it, add the following key in the app.config file into appSettings section
 
     <pre>&lt;add key="host.port" value="8080" /&gt; </pre>
@@ -138,7 +140,7 @@ module RunAtStartup =
 
 
 ## Windows service
-In order to see what the availiable command line options, run your Cronix application in the command line without any parameter.
+In order to see what are the availiable command line options, run your Cronix application in the command line without any parameters.
 The sample usage will be shown as in sample bellow.
 
 <div class="row">

@@ -30,3 +30,5 @@ files
 	 ../Cronix.UI/dist/font/fontawesome-webfont.woff ==> content/webui/font
 	 ../Cronix.UI/dist/font/fontawesome-webfontd41d.eot ==> content/webui/font
 	 ../Cronix.UI/dist/font/FontAwesome.otf ==> content/webui/font
+	 ../../Install.ps1 ==> tools
+	 ../Cronix.UI/readme.txt ==> content

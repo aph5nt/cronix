@@ -32,13 +32,18 @@ Documentation
 
 * [The Architecture Overview](the big picture.html)
 
-* [The developer's guide ](developers guide.html).
+* [The developer's guide ](developers guide.html)
 
 * [Samples](https://github.com/aph5nt/cronix/tree/master/docs/samples)
 
 * [API Reference](reference/index.html) contains automatically generated documentation for all types, modules
 and functions in the library. This includes additional brief samples on using most of the
 functions.
+
+Troubleshooting
+--------------------------
+
+* [If FSharpCore.dll 4.3.0 was not found](http://blog.ploeh.dk/2014/01/30/how-to-use-fsharpcore-430-when-all-you-have-is-431/)
 
    
 Contributing and copyright
