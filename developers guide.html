@@ -126,10 +126,10 @@ var connectionUrl = "http://localhost:8111/signalr";
 <td class="snippet"><pre class="fssnip">
 <span class="k">public</span> <span class="k">static</span> <span class="k">void</span> <span class="i">Main</span>(<span onmouseout="hideTip(event, 'fs9', 13)" onmouseover="showTip(event, 'fs9', 13)" class="i">string</span>[] <span class="i">args</span>)
 {
-	<span class="i">BootStrapper</span><span class="o">.</span><span class="i">InitService</span>(<span class="i">args</span>, <span class="i">scheduler</span> <span class="o">=&gt;</span>
-	{
+    <span class="i">BootStrapper</span><span class="o">.</span><span class="i">InitService</span>(<span class="i">args</span>, <span class="i">scheduler</span> <span class="o">=&gt;</span>
+    {
         <span class="i">WebPlugin</span><span class="o">.</span><span class="i">InitPlugin</span>(<span class="i">scheduler</span>);
-	});
+    });
 }
 </pre>
 </td>
@@ -159,11 +159,11 @@ A Build in schedule is a hardcoded schedule definition that will create a trigge
 <td class="snippet"><pre class="fssnip">
 <span class="k">public</span> <span class="k">static</span> <span class="k">void</span> <span class="i">Main</span>(<span onmouseout="hideTip(event, 'fs9', 14)" onmouseover="showTip(event, 'fs9', 14)" class="i">string</span>[] <span class="i">args</span>)
 {
-	<span class="i">BootStrapper</span><span class="o">.</span><span class="i">InitService</span>(<span class="i">args</span>, <span class="i">scheduler</span> <span class="o">=&gt;</span>
-	{
+    <span class="i">BootStrapper</span><span class="o">.</span><span class="i">InitService</span>(<span class="i">args</span>, <span class="i">scheduler</span> <span class="o">=&gt;</span>
+    {
         <span class="i">scheduler</span><span class="o">.</span><span class="i">ScheduleJob</span>(<span class="s">&quot;scheduled job&quot;</span>, <span class="s">&quot;* * * * *&quot;</span>, <span class="i">EmbededJobs</span><span class="o">.</span><span class="i">Callback</span>);
         <span class="i">scheduler</span><span class="o">.</span><span class="i">ScheduleJob</span>(<span class="s">&quot;scheduled job&quot;</span>, <span class="i">Dsl</span><span class="o">.</span><span class="i">frequency</span>(<span class="i">Dsl</span><span class="o">.</span><span class="i">CronExpr</span><span class="o">.</span><span class="i">Daily</span>), <span class="i">EmbededJobs</span><span class="o">.</span><span class="i">Callback</span>);
-	});
+    });
 }
 </pre>
 </td>
