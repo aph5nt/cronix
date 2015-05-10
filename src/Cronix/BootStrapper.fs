@@ -127,13 +127,13 @@ module BootStrapper =
         let entryAsm = Assembly.GetEntryAssembly()
         let executingAsm =  Assembly.GetExecutingAssembly()
         let assemblyName = if entryAsm <> null then entryAsm.GetName().Name else executingAsm.GetName().Name
-        printfn "Ussage:"
-        printfn " %s debug" assemblyName
-        printfn "    Starts the service in interactive mode."
-        printfn "  %s install" assemblyName
-        printfn "     Installs %s as a Windows service." assemblyName
-        printfn "  %s uninstall" assemblyName
-        printfn "     Uninstalls %s as a Windows service." assemblyName
+        printfn "Usage:"
+        printfn "%s debug" assemblyName
+        printfn "   - Starts '%s' in the interactive mode." assemblyName
+        printfn "%s install" assemblyName
+        printfn "   - Installs '%s' as a Windows service." assemblyName
+        printfn "%s uninstall" assemblyName
+        printfn "   - Uninstalls '%s' as a Windows service." assemblyName
     
     /// Returns true if service is run from console.
     let isDebug() = Environment.UserInteractive

@@ -1,3 +1,6 @@
+### 0.3.2 - Released
+* Minor fixes
+
 ### 0.3.1 - Released
 * Package description fix
 

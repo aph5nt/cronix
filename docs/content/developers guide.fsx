@@ -138,10 +138,27 @@ module RunAtStartup =
 
 
 ## Windows service
-* installing as windows service
-* uninstall 
-* run in debug mode
-* displaying help
+In order to see what the availiable command line options, run your Cronix application in the command line without any parameter.
+The sample usage will be shown as in sample bellow.
+
+<div class="row">
+<div class="span12">
+<div class="well well-small">
+<pre>
+C:\&gt;YourCronixApp.exe
+Usage:
+YourCronixApp debug
+    - Starts 'YourCronixApp' in the interactive mode.
+YourCronixApp install
+    - Installs 'YourCronixApp' as a Windows service.
+YourCronixApp uninstall
+    - Uninstalls 'YourCronixApp' as a Windows service.
+</pre>
+</div>
+</div>
+</div>
+
+
 
 *)
 
