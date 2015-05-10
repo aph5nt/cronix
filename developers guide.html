@@ -63,7 +63,7 @@ var connectionUrl = "http://localhost:8111/signalr";
 
 <ul>
 <li><p>Overview</p>
-<p><img src="img/webui.png"/></p>
+<p><img src="img\webui.png"/></p>
 <p>In order to enable webui, the Cronix.Web package must be installed and the WebPlugin initialized while bootstraping (as on snippet bellow).</p>
 <p>F# Sample</p></li>
 </ul>
@@ -111,16 +111,7 @@ var connectionUrl = "http://localhost:8111/signalr";
 </tr>
 </table>
 
-<table class="pre"><tr><td class="lines"><pre class="fssnip">
-<span class="l">1: </span>
-</pre>
-</td>
-<td class="snippet"><pre class="fssnip">
-<span class="i">C#</span> <span class="i">Sample</span>
-</pre>
-</td>
-</tr>
-</table>
+<p>C# Sample</p>
 
 <table class="pre"><tr><td class="lines"><pre class="fssnip">
 <span class="l">1: </span>
@@ -216,8 +207,6 @@ It must follow the namespace module and start method convention.</li>
 <span class="l">24: </span>
 <span class="l">25: </span>
 <span class="l">26: </span>
-<span class="l">27: </span>
-<span class="l">28: </span>
 </pre>
 </td>
 <td class="snippet"><pre class="fssnip">
@@ -237,13 +226,11 @@ It must follow the namespace module and start method convention.</li>
     <span class="k">open</span> <span onmouseout="hideTip(event, 'fs1', 17)" onmouseover="showTip(event, 'fs1', 17)" class="i">System</span>
     <span class="k">open</span> <span class="i">Cronix</span>
 
-    
     <span class="c">/// sample job</span>
     <span class="k">let</span> <span class="i">sampleJob</span> (<span class="i">token</span> <span class="o">:</span> <span onmouseout="hideTip(event, 'fs10', 18)" onmouseover="showTip(event, 'fs10', 18)" class="i">CancellationToken</span>) <span class="o">=</span> 
       <span onmouseout="hideTip(event, 'fs11', 19)" onmouseover="showTip(event, 'fs11', 19)" class="i">printf</span> <span class="s">&quot;callback executed at (UTC) %s\n&quot;</span> <span class="o">&lt;|</span> <span onmouseout="hideTip(event, 'fs12', 20)" onmouseover="showTip(event, 'fs12', 20)" class="i">DateTime</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs13', 21)" onmouseover="showTip(event, 'fs13', 21)" class="i">UtcNow</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs14', 22)" onmouseover="showTip(event, 'fs14', 22)" class="i">ToString</span>()
       <span onmouseout="hideTip(event, 'fs15', 23)" onmouseover="showTip(event, 'fs15', 23)" class="i">Thread</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs16', 24)" onmouseover="showTip(event, 'fs16', 24)" class="i">Sleep</span> <span class="n">100</span>
 
-    <span class="c">/// open your dll with tasks here</span>
     <span class="k">let</span> <span class="i">start</span> (<span class="i">scheduler</span> <span class="o">:</span> <span class="i">IScheduleManager</span>) <span class="o">=</span>
 
         <span class="c">// schedules goes here!</span>
