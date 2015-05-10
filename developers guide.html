@@ -63,8 +63,8 @@ var connectionUrl = "http://localhost:8111/signalr";
 
 <ul>
 <li><p>Overview</p>
-<p><img width="640" src="img\webui.PNG" alt="webui"></p>
-<p>In order to enable webui, the Cronix.Web package must be installed and the WebPlugin initialized while bootstraping (as on snippet bellow).</p>
+<p><img src="img\webui.PNG" alt="webui"></p>
+<p>In order to enable webui, the Cronix.Web package must be installed and the WebPlugin must be initialized while bootstraping (as on snippet bellow).</p>
 <p>F# Sample</p></li>
 </ul>
 
@@ -139,9 +139,10 @@ var connectionUrl = "http://localhost:8111/signalr";
 <h2><a name="Job-scheduling" class="anchor" href="#Job-scheduling">Job scheduling</a></h2>
 
 <ul>
-<li>Build-in schedules
-A Build in schedule is a hardcoded schedule definition that will create a trigger for a job at each Cronix application startup. Even if that trigger will be uncheduled, it will reschedule again after restart of your application.</li>
+<li>Build-in schedules</li>
 </ul>
+
+<p>A Build in schedule is a hardcoded schedule definition that will create a trigger for a job at each Cronix application startup. Even if that trigger will be uncheduled, it will reschedule again after restart of your application.</p>
 
 <p>C# Sample - build-in schedule:</p>
 
@@ -171,12 +172,13 @@ A Build in schedule is a hardcoded schedule definition that will create a trigge
 </table>
 
 <ul>
-<li>StartupScript
-Having a startup script gives the ability to add custom jobs to your application without the need od recompilation of your Cronix project.
+<li>StartupScript</li>
+</ul>
+
+<p>Having a startup script gives the ability to add custom jobs to your application without need od recompilation of your Cronix project.
 Custom dll's can be referenced, and the new schedule definitions can be freely modified.
 The Startup.fsx file must be placed in your Cronix project (it must have 'Copy to build directory' property set to True).
-It must follow the namespace module and start method convention.</li>
-</ul>
+It must follow the namespace, module and start method convention.</p>
 
 <p>Sample startup script:</p>
 
