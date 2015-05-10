@@ -29,20 +29,10 @@ Todo:
 
 0.3.2
 -----------------------
- - BK: run without param should display help page! (write system test for that!)
  - FT: fix font problem
+ 
 
 Documentation:
-	General:
-	- cronix functionality
-
-	How to series:
-	- creating new cronix project (+nlog configuration)
-	- scheduling building jobs
-	- scheduling external jobs
-	- installing as windows service
-	- hosting webui
-
 	Sample Series:
 	- bitcoin ticker
 	- hrmsc exchange rate notifier

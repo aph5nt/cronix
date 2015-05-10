@@ -12,7 +12,7 @@ nuget NCrontab
 nuget NLog
 nuget chessie
 nuget FSharp.Compiler.CodeDom
- 
+
 nuget jQuery
 nuget knockoutjs
 nuget Microsoft.AspNet.Razor
