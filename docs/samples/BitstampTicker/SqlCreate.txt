@@ -1,0 +1,13 @@
+﻿CREATE TABLE [dbo].[Ticks] (
+    [Id]        BIGINT          IDENTITY (1, 1) NOT NULL,
+    [High]      DECIMAL (18, 2) NOT NULL,
+    [Last]      DECIMAL (18, 2) NOT NULL,
+    [Bid]       DECIMAL (18, 2) NOT NULL,
+    [Vwap]      DECIMAL (18, 2) NOT NULL,
+    [Volume]    DECIMAL (18, 2) NOT NULL,
+    [Low]       DECIMAL (18, 2) NOT NULL,
+    [Ask]       DECIMAL (18, 2) NOT NULL,
+    [Timestamp] INT      NOT NULL,
+    PRIMARY KEY CLUSTERED ([Id] DESC)
+);
+

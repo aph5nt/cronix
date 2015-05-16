@@ -34,6 +34,8 @@ nuget Microsoft.Owin.Diagnostics
 nuget Microsoft.Owin.Cors
 nuget Foq
  
- 
+nuget FSharp.Data
+nuget SQLProvider 
+nuget System.Data.SQLite
 
 github fsharp/FAKE modules/Octokit/Octokit.fsx

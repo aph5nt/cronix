@@ -70,6 +70,8 @@ Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "Cronix.UI", "http://localho
 EndProject
 Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Cronix.Web", "src\Cronix.Web\Cronix.Web.fsproj", "{14621A39-B196-41A7-A370-907C9381BC3F}"
 EndProject
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "CryptoTicker", "docs\samples\CryptoTicker\CryptoTicker.fsproj", "{8460C741-3498-4835-A2A6-4209E9B96206}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -150,6 +152,16 @@ Global
 		{14621A39-B196-41A7-A370-907C9381BC3F}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{14621A39-B196-41A7-A370-907C9381BC3F}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{14621A39-B196-41A7-A370-907C9381BC3F}.Release|x86.ActiveCfg = Release|Any CPU
+		{8460C741-3498-4835-A2A6-4209E9B96206}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8460C741-3498-4835-A2A6-4209E9B96206}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8460C741-3498-4835-A2A6-4209E9B96206}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{8460C741-3498-4835-A2A6-4209E9B96206}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{8460C741-3498-4835-A2A6-4209E9B96206}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{8460C741-3498-4835-A2A6-4209E9B96206}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8460C741-3498-4835-A2A6-4209E9B96206}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8460C741-3498-4835-A2A6-4209E9B96206}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{8460C741-3498-4835-A2A6-4209E9B96206}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{8460C741-3498-4835-A2A6-4209E9B96206}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -162,5 +174,6 @@ Global
 		{06322D90-9A28-423C-9805-AC1393A8F18D} = {B6255659-79E8-4AC2-AD13-321960F13DF4}
 		{5C018694-E498-4971-AF52-4E4343DC38FC} = {B6255659-79E8-4AC2-AD13-321960F13DF4}
 		{1CBB9793-714B-42A9-AD03-12B15FB71967} = {B6255659-79E8-4AC2-AD13-321960F13DF4}
+		{8460C741-3498-4835-A2A6-4209E9B96206} = {B6255659-79E8-4AC2-AD13-321960F13DF4}
 	EndGlobalSection
 EndGlobal
