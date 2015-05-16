@@ -16,10 +16,7 @@ module Exchange =
 
     type Database = SqlDataProvider<ConnectionString = connectionString, DatabaseVendor = Common.DatabaseProviderTypes.MSSQLSERVER, UseOptionTypes = true>
     type BitStamp = JsonProvider<sample>
-    
-    let fetchData() =
-        BitStamp.Parse <| Http.RequestString fetchUrl
-        
+     
     let insertData() =
         let fetchedData = BitStamp.Parse <| Http.RequestString fetchUrl
         let context = Database.GetDataContext()
