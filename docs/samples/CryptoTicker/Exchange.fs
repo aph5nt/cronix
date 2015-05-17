@@ -32,7 +32,3 @@ module Exchange =
         tick.Vwap <- fetchedData.Vwap
         
         context.SubmitUpdates() |> ignore  
-         
-         // todo:
-         // source, timestamp (as clustered index), Date (for partittioning yyyy-mm-dd), order of columns
-         // remove id column
