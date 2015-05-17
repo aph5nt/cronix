@@ -1,13 +1,37 @@
-﻿CREATE TABLE [dbo].[Ticks] (
-    [Id]        BIGINT          IDENTITY (1, 1) NOT NULL,
-    [High]      DECIMAL (18, 2) NOT NULL,
-    [Last]      DECIMAL (18, 2) NOT NULL,
-    [Bid]       DECIMAL (18, 2) NOT NULL,
-    [Vwap]      DECIMAL (18, 2) NOT NULL,
-    [Volume]    DECIMAL (18, 2) NOT NULL,
-    [Low]       DECIMAL (18, 2) NOT NULL,
-    [Ask]       DECIMAL (18, 2) NOT NULL,
-    [Timestamp] INT      NOT NULL,
-    PRIMARY KEY CLUSTERED ([Id] DESC)
-);
+﻿USE [Bitstamp]
+GO
+
+/****** Object:  Table [dbo].[Ticks]    Script Date: 17/05/2015 08:46:37 ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE TABLE [dbo].[Ticks](
+	[Id] [bigint] IDENTITY(1,1) NOT NULL,
+	[Exchange] [nvarchar](10) NOT NULL,
+	[Timestamp] [int] NOT NULL,
+	[High] [decimal](18, 2) NOT NULL,
+	[Low] [decimal](18, 2) NOT NULL,
+	[Last] [decimal](18, 2) NOT NULL,
+	[Volume] [decimal](18, 2) NOT NULL,
+	[Ask] [decimal](18, 2) NOT NULL,
+	[Bid] [decimal](18, 2) NOT NULL,
+	[Vwap] [decimal](18, 2) NOT NULL,
+ CONSTRAINT [PK_Ticks_1] PRIMARY KEY NONCLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY],
+ CONSTRAINT [PK_Exchange_Timestamp] UNIQUE CLUSTERED 
+(
+	[Exchange] ASC,
+	[Timestamp] DESC
+)WITH (PAD_INDEX = ON, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, FILLFACTOR = 80) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+
+
+
 

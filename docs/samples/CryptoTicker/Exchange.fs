@@ -21,6 +21,7 @@ module Exchange =
         let fetchedData = BitStamp.Parse <| Http.RequestString fetchUrl
         let context = Database.GetDataContext()
         let tick = context.``[dbo].[Ticks]``.Create()
+        tick.Exchange <- "Bitstamp"
         tick.Ask <- fetchedData.Ask
         tick.Bid <- fetchedData.Bid
         tick.High <- fetchedData.High
@@ -32,3 +33,6 @@ module Exchange =
         
         context.SubmitUpdates() |> ignore  
          
+         // todo:
+         // source, timestamp (as clustered index), Date (for partittioning yyyy-mm-dd), order of columns
+         // remove id column
