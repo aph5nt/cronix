@@ -6,4 +6,6 @@ NCronTab
 chessie
 Microsoft.AspNet.SignalR.Core 
 Microsoft.AspNet.SignalR.SystemWeb 
- 
+Akka
+Akka.FSharp
+Akka.Logger.NLog

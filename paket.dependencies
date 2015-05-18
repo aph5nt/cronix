@@ -38,4 +38,8 @@ nuget FSharp.Data
 nuget SQLProvider 
 nuget System.Data.SQLite
 
+nuget Akka
+nuget Akka.FSharp
+nuget Akka.Logger.NLog
+
 github fsharp/FAKE modules/Octokit/Octokit.fsx

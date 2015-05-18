@@ -1,3 +1,6 @@
 NLog
 NCronTab
 chessie
+Akka
+Akka.FSharp
+Akka.Logger.NLog
