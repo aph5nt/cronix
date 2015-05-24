@@ -8,8 +8,6 @@ module Scheduling =
     open NCrontab 
     open Logging
     open Cronix
-    open Akka.FSharp
-    open Akka.Actor
 
     /// Creates the job trigger
     let createTrigger : CreateTrigger =
@@ -122,8 +120,8 @@ module Scheduling =
             |> logResult
 
     /// Replies the message 
-    let askAndResult (actor : IActorRef) message =
-         actor.Ask<Result<ScheduleState, string>>(message).Result
+    let reply (reply : AsyncReplyChannel<'a>) (msg : 'a) =
+        reply.Reply(msg)
 
 open System.Threading
 open System
@@ -131,9 +129,6 @@ open System.Collections.Generic
 open Cronix
 open Scheduling
 open Logging
-open Akka.Actor
-open Akka.FSharp
-open Chessie.ErrorHandling
 
 /// Mannages the scheduled jobs.
 type ScheduleManager() = 
@@ -152,31 +147,34 @@ type ScheduleManager() =
                     |> Seq.find (fun(i) -> i.Name = key)
             bubbleUpStateChanged.Trigger(findJobState()))
 
-    let system = ActorSystem.Create("ScheduleManagerSystem")
-    let handleMessage (mailbox: Actor<'a>) message =
-    
-        let sender = mailbox.Sender()
-        match message with
-        | ScheduleJob (name, expr, callback) -> scheduleJob(state, (name, expr, callback)) |> sender.Tell
-        | UnScheduleJob name                 -> unscheduleJob(state, name) |> sender.Tell
-        | DisableTrigger name                -> disableTrigger(state, name)  |> sender.Tell
-        | EnableTrigger name                 -> enableTrigger(state, name) |> sender.Tell
-        | FireTrigger name                   -> fireTriggerR(state, name) |> sender.Tell
-        | TerminateTrigger name              -> terminateTriggerR(state, name) |> sender.Tell
+    let tokenSource = new CancellationTokenSource()
+    let agent = new MailboxProcessor<_>((fun inbox ->
+        let loop = 
+            async {
+                while true do 
+                    let! (message, replyChannel) = inbox.Receive()
+                    match message with
+                    | ScheduleJob (name, expr, callback) -> scheduleJob(state, (name, expr, callback)) |> reply replyChannel |> ignore
+                    | UnScheduleJob name                 -> unscheduleJob(state, name) |> reply replyChannel |> ignore
+                    | DisableTrigger name                -> disableTrigger(state, name) |> reply replyChannel |> ignore
+                    | EnableTrigger name                 -> enableTrigger(state, name) |> reply replyChannel |> ignore
+                    | FireTrigger name                   -> fireTriggerR(state, name) |> reply replyChannel |> ignore
+                    | TerminateTrigger name              -> terminateTriggerR(state, name) |> reply replyChannel |> ignore
+            }
+        loop
+    ), tokenSource.Token)
 
-    let agentActor = spawn system "ScheduleManagerActor" (actorOf2 handleMessage)
-    
     let stop() =
+        tokenSource.Cancel() |> ignore      // stops the agent
         for KeyValue(name, trigger) in state do
             trigger.Terminate() |> ignore
-        system.Shutdown() |> ignore
 
     // internal method to cleanup resources
     let cleanup(disposing : bool) = 
         if not disposed then
             disposed <- true
             if disposing then stop()
-    
+
     interface IDisposable with
         member self.Dispose() =
             cleanup(true)
@@ -186,12 +184,29 @@ type ScheduleManager() =
         cleanup(false)
 
     interface IScheduleManager with
-        member self.ScheduleJob name expr callback = askAndResult <| agentActor <| ScheduleJob( name, expr, callback)
-        member self.UnScheduleJob name = askAndResult <| agentActor <| UnScheduleJob(name)
-        member self.EnableTrigger name = askAndResult <| agentActor <| EnableTrigger(name)
-        member self.DisableTrigger name = askAndResult <| agentActor <| DisableTrigger(name)
-        member x.FireTrigger name = askAndResult <| agentActor <| FireTrigger(name)
-        member x.TerminateTriggerExecution name = askAndResult <| agentActor <| TerminateTrigger(name)
+        member self.ScheduleJob name expr callback = 
+            agent.PostAndAsyncReply(fun replyChannel -> (ScheduleJob( name, expr, callback), replyChannel))
+            |> Async.RunSynchronously
+
+        member self.UnScheduleJob name =
+            agent.PostAndAsyncReply(fun replyChannel -> (UnScheduleJob(name), replyChannel))
+            |> Async.RunSynchronously
+        
+        member self.EnableTrigger name = 
+             agent.PostAndAsyncReply(fun replyChannel -> (EnableTrigger(name), replyChannel))
+            |> Async.RunSynchronously
+
+        member self.DisableTrigger name = 
+             agent.PostAndAsyncReply(fun replyChannel -> (DisableTrigger(name), replyChannel))
+            |> Async.RunSynchronously
+
+        member x.FireTrigger name =
+             agent.PostAndAsyncReply(fun replyChannel -> (FireTrigger(name), replyChannel))
+            |> Async.RunSynchronously
+
+         member x.TerminateTriggerExecution name =
+             agent.PostAndAsyncReply(fun replyChannel -> (TerminateTrigger(name), replyChannel))
+            |> Async.RunSynchronously
 
         member self.TriggerDetails =
             state |> Seq.map(fun i -> { Name = i.Value.Name; CronExpr = i.Value.CronExpr; TriggerState = i.Value.State; NextOccuranceDate = i.Value.OccurrenceAt })
@@ -202,6 +217,10 @@ type ScheduleManager() =
         member self.StopManager() = 
             logger.Debug("stopping agent")
             stop()
-
         member self.StartManager() = 
             logger.Debug("starting agent")
+            agent.Start()
+  
+
+
+

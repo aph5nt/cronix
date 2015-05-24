@@ -13,7 +13,4 @@ Microsoft.Owin.Diagnostics
 Microsoft.Owin.Cors
 
 FSharp.Data
-SQLProvider
-Akka
-Akka.FSharp
-Akka.Logger.NLog
+SQLProvider 

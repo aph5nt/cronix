@@ -45,7 +45,6 @@ module BootStrapper =
     open System.ServiceProcess
     open System.Reflection
     open System.Diagnostics
-    open Akka.Actor
 
     /// Boostrapper module specific logger.
     let logger = logger()
@@ -110,10 +109,6 @@ module BootStrapper =
         try
             AppDomain.CurrentDomain.UnhandledException.AddHandler(fun(_) (args:UnhandledExceptionEventArgs) -> logger.Fatal(args.ExceptionObject))
             let scheduleManager = new ScheduleManager() :> IScheduleManager
-
-            //------------AKKA
-            let schedulingSystem = ActorSystem.Create("SchedulingSystem")
-             
             let setup() = 
                 setupService scheduleManager startupHandler |> ignore 
             use processAdapter = new ServiceProcessAdapter(scheduleManager, setup)
